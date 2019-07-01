@@ -4,7 +4,7 @@ namespace problem0._1
 {
     class Program
     {
-        static string solution(int N)
+        static string solution1(int N)
         {
             var result = "";
             for (int i = 0; i < N; ++i)
@@ -21,7 +21,7 @@ namespace problem0._1
             int n;
             if (Int32.TryParse(input, out n) && n > 0)
             {
-                Console.WriteLine("Result string: " + solution(n));
+                Console.WriteLine("Result string: " + solution1(n));
             }
             else
             {

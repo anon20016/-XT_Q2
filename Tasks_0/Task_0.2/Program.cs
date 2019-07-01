@@ -4,6 +4,11 @@ namespace problem0._1
 {
     class Program
     {
+        /// <summary>
+        /// Проверка числа на простоту
+        /// </summary>
+        /// <param name="n"> Целое положительное </param>
+        /// <returns></returns>
         static bool is_prime(int n)
         {
             for (int i = 2; i * i <= n; ++i)
@@ -20,7 +25,7 @@ namespace problem0._1
         {
             Console.Write("Enter positive integer N > 1: ");
             string input = Console.ReadLine();
-            int n;
+            int n;            
             if (Int32.TryParse(input, out n) && n > 1)
             {
                 if (is_prime(n))
