@@ -2,7 +2,7 @@
 
 namespace Task2_8
 {
-    abstract class Monsters
+    abstract class Monsters : IMove
     {
         public Monsters(int x, int y)
         {
@@ -14,6 +14,6 @@ namespace Task2_8
         public int Y { get; set; }
 
         public abstract void Event();
-        public abstract void Move();
+        public abstract void Move(int dx, int dy);
     }
 }

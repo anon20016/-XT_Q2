@@ -2,7 +2,7 @@
 
 namespace Task2_8
 {
-    public class User
+    public class User : IMove
     {
         private int countLive;
         public int Speed { get; set; }
