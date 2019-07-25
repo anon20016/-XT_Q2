@@ -9,7 +9,6 @@ namespace Task3_3
 {
     public class DynamicArray<T> : IEnumerable<T>, IEnumerator<T>, ICloneable where T : IComparable
     {
-        private T[] arr;
         private int capacity;
         private int index = -1;
 
@@ -17,7 +16,7 @@ namespace Task3_3
         {   
             get
             {
-                return this.Array[this.index];
+                return Array[index];
             }
         }
 
@@ -25,7 +24,7 @@ namespace Task3_3
         {
             get
             {
-                return this.Array[this.index];
+                return Array[index];
             }
         }
                 
@@ -76,7 +75,7 @@ namespace Task3_3
 
         public T this[int index]
         {
-            get => index >= 0 ? Array[index] : this.Array[Length + index];
+            get => index >= 0 ? Array[index] : Array[Length + index];
             set
             {
                 if (index < Length)
@@ -119,13 +118,11 @@ namespace Task3_3
             for (; Capacity - Length < arr.Count(); Capacity *= 2) ;            
 
             T[] temp = new T[Capacity];
-
-            T[] temp = new T[Capacity];
             Array.CopyTo(temp, 0);
             Array = temp;
             foreach (var item in arr)
             {
-                this.Add(item);
+                Add(item);
             }
         }
 
@@ -148,7 +145,6 @@ namespace Task3_3
             {
                 Array[j] = Array[j + 1];
             }
-            i--;
             Length--;
             return true;
         }
@@ -158,7 +154,6 @@ namespace Task3_3
             {
                 Array[j] = Array[j - 1];
             }
-            i--;
             Length--;
             return true;
         }
@@ -186,10 +181,10 @@ namespace Task3_3
 
         public bool MoveNext()
         {
-            this.index++;
-            if (this.index == this.Length)
+            index++;
+            if (index == Length)
             {
-                this.Reset();
+                Reset();
                 return false;
             }
 
@@ -208,7 +203,7 @@ namespace Task3_3
 
         public object Clone()
         {
-            return new DynamicArray<T>(this.Array, this.Capacity);
+            return new DynamicArray<T>(Array, Capacity);
         }
 
         public IEnumerator<T> GetEnumerator()

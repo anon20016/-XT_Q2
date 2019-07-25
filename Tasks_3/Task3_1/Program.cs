@@ -12,7 +12,7 @@ namespace Task3_1
             string[] input = Console.ReadLine().Split();            
             if (input.Length == 1 && Int32.TryParse(input[0], out n) && n > 0)
             {
-                solution3_1(n);
+                Solution3_1(n);
             }
             else
             {

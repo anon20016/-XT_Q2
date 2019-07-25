@@ -10,7 +10,7 @@ namespace Task3_2
             string s;
             Console.WriteLine("Enter string");
             s = Console.ReadLine();
-            solution3_2(s);
+            Solution3_2(s);
         }
 
         static void Solution3_2(string s)
