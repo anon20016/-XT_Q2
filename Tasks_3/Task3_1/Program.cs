@@ -20,7 +20,7 @@ namespace Task3_1
             }
         }
         
-        static void solution3_1(int n)
+        static void Solution3_1(int n)
         {
             LinkedList<int> mass = new LinkedList<int>();
             for (int i = 1; i <= n; i++)

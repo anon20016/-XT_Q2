@@ -13,7 +13,7 @@ namespace Task3_2
             solution3_2(s);
         }
 
-        static void solution3_2(string s)
+        static void Solution3_2(string s)
         {
             string[] words = s.Split(new char[] { '.', ' '});
             Dictionary<string, int> dict = new Dictionary<string, int>();
