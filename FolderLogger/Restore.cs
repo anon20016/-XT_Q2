@@ -8,10 +8,16 @@ namespace FolderLogger
 {
     class Restore
     {
+        /// <summary>
+        /// (time, path)
+        /// </summary>
         private Dictionary<string, string> backups;
         public string Path { get; set; }
 
-
+        /// <summary>
+        /// Creates new Restore module for file
+        /// </summary>
+        /// <param name="path">file path</param>
         public Restore(string path)
         {
             if (!File.Exists(path))
@@ -21,7 +27,6 @@ namespace FolderLogger
             Path = path;
 
             string folder = Environment.CurrentDirectory + "\\data\\" + Math.Abs(Path.GetHashCode());
-            MessageBox.Show(folder);
             if (!Directory.Exists(folder))
             {
                 throw new FileNotFoundException($"No information about {Path}");
@@ -36,11 +41,19 @@ namespace FolderLogger
             }
         }
 
+        /// <summary>
+        /// Returns all backups for this Restore module
+        /// </summary>
+        /// <returns></returns>
         public string[] GetAllBackups_Date()
         {
             return new List<string>(backups.Keys).ToArray();
         }
 
+        /// <summary>
+        /// Making backup for selected datetime
+        /// </summary>
+        /// <param name="s">date + tile</param>
         public void Backup(string s)
         {            
             byte[] buffer = null;
@@ -51,7 +64,5 @@ namespace FolderLogger
             } 
             File.WriteAllBytes(Path, buffer);           
         }
-
-
     }
 }

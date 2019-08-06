@@ -2,7 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Threading;
+using System.Linq;
 
 namespace FolderLogger
 {
@@ -15,7 +15,7 @@ namespace FolderLogger
         private List<FileSystemWatcher> fileSystemWatchers;
 
         /// <summary>
-        /// Returns all subnfolders
+        /// Returns all subfolders
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
@@ -28,6 +28,10 @@ namespace FolderLogger
             }
         }
 
+        /// <summary>
+        /// Addes Watcher for folder
+        /// </summary>
+        /// <param name="path">folder path</param>
         public Watcher(string path)
         {
             if (!Directory.Exists(path))
@@ -48,11 +52,13 @@ namespace FolderLogger
 
             foreach (var item in derictories)
             {
+                int countFiles = 0;
                 foreach (var file in Directory.GetFiles(item))
                 {
                     if (file.EndsWith(".txt"))
                     {
                         SafeChange(file);
+                        countFiles++;
                     }
                 }
                 FileSystemWatcher watcher = new FileSystemWatcher
@@ -63,8 +69,8 @@ namespace FolderLogger
                     Filter = "*.txt"
                 };
                 watcher.Changed += new FileSystemEventHandler(OnChanged);
-                watcher.Created += new FileSystemEventHandler(OnChanged);
-                watcher.Deleted += new FileSystemEventHandler(OnChanged);
+                watcher.Created += new FileSystemEventHandler(OnCreated);
+                watcher.Deleted += new FileSystemEventHandler(OnDeleted);
                 watcher.Renamed += new RenamedEventHandler(OnRenamed);               
                 watcher.EnableRaisingEvents = true;
 
@@ -77,7 +83,6 @@ namespace FolderLogger
             Change?.Invoke($"Stop watching at {Path}");
             Dispose();
         }
-
         public void Dispose()
         {
             foreach(var item in fileSystemWatchers)
@@ -111,23 +116,70 @@ namespace FolderLogger
             SafeChange(e.FullPath);
         }
 
+        /// <summary>
+        /// Saves changes to related folder
+        /// </summary>
+        /// <param name="path">file path</param>
         private void SafeChange(string path)
-        {
+        {            
             string safeDir = Environment.CurrentDirectory + "\\data\\" + Math.Abs(path.GetHashCode());
             if (!Directory.Exists(safeDir)){
-                Directory.CreateDirectory(safeDir);
+                Directory.CreateDirectory(safeDir);                
             }
 
-            byte[] buffer = null;
+            byte[] buffer = { };
+
             using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 buffer = new byte[fs.Length];
                 fs.Read(buffer, 0, (int)fs.Length);
             }
-            File.WriteAllBytes($"{safeDir}\\c{DateTime.Now.ToString().Replace(':', '_')}.watcher", buffer);
-           
+
+            /// checks if last file is the same with currient
+            byte[] lastbuffer = { };
+            if (Directory.GetFiles(safeDir).Length != 0)
+            {
+                string lastFile = Directory.GetFiles(safeDir).OrderByDescending(d => new FileInfo(d).CreationTime).First();
+
+                using (FileStream fs = new FileStream(lastFile, FileMode.Open, FileAccess.Read))
+                {
+                    lastbuffer = new byte[fs.Length];
+                    fs.Read(lastbuffer, 0, (int)fs.Length);
+                }
+                
+            }
+            if (!Comparebytes(buffer, lastbuffer))
+            {
+                File.WriteAllBytes($"{safeDir}\\c{DateTime.Now.ToString().Replace(':', '_')}.watcher", buffer);
+            }           
         }
 
+        /// <summary>
+        /// Compares two byte[] arrays
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        private bool Comparebytes(byte[] x, byte[] y)
+        {
+            if (x.Length != y.Length)
+            {
+                return false;
+            }
+            for (int i = 0; i < x.Length; i++)
+            {
+                if (x[i] != x[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Saves new file with info about delete
+        /// </summary>
+        /// <param name="path"></param>
         private void DeleteChange(string path)
         {
             string safeDir = Environment.CurrentDirectory + "\\data\\" + Math.Abs(path.GetHashCode());
@@ -135,12 +187,8 @@ namespace FolderLogger
             {
                 Directory.CreateDirectory(safeDir);
             }
-
-            using (Stream source = File.OpenRead(path))
-            {
-                byte[] buffer = null;                
-                File.WriteAllBytes($"{safeDir}\\d{DateTime.Now.ToString().Replace(':', '_')}.watcher", buffer);
-            }
+            byte[] buffer = { };
+            File.WriteAllBytes($"{safeDir}\\d{DateTime.Now.ToString().Replace(':', '_')}.watcher", buffer);            
         }
 
     }

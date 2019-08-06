@@ -150,7 +150,8 @@ namespace FolderLogger
                 BackColor = Color.LightBlue,
                 Parent = p,
                 BorderStyle = BorderStyle.None,
-                Name = "watchersList"
+                Name = "watchersList",
+                AutoScroll = true
             };
 
             Label selectinfo1 = new Label()
@@ -194,11 +195,10 @@ namespace FolderLogger
                 Top = 95,
                 Left = 5,
                 Parent = p,
-                Text = "Select watcher from right list",
+                Text = "Select watchers from right list",
                 Font = new Font("Arial", 10),
                 TextAlign = ContentAlignment.MiddleCenter
             };
-
             Label infodelete2 = new Label()
             {
                 Width = p.Width / 2,
@@ -424,8 +424,7 @@ namespace FolderLogger
                 AutoEllipsis = true
             };
             watchers.Add(new Tuple<CheckBox, Label>(tempcheckbos, templabel));
-        }
-        
+        }        
 
         /// <summary>
         /// Adding text to log
@@ -445,9 +444,9 @@ namespace FolderLogger
         }
         void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-            base.Capture = false;
+            Capture = false;
             Message m = Message.Create(base.Handle, 0xa1, new IntPtr(2), IntPtr.Zero);
-            this.WndProc(ref m);
+            WndProc(ref m);
         }
     }
 

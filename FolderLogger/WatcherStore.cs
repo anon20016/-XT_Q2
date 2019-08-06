@@ -2,6 +2,9 @@
 
 namespace FolderLogger
 {
+    /// <summary>
+    /// List of watchers with methods
+    /// </summary>
     class WatcherStore
     {
         List<Watcher> watchers;
@@ -14,7 +17,6 @@ namespace FolderLogger
 
         public int Count => watchers.Count;      
         
-
         /// <summary>
         /// Adds Watcher to store
         /// </summary>
