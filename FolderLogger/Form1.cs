@@ -297,11 +297,7 @@ namespace FolderLogger
             };
         }
 
-        private void RestoreButton_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
+     
         private void SelectFile_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog filedialog = new OpenFileDialog())
@@ -311,6 +307,8 @@ namespace FolderLogger
                     try
                     {
                         Restore restore = new Restore(filedialog.FileName);
+                        restore.Change += Watcher_Change;
+                        (Controls["restorePanel"].Controls["comboBox"] as ComboBox).Items.Clear();
                         (Controls["restorePanel"].Controls["comboBox"] as ComboBox).Items.AddRange(restore.GetAllBackups_Date());
                         Controls["restorePanel"].Controls["restoreButton"].Click += delegate
                         {

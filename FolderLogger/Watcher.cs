@@ -47,18 +47,15 @@ namespace FolderLogger
         public void Watch()
         {            
             GetAllFiles(Path);            
-            Change?.Invoke($"Start watching at {Path}");
-                   
+            Change?.Invoke($"Start watching at {Path}");                   
 
             foreach (var item in derictories)
             {
-                int countFiles = 0;
                 foreach (var file in Directory.GetFiles(item))
                 {
                     if (file.EndsWith(".txt"))
                     {
                         SafeChange(file);
-                        countFiles++;
                     }
                 }
                 FileSystemWatcher watcher = new FileSystemWatcher

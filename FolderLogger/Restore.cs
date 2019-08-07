@@ -8,6 +8,8 @@ namespace FolderLogger
 {
     class Restore
     {
+        public event LogWrite Change;
+
         /// <summary>
         /// (time, path)
         /// </summary>
@@ -62,7 +64,9 @@ namespace FolderLogger
                 buffer = new byte[fs.Length];
                 fs.Read(buffer, 0, (int)fs.Length);
             } 
-            File.WriteAllBytes(Path, buffer);           
+            File.WriteAllBytes(Path, buffer);    
+
+            Change?.Invoke($"File restored to datetime {s}");
         }
     }
 }
