@@ -1,0 +1,56 @@
+.reg_form {
+    background-color: #0690CF;
+    width: 500px;
+    height: 315px;
+    border: 2px solid #0074B1;
+    color: white;
+}
+
+.title {
+    height: 40px;
+    font-size: 30px;
+    border-bottom: 1px solid white;
+    margin-top: 25px;
+    padding-left: 20px;
+}
+
+.input {
+    padding-left: 20px;
+}
+
+.input p {
+    margin: 0;
+    margin-top: 30px;
+	font-size: 20px;
+}
+
+input[type="email"] {
+    width: 430px;
+    height: 25px;
+    border: 1px solid #AFB1B7;
+    margin-top: 5px;
+    padding-left: 2px;
+}
+
+.password {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+input[type="password"] {
+	margin-top: 5px;
+    width: 205px;
+	height: 25px;
+    border: 1px solid #AFB1B7; 
+}
+
+input[type="submit"] {
+    width: 102px;
+    height: 30px;
+    background-color: #FFdF7f;
+    border: none;
+    text-align: center;
+    margin-left: 20px;
+    margin-top: 25px;
+    cursor: pointer;
+}

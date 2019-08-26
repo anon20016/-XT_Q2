@@ -1,0 +1,40 @@
+body {
+    background-color: #4E6379;
+}
+
+.block {
+    width: 915px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.block .inf {
+    width: 300px;
+    display: inline-block;
+    border-right: 2px solid #D9D9D9;
+}
+
+.block .inf p{
+    margin: 0;
+    color: #F56332;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.block .inf text {
+    text-align: center;
+}
+
+.block .inf button {
+    width: 100px;
+    height: 30px;
+    border: none;
+    color: white;
+    background-color: #F56332;
+    margin-top: 11px;
+    border-radius: 2px;
+    cursor: pointer;
+}

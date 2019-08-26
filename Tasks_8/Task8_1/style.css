@@ -1,0 +1,25 @@
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+.menu {	
+    width: 200px;			
+    background-color: #F9E497;	
+    color: #B00538;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    border: 1px solid #333333;
+    -webkit-box-shadow: 5px 5px 0 0px #B00538;
+    -moz-box-shadow: 5px 5px 0 0px #B00538;
+    box-shadow: 5px 5px 0 0px #B00538;
+    margin-top: 10px;
+    text-align: left;
+}
+
+.menu li {	
+    margin: 10px;
+    list-style-type: none;
+    margin-left: -25px;
+}

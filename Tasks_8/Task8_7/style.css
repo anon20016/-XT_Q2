@@ -1,0 +1,19 @@
+.title {
+    width: 550px;
+    color: white;
+    background-color: #008B66;
+    line-height: 50px;
+    font-size: 18px;
+    padding-left: 15px;
+}
+
+.text {
+    width: 500px;
+    position: relative;
+    left: 35px;
+    top: -10px;    
+    background-color: #DFE6E1;
+    padding: 15px;
+    line-height: 20px;
+	
+}
