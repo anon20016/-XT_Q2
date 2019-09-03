@@ -1,0 +1,59 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.section {
+    position: fixed;
+    width: 100px;
+    height: 150px;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.section span {
+    font-weight: bold;
+    padding-left: 15px;
+}
+
+.section ul {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #111111;
+}
+.section ul.right li {
+    position: absolute;
+    opacity: 0;
+}
+.section ul li {
+    list-style-type: none;
+    cursor: pointer;
+    line-height: 20px;
+}
+
+.section ul li.activeLeft {
+    background-color: #A3C8F5;
+}
+.section ul li.activeRight {
+    background-color: #A3C8F5;
+}
+.selected {
+    width: 100px;
+    height: 150px;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.buttons {
+    position: fixed;
+    left:120px;
+    top:15px;
+    width: 40px;
+    display: inline-block;
+}
+
+.buttons button {
+    width: 40px;
+    height: 25px;
+    margin: 0px 10px 3px 10px;
+}

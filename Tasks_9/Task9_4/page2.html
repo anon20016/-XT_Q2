@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Page 2</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+</head>
+
+<body style="background-color: #fccf99;" onload="startTimer()">
+    <div class="menu">
+        <center>
+            <ul>
+                <a href="index.html">
+                    <li>Page 1</li>
+                </a>
+                <a href="page2.html">
+                    <li>Page 2</li>
+                </a>
+                <a href="page3.html">
+                    <li>Page 3</li>
+                </a>
+                <a href="page4.html">
+                    <li>Page 4</li>
+                </a>
+            </ul>
+        </center>
+    </div>    
+    <center>
+        <div class="timer">
+            <p><span id="my_timer">00:30</span></p>
+            <button id="pause">pause</button>
+            <button onclick="window.location.reload();">reset timer</button>
+        </div>
+        <div class="nav">
+            <a href="index.html"><button id="back">Back</button></a>
+            <a href="page3.html"><button id="next">Next</button></a>
+        </div>
+    </center>
+    <script src="script.js"></script>
+</body>
+<script>
+    function startTimer() {
+        var my_timer = document.getElementById("my_timer");
+        var time = my_timer.innerHTML;
+        var arr = time.split(":");
+        var m = arr[0],
+            s = arr[1];
+        if (s == 0) {
+            if (m == 0) {
+                window.location.href = "page3.html";
+                return;
+                m = 60;
+            }
+            m--;
+            if (m < 10) {
+                m = "0" + m;
+            }
+            s = 59;
+        } else s--;
+        if (s < 10) {
+            s = "0" + s;
+        }
+        document.getElementById("my_timer").innerHTML = m + ":" + s;
+        var time = setTimeout(startTimer, 1000);
+    }
+</script>
+</html>

@@ -1,0 +1,68 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.menu {
+    margin: 0;
+    width: 100%;
+    height: 50px;
+    background-color: rgb(211, 211, 211);
+
+}
+
+.menu ul a {
+    width: 100px;
+    display: inline-block;
+    line-height: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+}
+
+.menu ul li {
+    list-style-type: none;
+}
+
+.active {
+    background-color: rgba(198, 198, 198, 0.95);
+}
+
+.nav {
+    margin-top: 30px;
+}
+.nav a{
+   text-decoration: none;
+}
+.nav button {
+    width: 100px;
+    line-height: 30px;
+}
+
+.nav button:hover {
+    background-color: rgba(198, 198, 198, 0.95);
+}
+
+.timer {
+    color: #ff0000;
+    font-size: 150%;
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+.block_inf {
+    width: 400px;
+    height: 200px;
+    line-height: 200px;
+    background-color: #ffffff;
+    margin-top: 30px;
+}
+
+.block_inf button{
+    width: 100px;
+    line-height: 30px;
+    margin: 20px;
+}
+.block_inf button:hover {
+    background-color: rgba(198, 198, 198, 0.95);
+}
