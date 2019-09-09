@@ -7,7 +7,7 @@ namespace DAL
 {
     public class UserStorage : IStorable<User>
     {
-        private static List<User> Users { get; set; }
+        private static  List<User> Users { get; set; }
 
         static UserStorage()
         {

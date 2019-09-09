@@ -8,7 +8,7 @@ namespace BAL
 {
     public class UserManager
     {
-        public static IStorable<User> MemoryStorage = new UserStorage();
+        public IStorable<User> MemoryStorage = new UserStorage();
 
         public void AddUser(string name, string dayofbirth)
         {

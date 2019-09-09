@@ -8,11 +8,11 @@ namespace PL
 
     class Program
     {
-        public static UserManager userManager = new UserManager();
+        public static UserManager userManagerLogic = new UserManager();
 
         static void Main(string[] args)
         {
-            userManager.LoadData();
+            userManagerLogic.LoadData();
             SelectOption();
         }
 
@@ -36,7 +36,7 @@ namespace PL
                             ReadUserInfo(ref name, ref dateofbirth);
                             try
                             {
-                                userManager.AddUser(name, dateofbirth);
+                                userManagerLogic.AddUser(name, dateofbirth);
                             }
                             catch (Exception e)
                             {
@@ -45,13 +45,20 @@ namespace PL
                             break;
                         case 2:
                             ReadUserInfo(ref name, ref dateofbirth);
-                            userManager.RemoveUser(name, dateofbirth);
+                            try
+                            {
+                                userManagerLogic.RemoveUser(name, dateofbirth);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.Message);
+                            }
                             break;
                         case 3:
-                            WriteAllUsers(userManager.GetAllUsers());
+                            WriteAllUsers(userManagerLogic.GetAllUsers());
                             break;
                         case 4:
-                            userManager.SaveData();
+                            userManagerLogic.SaveData();
                             Environment.Exit(0);
                             break;                             
                     }
