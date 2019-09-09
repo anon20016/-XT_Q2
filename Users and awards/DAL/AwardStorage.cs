@@ -1,8 +1,8 @@
 ﻿using Entities;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System;
 
 namespace DAL
 {
@@ -29,7 +29,11 @@ namespace DAL
         public bool Find(Award note)
         {
             return Awards.Contains(note);
-        }        
+        }
+        public Award Find(int id)
+        {
+            return FindAward(id);
+        }
 
         Award FindAward(string name)
         {
@@ -135,5 +139,7 @@ namespace DAL
         {
             return Awards;
         }
+
+
     }
 }

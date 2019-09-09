@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DAL;
 using Entities;
-using DAL;
+using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace BAL
@@ -30,7 +30,7 @@ namespace BAL
             }
         }
         public void AddUser(User note)
-        {           
+        {
             MemoryStorage.Add(note);
         }
         public void RemoveUser(User note)
@@ -42,9 +42,10 @@ namespace BAL
             Regex regex = new Regex(@"(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d");
             if (regex.IsMatch(dayofbirth))
             {
-                if (!MemoryStorage.Remove(new User(name, dayofbirth))){
+                if (!MemoryStorage.Remove(new User(-1, name, dayofbirth)))
+                {
                     throw new FormatException("No user");
-                }                
+                }
             }
             else
             {
@@ -63,6 +64,6 @@ namespace BAL
         public ICollection<User> GetAllUsers()
         {
             return MemoryStorage.GetAll();
-        }        
+        }
     }
 }

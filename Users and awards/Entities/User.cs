@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Entities
+﻿namespace Entities
 {
     public class User
     {
@@ -28,12 +22,12 @@ namespace Entities
         public User(string name, string dateofbirth)
         {
             Id = count++;
-            Name = name;           
+            Name = name;
             DateOfBirth = dateofbirth;
         }
         public override string ToString()
         {
-            return Id.ToString() +  " " + Name + " " + DateOfBirth;
+            return Id.ToString() + " " + Name + " " + DateOfBirth;
         }
     }
 }

@@ -67,5 +67,10 @@ namespace DAL
         {
             throw new NotImplementedException();
         }
+
+        public Association Find(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

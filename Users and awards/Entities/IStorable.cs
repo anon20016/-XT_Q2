@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Entities
 {
@@ -12,6 +8,7 @@ namespace Entities
         bool Remove(T note);
         bool Remove(int id);
         bool Find(T note);
+        T Find(int id);
         void Save();
         void Load();
 

@@ -1,9 +1,6 @@
-﻿using Entities;
-using System;
+﻿using DAL;
+using Entities;
 using System.Collections.Generic;
-using System.Linq;
-using DAL;
-using System.Threading.Tasks;
 
 namespace BAL
 {
@@ -12,19 +9,42 @@ namespace BAL
         public IStorable<Award> MemoryStorage = new AwardStorage();
         public IStorable<Association> AsStorage = new AssotiationStorage();
 
-        public AwardLogic(){
-            MemoryStorage.Load();
-            AsStorage.Load();
+        public void AddAward(string name, string discription)
+        {
+            if (MemoryStorage.Add(new Award(++Award.count, name, discription)))
+            {
+
+            }
+            else
+            {
+
+            }
+
+        }
+        public void RemoveAward(string name)
+        {
+            if (MemoryStorage.Remove(new Award(-1, name, "")))
+            {
+
+            }
+            else
+            {
+
+            }
         }
 
         public bool Associate(int fr, int sc)
         {
-            return AsStorage.Add(new Association(fr, sc));            
+            return AsStorage.Add(new Association(fr, sc));
         }
-
         public bool deAssociate(int fr, int sc)
         {
             return AsStorage.Remove(new Association(fr, sc));
+        }
+
+        public Award Find(int id)
+        {
+            return MemoryStorage.Find(id);
         }
 
         public ICollection<Award> GetAll()
@@ -32,10 +52,18 @@ namespace BAL
             return MemoryStorage.GetAll();
         }
 
-        public void LoadData()
+        public ICollection<Association> GetAllAssotiations()
         {
-            MemoryStorage.Load();
+            return AsStorage.GetAll();
         }
 
+        public void LoadData()
+        {
+
+            MemoryStorage.Load();
+            AsStorage.Load();
+        }
+
+        
     }
 }

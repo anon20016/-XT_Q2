@@ -1,6 +1,7 @@
-﻿using System;
-using BAL;
+﻿using BAL;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PL
 {
@@ -21,25 +22,49 @@ namespace PL
         public static void SelectOption()
         {
             Console.WriteLine("Select option: ");
+            Console.WriteLine("0) Show Users and Awards");
             Console.WriteLine("1) Add User");
             Console.WriteLine("2) Remove User");
             Console.WriteLine("3) Show all users");
             Console.WriteLine("4) Show all awards");
-            Console.WriteLine("5) Close app");
+            Console.WriteLine("5) Add Award");
+            Console.WriteLine("6) Remove Award");
+            Console.WriteLine("7) Give Award to user");
+            Console.WriteLine("8) Remove Award from user");
+            Console.WriteLine("9) Close app");
             var input = Console.ReadLine();
             int option = 0;
-            while (option != 4)
+            while (true)
             {
-                if (int.TryParse(input, out option) && option > 0 && option < 6)
+                if (int.TryParse(input, out option) && option >= 0 && option < 10)
                 {
-                    string name = "", dateofbirth = "";
+                    string[] inpt;
                     switch (option)
                     {
+                        case 0:
+                            var tempA = awardManagerLogic.GetAllAssotiations();
+                            var tempU = userManagerLogic.GetAllUsers();
+                            foreach (var item in tempU)
+                            {
+                                Console.Write($"{item.Name} {item.DateOfBirth}");
+                                var r = from i in tempA where (i.firstID == item.Id) select i.secondID;
+                                if (r.Count() > 0)
+                                {
+                                    Console.Write(" Awards: ");
+                                    foreach (var item1 in r)
+                                    {
+                                        Console.Write(awardManagerLogic.Find(item1).Name + " ");
+                                    }
+                                }
+                                Console.WriteLine();
+                            }
+
+                            break;
                         case 1:
-                            ReadUserInfo(ref name, ref dateofbirth);
+                            inpt = ReadInfo("Name: ", "Date of Birth (dd.mm.yyyy): ");
                             try
                             {
-                                userManagerLogic.AddUser(name, dateofbirth);
+                                userManagerLogic.AddUser(inpt[0], inpt[1]);
                             }
                             catch (Exception e)
                             {
@@ -47,10 +72,10 @@ namespace PL
                             }
                             break;
                         case 2:
-                            ReadUserInfo(ref name, ref dateofbirth);
+                            inpt = ReadInfo("Name: ", "Date of Birth (dd.mm.yyyy): ");
                             try
                             {
-                                userManagerLogic.RemoveUser(name, dateofbirth);
+                                userManagerLogic.RemoveUser(inpt[0], inpt[1]);
                             }
                             catch (Exception e)
                             {
@@ -64,9 +89,54 @@ namespace PL
                             WriteAllUsers(awardManagerLogic.GetAll());
                             break;
                         case 5:
+                            inpt = ReadInfo("Name: ", "Discription: ");
+                            try
+                            {
+                                awardManagerLogic.AddAward(inpt[0], inpt[1]);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.Message);
+                            }
+                            break;
+
+                        case 6:
+                            inpt = ReadInfo("Name: ");
+                            try
+                            {
+                                awardManagerLogic.RemoveAward(inpt[0]);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.Message);
+                            }
+                            break;
+                        case 7:
+                            inpt = ReadInfo("User Id: ", "Award Id");
+                            try
+                            {
+                                awardManagerLogic.Associate(Convert.ToInt32(inpt[0]), Convert.ToInt32(inpt[1]));
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.Message);
+                            }
+                            break;
+                        case 8:
+                            inpt = ReadInfo("User Id: ", "Award Id");
+                            try
+                            {
+                                awardManagerLogic.Associate(Convert.ToInt32(inpt[0]), Convert.ToInt32(inpt[1]));
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.Message);
+                            }
+                            break;
+                        case 9:
                             userManagerLogic.SaveData();
                             Environment.Exit(0);
-                            break;                             
+                            break;
                     }
                 }
                 else
@@ -77,13 +147,18 @@ namespace PL
                 input = Console.ReadLine();
             }
         }
-        public static void ReadUserInfo(ref string name, ref string dateofbirth)
+
+        private static string[] ReadInfo(params string[] args)
         {
-            Console.Write("Name: ");
-            name = Console.ReadLine();
-            Console.Write("Date of Birth (dd.mm.yyyy): ");
-            dateofbirth = Console.ReadLine();
+            string[] res = new string[args.Length];
+            for (int i = 0; i < args.Length; i++)
+            {
+                Console.Write(args[i]);
+                res[i] = Console.ReadLine();
+            }
+            return res;
         }
+
         public static void WriteAllUsers<T>(ICollection<T> ts)
         {
             foreach (var item in ts)

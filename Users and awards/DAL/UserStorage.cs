@@ -49,7 +49,7 @@ namespace DAL
             {
                 throw new FormatException("Error");
             }
-        }       
+        }
 
         public bool Find(User note)
         {
@@ -61,6 +61,10 @@ namespace DAL
                 }
             }
             return false;
+        }
+        public User Find(int id)
+        {
+            return FindUser(id);
         }
 
         public bool Remove(User note)
