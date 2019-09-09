@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public interface IAwardLogic
+    public interface IAssociate
     {
-        ICollection<Award> GetAll();
+        bool Associate(int fr, int sc);
+        bool deAssociate(int fr, int sc);
     }
 }

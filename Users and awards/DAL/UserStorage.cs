@@ -1,15 +1,14 @@
 ﻿using Entities;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace DAL
 {
     public class UserStorage : IStorable<User>
     {
         private List<User> Users { get; set; }
-
-
         public UserStorage()
         {
             Users = new List<User>();
@@ -20,17 +19,37 @@ namespace DAL
             Users.Add(note);
             return true;
         }
-        
+
         public bool Add(string name, string dateofbirth)
         {
-            Users.Add(new User(name, dateofbirth));
+            Users.Add(new User(User.count, name, dateofbirth));
             return true;
         }
 
-        public ICollection<User> GetAll()
+        User FindUser(string name, string dateofbirth)
         {
-            return Users;
+            var r = from item in Users where ((item.Name == name) && (item.DateOfBirth == dateofbirth)) select item;
+            if (r.Count() > 0)
+            {
+                return r.First();
+            }
+            else
+            {
+                throw new FormatException("Error");
+            }
         }
+        User FindUser(int id)
+        {
+            var r = from item in Users where ((item.Id == id)) select item;
+            if (r.Count() > 0)
+            {
+                return r.First();
+            }
+            else
+            {
+                throw new FormatException("Error");
+            }
+        }       
 
         public bool Find(User note)
         {
@@ -46,12 +65,40 @@ namespace DAL
 
         public bool Remove(User note)
         {
-            if (Find(note))
+            if (note.Id == -1)
             {
-                Users.Remove(note);
+                return Remove(note.Name, note.DateOfBirth);
+            }
+            else
+            {
+                return Remove(note.Id);
+            }
+        }
+        public bool Remove(int id)
+        {
+            try
+            {
+                User temp = FindUser(id);
+                Users.Remove(temp);
                 return true;
             }
-            return false;
+            catch
+            {
+                return false;
+            }
+        }
+        public bool Remove(string name, string dateofbirth)
+        {
+            try
+            {
+                User temp = FindUser(name, dateofbirth);
+                Users.Remove(temp);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public void Load()
@@ -79,16 +126,21 @@ namespace DAL
                     User.count = mxID + 1;
                 }
             }
-        }       
+        }
         public void Save()
         {
             using (StreamWriter sr = new StreamWriter(@"data.txt"))
             {
-                foreach(var item in Users)
+                foreach (var item in Users)
                 {
                     sr.WriteLine($"{item.Id}*{item.Name}*{item.DateOfBirth}");
                 }
             }
+        }
+
+        public ICollection<User> GetAll()
+        {
+            return Users;
         }
     }
 

@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Association.cs" />
     <Compile Include="Award.cs" />
+    <Compile Include="IAssociate.cs" />
     <Compile Include="IAwardLogic.cs" />
     <Compile Include="IStorable.cs" />
     <Compile Include="User.cs" />

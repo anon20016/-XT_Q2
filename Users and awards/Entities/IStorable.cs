@@ -10,6 +10,7 @@ namespace Entities
     {
         bool Add(T note);
         bool Remove(T note);
+        bool Remove(int id);
         bool Find(T note);
         void Save();
         void Load();

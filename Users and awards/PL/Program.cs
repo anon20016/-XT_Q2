@@ -9,10 +9,12 @@ namespace PL
     class Program
     {
         public static UserLogic userManagerLogic = new UserLogic();
+        public static AwardLogic awardManagerLogic = new AwardLogic();
 
         static void Main(string[] args)
         {
             userManagerLogic.LoadData();
+            awardManagerLogic.LoadData();
             SelectOption();
         }
 
@@ -22,12 +24,13 @@ namespace PL
             Console.WriteLine("1) Add User");
             Console.WriteLine("2) Remove User");
             Console.WriteLine("3) Show all users");
-            Console.WriteLine("4) Close app");
+            Console.WriteLine("4) Show all awards");
+            Console.WriteLine("5) Close app");
             var input = Console.ReadLine();
             int option = 0;
             while (option != 4)
             {
-                if (int.TryParse(input, out option) && option > 0 && option < 5)
+                if (int.TryParse(input, out option) && option > 0 && option < 6)
                 {
                     string name = "", dateofbirth = "";
                     switch (option)
@@ -58,6 +61,9 @@ namespace PL
                             WriteAllUsers(userManagerLogic.GetAllUsers());
                             break;
                         case 4:
+                            WriteAllUsers(awardManagerLogic.GetAll());
+                            break;
+                        case 5:
                             userManagerLogic.SaveData();
                             Environment.Exit(0);
                             break;                             
