@@ -6,51 +6,39 @@ using System.Text.RegularExpressions;
 
 namespace BAL
 {
-    public class UserLogic
+    public class UserLogic : IUserLogic
     {
         public IStorable<User> MemoryStorage = new UserStorage();
 
-        public void AddUser(string name, string dayofbirth)
+        public bool AddUser(string name, string dayofbirth)
         {
             Regex regex = new Regex(@"(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d");
-            if (regex.IsMatch(dayofbirth))
+            if (regex.IsMatch(dayofbirth) && name.Length > 0)
             {
-                if (!MemoryStorage.Find(new User(0, name, dayofbirth)))
-                {
-                    MemoryStorage.Add(new User(name, dayofbirth));
-                }
-                else
-                {
-                    throw new FormatException("This user already exists");
-                }
+                return MemoryStorage.Add(new User(++User.count, name, dayofbirth));
             }
             else
             {
                 throw new FormatException("Error in data format");
             }
         }
-        public void AddUser(User note)
-        {
-            MemoryStorage.Add(note);
-        }
-        public void RemoveUser(User note)
-        {
-            MemoryStorage.Remove(note);
-        }
-        public void RemoveUser(string name, string dayofbirth)
+        
+        public bool RemoveUser(string name, string dayofbirth)
         {
             Regex regex = new Regex(@"(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d");
             if (regex.IsMatch(dayofbirth))
             {
-                if (!MemoryStorage.Remove(new User(-1, name, dayofbirth)))
-                {
-                    throw new FormatException("No user");
-                }
+                return !MemoryStorage.Remove(new User(-1, name, dayofbirth));                
             }
             else
             {
                 throw new FormatException("Error in data format");
             }
+        }
+
+        public User Find(int id)
+        {
+            return MemoryStorage.Find(id);
         }
         public void SaveData()
         {
@@ -61,7 +49,7 @@ namespace BAL
             MemoryStorage.Load();
         }
 
-        public ICollection<User> GetAllUsers()
+        public ICollection<User> GetAll()
         {
             return MemoryStorage.GetAll();
         }

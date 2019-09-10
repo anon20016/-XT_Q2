@@ -17,15 +17,24 @@ namespace DAL
 
         public bool Add(Award note)
         {
-            Awards.Add(note);
-            return true;
+            if (FindAward(note.Name) == null)
+            {
+                Awards.Add(note);
+                return true;
+            }
+            Award.count--;
+            return false;            
         }
         public bool Add(string name, string discr)
         {
-            Awards.Add(new Award(++Award.count, name, discr));
-            return true;
+            if (FindAward(name) == null)
+            {
+                Awards.Add(new Award(++Award.count, name, discr));
+                return true;
+            }
+            return false;
         }
-
+  
         public bool Find(Award note)
         {
             return Awards.Contains(note);
@@ -44,7 +53,7 @@ namespace DAL
             }
             else
             {
-                throw new FormatException("Error");
+                return null;
             }
         }
         Award FindAward(int id)
@@ -88,29 +97,21 @@ namespace DAL
 
         public bool Remove(string name)
         {
-            try
+            if (FindAward(name) != null)
             {
-                Award temp = FindAward(name);
-                Awards.Remove(temp);
+                Awards.Remove(FindAward(name));
                 return true;
             }
-            catch
-            {
-                return false;
-            }
+            return false;
         }
         public bool Remove(int id)
         {
-            try
+            if (FindAward(id) != null)
             {
-                Award temp = FindAward(id);
-                Awards.Remove(temp);
+                Awards.Remove(FindAward(id));
                 return true;
             }
-            catch
-            {
-                return false;
-            }
+            return false;
         }
         public bool Remove(Award note)
         {

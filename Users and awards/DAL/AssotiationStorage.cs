@@ -12,8 +12,12 @@ namespace DAL
 
         public bool Add(Association note)
         {
-            Assotiations.Add(note);
-            return true;
+            if (!Find(note))
+            {
+                Assotiations.Add(note);
+                return true;
+            }
+            return false;
         }
         public bool Find(Association note)
         {
@@ -55,7 +59,13 @@ namespace DAL
 
         public void Save()
         {
-            throw new NotImplementedException();
+            using (StreamWriter sr = new StreamWriter(@"assotiations.txt"))
+            {
+                foreach (var item in Assotiations)
+                {
+                    sr.WriteLine($"{item.firstID}*{item.secondID}");
+                }
+            }
         }
 
         public ICollection<Association> GetAll()

@@ -16,14 +16,23 @@ namespace DAL
 
         public bool Add(User note)
         {
-            Users.Add(note);
-            return true;
+            if (FindUser(note.Name, note.DateOfBirth) == null)
+            {
+                Users.Add(note);
+                return true;
+            }
+            User.count--;
+            return false;
         }
 
         public bool Add(string name, string dateofbirth)
         {
-            Users.Add(new User(User.count, name, dateofbirth));
-            return true;
+            if (FindUser(name, dateofbirth) == null)
+            {
+                Users.Add(new User(++User.count, name, dateofbirth));
+                return true;
+            }
+            return false;
         }
 
         User FindUser(string name, string dateofbirth)
@@ -35,7 +44,7 @@ namespace DAL
             }
             else
             {
-                throw new FormatException("Error");
+                return null;
             }
         }
         User FindUser(int id)
@@ -47,7 +56,7 @@ namespace DAL
             }
             else
             {
-                throw new FormatException("Error");
+                return null;
             }
         }
 
@@ -80,29 +89,21 @@ namespace DAL
         }
         public bool Remove(int id)
         {
-            try
+            if (FindUser(id) != null)
             {
-                User temp = FindUser(id);
-                Users.Remove(temp);
+                Users.Remove(FindUser(id));
                 return true;
             }
-            catch
-            {
-                return false;
-            }
+            return false;
         }
         public bool Remove(string name, string dateofbirth)
         {
-            try
+            if (FindUser(name, dateofbirth) != null)
             {
-                User temp = FindUser(name, dateofbirth);
-                Users.Remove(temp);
+                Users.Remove(FindUser(name, dateofbirth));
                 return true;
             }
-            catch
-            {
-                return false;
-            }
+            return false;
         }
 
         public void Load()

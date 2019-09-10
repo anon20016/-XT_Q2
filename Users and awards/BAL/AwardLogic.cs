@@ -4,42 +4,45 @@ using System.Collections.Generic;
 
 namespace BAL
 {
-    public class AwardLogic : IAwardLogic, IAssociate
+    public class AwardLogic : IAwardAssotiateLogic
     {
         public IStorable<Award> MemoryStorage = new AwardStorage();
         public IStorable<Association> AsStorage = new AssotiationStorage();
 
-        public void AddAward(string name, string discription)
+        public bool AddAward(string name, string discription)
         {
-            if (MemoryStorage.Add(new Award(++Award.count, name, discription)))
+            if (name.Length > 0)
             {
-
+                return (MemoryStorage.Add(new Award(++Award.count, name, discription)));
             }
-            else
-            {
-
-            }
-
+            return false;
         }
-        public void RemoveAward(string name)
+        public bool RemoveAward(string name)
         {
-            if (MemoryStorage.Remove(new Award(-1, name, "")))
-            {
-
-            }
-            else
-            {
-
-            }
+            return (MemoryStorage.Remove(new Award(-1, name, "")));
         }
 
         public bool Associate(int fr, int sc)
         {
-            return AsStorage.Add(new Association(fr, sc));
+            if (MemoryStorage.Find(sc) != null)
+            {
+                return AsStorage.Add(new Association(fr, sc));
+            }
+            else
+            {
+                throw new KeyNotFoundException("No such Award");
+            }
         }
         public bool deAssociate(int fr, int sc)
         {
-            return AsStorage.Remove(new Association(fr, sc));
+            if (MemoryStorage.Find(sc) != null)
+            {
+                return AsStorage.Remove(new Association(fr, sc));
+            }
+            else
+            {
+                throw new KeyNotFoundException("No such Award");
+            }
         }
 
         public Award Find(int id)
@@ -63,7 +66,12 @@ namespace BAL
             MemoryStorage.Load();
             AsStorage.Load();
         }
+        public void SaveData()
+        {
+            MemoryStorage.Save();
+            AsStorage.Save();
+        }
 
-        
+
     }
 }

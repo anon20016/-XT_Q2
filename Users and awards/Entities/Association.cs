@@ -10,7 +10,10 @@
             firstID = fr;
             secondID = sc;
         }
-
+        public override bool Equals(object obj)
+        {
+            return (obj as Association).firstID == firstID && (obj as Association).secondID == secondID;
+        }
 
     }
 }

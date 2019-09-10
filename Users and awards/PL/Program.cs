@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using Entities;
 
 namespace PL
 {
@@ -9,14 +11,17 @@ namespace PL
 
     class Program
     {
-        public static UserLogic userManagerLogic = new UserLogic();
-        public static AwardLogic awardManagerLogic = new AwardLogic();
+        public static IUserLogic userManagerLogic = new UserLogic();
+        public static IAwardAssotiateLogic awardManagerLogic = new AwardLogic();
 
         static void Main(string[] args)
         {
             userManagerLogic.LoadData();
             awardManagerLogic.LoadData();
+
             SelectOption();
+
+
         }
 
         public static void SelectOption()
@@ -43,7 +48,7 @@ namespace PL
                     {
                         case 0:
                             var tempA = awardManagerLogic.GetAllAssotiations();
-                            var tempU = userManagerLogic.GetAllUsers();
+                            var tempU = userManagerLogic.GetAll();
                             foreach (var item in tempU)
                             {
                                 Console.Write($"{item.Name} {item.DateOfBirth}");
@@ -64,7 +69,10 @@ namespace PL
                             inpt = ReadInfo("Name: ", "Date of Birth (dd.mm.yyyy): ");
                             try
                             {
-                                userManagerLogic.AddUser(inpt[0], inpt[1]);
+                                if (!userManagerLogic.AddUser(inpt[0], inpt[1])){
+                                    Console.WriteLine("This user already exists");
+                                }                               
+                                
                             }
                             catch (Exception e)
                             {
@@ -75,7 +83,10 @@ namespace PL
                             inpt = ReadInfo("Name: ", "Date of Birth (dd.mm.yyyy): ");
                             try
                             {
-                                userManagerLogic.RemoveUser(inpt[0], inpt[1]);
+                                if (!userManagerLogic.RemoveUser(inpt[0], inpt[1])){
+                                    Console.WriteLine("No such user");
+                                }
+                                
                             }
                             catch (Exception e)
                             {
@@ -83,7 +94,7 @@ namespace PL
                             }
                             break;
                         case 3:
-                            WriteAllUsers(userManagerLogic.GetAllUsers());
+                            WriteAllUsers(userManagerLogic.GetAll());
                             break;
                         case 4:
                             WriteAllUsers(awardManagerLogic.GetAll());
@@ -112,10 +123,13 @@ namespace PL
                             }
                             break;
                         case 7:
-                            inpt = ReadInfo("User Id: ", "Award Id");
+                            inpt = ReadInfo("User Id: ", "Award Id: ");
                             try
                             {
-                                awardManagerLogic.Associate(Convert.ToInt32(inpt[0]), Convert.ToInt32(inpt[1]));
+                                if (!awardManagerLogic.Associate(Convert.ToInt32(inpt[0]), Convert.ToInt32(inpt[1])))
+                                {
+                                    Console.WriteLine("Already graded");
+                                }
                             }
                             catch (Exception e)
                             {
@@ -123,10 +137,13 @@ namespace PL
                             }
                             break;
                         case 8:
-                            inpt = ReadInfo("User Id: ", "Award Id");
+                            inpt = ReadInfo("User Id: ", "Award Id: ");
                             try
                             {
-                                awardManagerLogic.Associate(Convert.ToInt32(inpt[0]), Convert.ToInt32(inpt[1]));
+                                if (!awardManagerLogic.deAssociate(Convert.ToInt32(inpt[0]), Convert.ToInt32(inpt[1])))
+                                {
+                                    Console.WriteLine("User dont have this award");
+                                }                                
                             }
                             catch (Exception e)
                             {
@@ -135,6 +152,7 @@ namespace PL
                             break;
                         case 9:
                             userManagerLogic.SaveData();
+                            awardManagerLogic.SaveData();
                             Environment.Exit(0);
                             break;
                     }
@@ -167,9 +185,5 @@ namespace PL
             }
         }
 
-        public static void WriteMessage(string s)
-        {
-            Console.WriteLine(s);
-        }
-    }
+    } 
 }
