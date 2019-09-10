@@ -19,8 +19,11 @@ namespace PL
             userManagerLogic.LoadData();
             awardManagerLogic.LoadData();
 
+            // Saving data every 10sec
             Thread saving = new Thread(() => { while (true) { SaveData(); Thread.Sleep(10000); } });
             saving.Start();
+
+            // Working
             Thread main = new Thread(() => SelectOption());
             main.Start();            
         }
@@ -166,6 +169,7 @@ namespace PL
             }
         }
 
+        // Taking inputs
         private static string[] ReadInfo(params string[] args)
         {
             string[] res = new string[args.Length];
@@ -177,6 +181,7 @@ namespace PL
             return res;
         }
 
+        // Write Collection
         public static void WriteAllUsers<T>(ICollection<T> ts)
         {
             foreach (var item in ts)
@@ -185,6 +190,7 @@ namespace PL
             }
         }
 
+        // Saving data
         public static void SaveData()
         {
             userManagerLogic.SaveData();
