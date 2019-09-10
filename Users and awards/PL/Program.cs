@@ -19,9 +19,10 @@ namespace PL
             userManagerLogic.LoadData();
             awardManagerLogic.LoadData();
 
-            SelectOption();
-
-
+            Thread saving = new Thread(() => { while (true) { SaveData(); Thread.Sleep(10000); } });
+            saving.Start();
+            Thread main = new Thread(() => SelectOption());
+            main.Start();            
         }
 
         public static void SelectOption()
@@ -151,8 +152,7 @@ namespace PL
                             }
                             break;
                         case 9:
-                            userManagerLogic.SaveData();
-                            awardManagerLogic.SaveData();
+                            SaveData();
                             Environment.Exit(0);
                             break;
                     }
@@ -184,6 +184,13 @@ namespace PL
                 Console.WriteLine(item.ToString());
             }
         }
+
+        public static void SaveData()
+        {
+            userManagerLogic.SaveData();
+            awardManagerLogic.SaveData();
+        }
+        
 
     } 
 }
