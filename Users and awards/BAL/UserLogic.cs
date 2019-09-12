@@ -8,7 +8,7 @@ namespace BAL
 {
     public class UserLogic : IUserLogic
     {
-        public IStorable<User> MemoryStorage = new UserStorage();
+        public IStorable<User> MemoryStorage = new UserStorage(@"Users.txt");
 
         public bool AddUser(string name, string dayofbirth)
         {

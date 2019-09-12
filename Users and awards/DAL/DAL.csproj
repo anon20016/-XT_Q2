@@ -47,6 +47,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\assotiations.txt" />
+    <Content Include="Data\awards.txt" />
+    <Content Include="Data\data.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Entities\Entities.csproj">
       <Project>{e43ed452-a0e5-4289-aa8c-2cd276780ea3}</Project>
       <Name>Entities</Name>

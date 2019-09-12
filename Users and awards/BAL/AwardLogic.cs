@@ -6,8 +6,8 @@ namespace BAL
 {
     public class AwardLogic : IAwardAssotiateLogic
     {
-        public IStorable<Award> MemoryStorage = new AwardStorage();
-        public IStorable<Association> AsStorage = new AssotiationStorage();
+        public IStorable<Award> MemoryStorage = new AwardStorage(@"Awards.txt");
+        public IStorable<Association> AsStorage = new AssotiationStorage(@"assotiations.txt");
 
         public bool AddAward(string name, string discription)
         {
@@ -62,7 +62,6 @@ namespace BAL
 
         public void LoadData()
         {
-
             MemoryStorage.Load();
             AsStorage.Load();
         }
@@ -71,7 +70,5 @@ namespace BAL
             MemoryStorage.Save();
             AsStorage.Save();
         }
-
-
     }
 }

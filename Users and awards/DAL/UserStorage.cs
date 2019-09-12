@@ -9,8 +9,11 @@ namespace DAL
     public class UserStorage : IStorable<User>
     {
         private List<User> Users { get; set; }
-        public UserStorage()
+        private string path { get; set; }
+
+        public UserStorage(string p)
         {
+            path = p;
             Users = new List<User>();
         }
 

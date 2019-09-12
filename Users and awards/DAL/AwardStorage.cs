@@ -9,9 +9,11 @@ namespace DAL
     public class AwardStorage : IStorable<Award>
     {
         private List<Award> Awards { get; set; }
+        private string path { get; set; }
 
-        public AwardStorage()
+        public AwardStorage(string p)
         {
+            path = p;
             Awards = new List<Award>();
         }
 
@@ -71,10 +73,11 @@ namespace DAL
 
         public void Load()
         {
-            if (File.Exists(@"awards.txt"))
+            
+            if (File.Exists(path))
             {
                 int mxID = 0;
-                using (StreamReader sr = new StreamReader(@"awards.txt", System.Text.Encoding.Default))
+                using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
                 {
                     string line;
                     while ((line = sr.ReadLine()) != null)
@@ -127,7 +130,7 @@ namespace DAL
 
         public void Save()
         {
-            using (StreamWriter sr = new StreamWriter(@"awards.txt"))
+            using (StreamWriter sr = new StreamWriter(path))
             {
                 foreach (var item in Awards)
                 {

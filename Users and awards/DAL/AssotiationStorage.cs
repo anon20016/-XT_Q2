@@ -9,6 +9,12 @@ namespace DAL
     public class AssotiationStorage : IStorable<Association>
     {
         List<Association> Assotiations = new List<Association>();
+        private string path { get; set; }
+
+        public AssotiationStorage(string p)
+        {
+            path = p;
+        }
 
         public bool Add(Association note)
         {

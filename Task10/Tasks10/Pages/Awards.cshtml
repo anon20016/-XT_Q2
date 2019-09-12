@@ -1,0 +1,35 @@
+﻿@using Entities;
+@using BAL;
+
+@{
+    Layout = "~/Pages/Layouts/_MainLayout.cshtml";
+}
+
+@{
+    IAwardAssotiateLogic awardManagerLogic = new AwardLogic();
+    awardManagerLogic.LoadData();
+    var temp = awardManagerLogic.GetAll();
+
+
+
+}
+
+    <table>
+        <col width="100" />
+        <col width="250" />
+        <col width="450" />
+        @foreach (var item in temp)
+        {
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Discription
+                </td>
+            </tr>
+        }
+    </table>
