@@ -18,23 +18,23 @@ namespace DAL
 
         public bool Add(Association note)
         {
-            if (!Find(note))
+            if (!Exists(note))
             {
                 Assotiations.Add(note);
                 return true;
             }
             return false;
         }
-        public bool Find(Association note)
+        public bool Exists(Association note)
         {
             return Assotiations.Contains(note);
         }
 
         public void Load()
         {
-            if (File.Exists(@"assotiations.txt"))
+            if (File.Exists(path))
             {
-                using (StreamReader sr = new StreamReader(@"assotiations.txt", System.Text.Encoding.Default))
+                using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
                 {
                     string line;
                     while ((line = sr.ReadLine()) != null)
@@ -52,6 +52,32 @@ namespace DAL
 
         public bool Remove(Association note)
         {
+            if (note.firstID == -1)
+            {
+                List<Association> tmp = new List<Association>();
+                foreach(var item in Assotiations)
+                {
+                    if (item.secondID != note.secondID)
+                    {
+                        tmp.Add(item);
+                    }
+                }
+                Assotiations = tmp;
+                return true;
+            }
+            if (note.secondID == -1)
+            {
+                List<Association> tmp = new List<Association>();
+                foreach (var item in Assotiations)
+                {
+                    if (item.firstID != note.firstID)
+                    {
+                        tmp.Add(item);
+                    }
+                }
+                Assotiations = tmp;
+                return true;
+            }
             if (Assotiations.Contains(note))
             {
                 Assotiations.Remove(note);
@@ -65,7 +91,11 @@ namespace DAL
 
         public void Save()
         {
-            using (StreamWriter sr = new StreamWriter(@"assotiations.txt"))
+            if (!File.Exists(path))
+            {
+                File.Create(path);
+            }
+            using (StreamWriter sr = new StreamWriter(path))
             {
                 foreach (var item in Assotiations)
                 {
@@ -78,13 +108,17 @@ namespace DAL
         {
             return Assotiations;
         }
-
-        public bool Remove(int id)
+                
+        public bool Remove(int x)
         {
             throw new NotImplementedException();
         }
 
         public Association Find(int id)
+        {
+            throw new NotImplementedException();
+        }
+        public int Find(Association note)
         {
             throw new NotImplementedException();
         }

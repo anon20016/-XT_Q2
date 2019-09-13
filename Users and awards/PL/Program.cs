@@ -48,116 +48,113 @@ namespace PL
                 if (int.TryParse(input, out option) && option >= 0 && option < 10)
                 {
                     string[] inpt;
-                    switch (option)
+                    try
                     {
-                        case 0:
-                            var tempA = awardManagerLogic.GetAllAssotiations();
-                            var tempU = userManagerLogic.GetAll();
-                            foreach (var item in tempU)
-                            {
-                                Console.Write($"{item.Name} {item.DateOfBirth}");
-                                var r = from i in tempA where (i.firstID == item.Id) select i.secondID;
-                                if (r.Count() > 0)
+                        switch (option)
+                        {
+                            case 0:
+                                var tempA = awardManagerLogic.GetAllAssotiations();
+                                var tempU = userManagerLogic.GetAll();
+                                foreach (var item in tempU)
                                 {
-                                    Console.Write(" Awards: ");
-                                    foreach (var item1 in r)
+                                    Console.Write($"{item.Name} {item.DateOfBirth}");
+                                    var r = from i in tempA where (i.firstID == item.Id) select i.secondID;
+                                    if (r.Count() > 0)
                                     {
-                                        Console.Write(awardManagerLogic.Find(item1).Name + " ");
+                                        Console.Write(" Awards: ");
+                                        foreach (var item1 in r)
+                                        {
+                                            Console.Write(awardManagerLogic.Find(item1).Name + " ");
+                                        }
+                                    }
+                                    Console.WriteLine();
+                                }
+
+                                break;
+                            case 1:
+                                inpt = ReadInfo("Name: ", "Date of Birth (dd.mm.yyyy): ");
+                                if (!userManagerLogic.AddUser(inpt[0], inpt[1]))
+                                {
+                                    Console.WriteLine("This user already exists");
+                                }
+                                break;
+                            case 2:
+                                inpt = ReadInfo("Name: ", "Date of Birth (dd.mm.yyyy): ");
+                                try
+                                {
+                                    awardManagerLogic.RemoveFirstId(userManagerLogic.Find(inpt[0], inpt[1]));
+                                    if (!userManagerLogic.RemoveUser(inpt[0], inpt[1]))
+                                    {
+                                        Console.WriteLine("No such user");
+                                    }                                    
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e.Message);
+                                }
+                                break;
+                            case 3:
+                                WriteAllUsers(userManagerLogic.GetAll());
+                                break;
+                            case 4:
+                                WriteAllUsers(awardManagerLogic.GetAll());
+                                break;
+                            case 5:
+                                inpt = ReadInfo("Name: ", "Discription: ");
+                                try
+                                {
+                                    awardManagerLogic.AddAward(inpt[0], inpt[1]);
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e.Message);
+                                }
+                                break;
+                            case 6:
+                                inpt = ReadInfo("Name: ");
+                                awardManagerLogic.RemoveSecondId(awardManagerLogic.Find(inpt[0]));
+                                if (!awardManagerLogic.RemoveAward(inpt[0]))
+                                {
+                                    Console.WriteLine("No such award");
+                                }                                
+                                break;
+                            case 7:
+                                inpt = ReadInfo("User Id: ", "Award Id: ");
+                                try
+                                {
+                                    if (!awardManagerLogic.Associate(Convert.ToInt32(inpt[0]), Convert.ToInt32(inpt[1])))
+                                    {
+                                        Console.WriteLine("Already graded");
                                     }
                                 }
-                                Console.WriteLine();
-                            }
-
-                            break;
-                        case 1:
-                            inpt = ReadInfo("Name: ", "Date of Birth (dd.mm.yyyy): ");
-                            try
-                            {
-                                if (!userManagerLogic.AddUser(inpt[0], inpt[1])){
-                                    Console.WriteLine("This user already exists");
-                                }                               
-                                
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.Message);
-                            }
-                            break;
-                        case 2:
-                            inpt = ReadInfo("Name: ", "Date of Birth (dd.mm.yyyy): ");
-                            try
-                            {
-                                if (!userManagerLogic.RemoveUser(inpt[0], inpt[1])){
-                                    Console.WriteLine("No such user");
-                                }
-                                
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.Message);
-                            }
-                            break;
-                        case 3:
-                            WriteAllUsers(userManagerLogic.GetAll());
-                            break;
-                        case 4:
-                            WriteAllUsers(awardManagerLogic.GetAll());
-                            break;
-                        case 5:
-                            inpt = ReadInfo("Name: ", "Discription: ");
-                            try
-                            {
-                                awardManagerLogic.AddAward(inpt[0], inpt[1]);
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.Message);
-                            }
-                            break;
-
-                        case 6:
-                            inpt = ReadInfo("Name: ");
-                            try
-                            {
-                                awardManagerLogic.RemoveAward(inpt[0]);
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.Message);
-                            }
-                            break;
-                        case 7:
-                            inpt = ReadInfo("User Id: ", "Award Id: ");
-                            try
-                            {
-                                if (!awardManagerLogic.Associate(Convert.ToInt32(inpt[0]), Convert.ToInt32(inpt[1])))
+                                catch (Exception e)
                                 {
-                                    Console.WriteLine("Already graded");
+                                    Console.WriteLine(e.Message);
                                 }
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.Message);
-                            }
-                            break;
-                        case 8:
-                            inpt = ReadInfo("User Id: ", "Award Id: ");
-                            try
-                            {
-                                if (!awardManagerLogic.deAssociate(Convert.ToInt32(inpt[0]), Convert.ToInt32(inpt[1])))
+                                break;
+                            case 8:
+                                inpt = ReadInfo("User Id: ", "Award Id: ");
+                                try
                                 {
-                                    Console.WriteLine("User dont have this award");
-                                }                                
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.Message);
-                            }
-                            break;
-                        case 9:
-                            SaveData();
-                            Environment.Exit(0);
-                            break;
+                                    if (!awardManagerLogic.deAssociate(Convert.ToInt32(inpt[0]), Convert.ToInt32(inpt[1])))
+                                    {
+                                        Console.WriteLine("User dont have this award");
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e.Message);
+                                }
+                                break;
+                            case 9:
+                                SaveData();
+                                Environment.Exit(0);
+                                break;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
                     }
                 }
                 else

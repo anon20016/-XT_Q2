@@ -6,8 +6,8 @@ namespace BAL
 {
     public class AwardLogic : IAwardAssotiateLogic
     {
-        public IStorable<Award> MemoryStorage = new AwardStorage(@"Awards.txt");
-        public IStorable<Association> AsStorage = new AssotiationStorage(@"assotiations.txt");
+        public IStorable<Award> MemoryStorage = new AwardStorage(@"C:\Temp\Awards.txt");
+        public IStorable<Association> AsStorage = new AssotiationStorage(@"C:\Temp\assotiations.txt");
 
         public bool AddAward(string name, string discription)
         {
@@ -49,6 +49,10 @@ namespace BAL
         {
             return MemoryStorage.Find(id);
         }
+        public int Find(string name)
+        {
+            return MemoryStorage.Find(new Award(-1, name, ""));
+        }
 
         public ICollection<Award> GetAll()
         {
@@ -58,6 +62,15 @@ namespace BAL
         public ICollection<Association> GetAllAssotiations()
         {
             return AsStorage.GetAll();
+        }
+
+        public void RemoveFirstId(int x)
+        {
+            AsStorage.Remove(new Association(x, -1));
+        }
+        public void RemoveSecondId(int x)
+        {
+            AsStorage.Remove(new Association(-1, x));
         }
 
         public void LoadData()
@@ -70,5 +83,7 @@ namespace BAL
             MemoryStorage.Save();
             AsStorage.Save();
         }
+
+        
     }
 }

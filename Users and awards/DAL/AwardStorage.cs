@@ -37,13 +37,17 @@ namespace DAL
             return false;
         }
   
-        public bool Find(Award note)
+        public bool Exists(Award note)
         {
             return Awards.Contains(note);
         }
         public Award Find(int id)
         {
             return FindAward(id);
+        }
+        public int Find(Award note)
+        {
+            return FindAward(note.Name).Id;
         }
 
         Award FindAward(string name)
@@ -130,6 +134,10 @@ namespace DAL
 
         public void Save()
         {
+            if (!File.Exists(path))
+            {
+                File.Create(path);
+            }
             using (StreamWriter sr = new StreamWriter(path))
             {
                 foreach (var item in Awards)
@@ -144,6 +152,6 @@ namespace DAL
             return Awards;
         }
 
-
+        
     }
 }

@@ -8,7 +8,7 @@ namespace BAL
 {
     public class UserLogic : IUserLogic
     {
-        public IStorable<User> MemoryStorage = new UserStorage(@"Users.txt");
+        public IStorable<User> MemoryStorage = new UserStorage(@"C:\Temp\Users.txt");
 
         public bool AddUser(string name, string dayofbirth)
         {
@@ -28,7 +28,7 @@ namespace BAL
             Regex regex = new Regex(@"(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d");
             if (regex.IsMatch(dayofbirth))
             {
-                return !MemoryStorage.Remove(new User(-1, name, dayofbirth));                
+                return MemoryStorage.Remove(new User(-1, name, dayofbirth));                
             }
             else
             {
@@ -40,6 +40,11 @@ namespace BAL
         {
             return MemoryStorage.Find(id);
         }
+        public int Find(string name, string dayofbirth)
+        {
+            return MemoryStorage.Find(new User(-1, name, dayofbirth));
+        }
+
         public void SaveData()
         {
             MemoryStorage.Save();
@@ -53,5 +58,7 @@ namespace BAL
         {
             return MemoryStorage.GetAll();
         }
+
+        
     }
 }

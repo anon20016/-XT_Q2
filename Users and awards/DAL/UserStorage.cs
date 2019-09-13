@@ -63,7 +63,12 @@ namespace DAL
             }
         }
 
-        public bool Find(User note)
+        public int Find(User note)
+        {
+            return FindUser(note.Name, note.DateOfBirth).Id;
+        }
+
+        public bool Exists(User note)
         {
             foreach (var item in Users)
             {
@@ -74,9 +79,14 @@ namespace DAL
             }
             return false;
         }
+
         public User Find(int id)
         {
             return FindUser(id);
+        }
+        public User Find(string name, string dateofbirth)
+        {
+            return FindUser(name, dateofbirth);
         }
 
         public bool Remove(User note)
@@ -111,10 +121,10 @@ namespace DAL
 
         public void Load()
         {
-            if (File.Exists(@"data.txt"))
+            if (File.Exists(path))
             {
                 int mxID = 0;
-                using (StreamReader sr = new StreamReader(@"data.txt", System.Text.Encoding.Default))
+                using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
                 {
                     string line;
                     while ((line = sr.ReadLine()) != null)
@@ -130,14 +140,17 @@ namespace DAL
                             }
                         }
                     }
-
-                    User.count = mxID + 1;
+                    User.count = mxID;
                 }
             }
         }
         public void Save()
         {
-            using (StreamWriter sr = new StreamWriter(@"data.txt"))
+            if (!File.Exists(path))
+            {
+                File.Create(path);
+            }
+            using (StreamWriter sr = new StreamWriter(path))
             {
                 foreach (var item in Users)
                 {
@@ -150,6 +163,8 @@ namespace DAL
         {
             return Users;
         }
+
+        
     }
 
 }
