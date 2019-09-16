@@ -11,7 +11,7 @@ namespace Entities
         /// Removes note by id
         /// </summary>
         bool Remove(int id);
-
+                     
         /// <summary>
         /// Checks if such note exists
         /// </summary>       

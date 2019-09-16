@@ -1,0 +1,100 @@
+﻿@using Entities;
+@using BAL;
+
+@{
+    Layout = "~/Pages/Layouts/_MainLayout.cshtml";
+}
+
+@{
+    IAwardAssotiateLogic awardManagerLogic = new AwardLogic();
+    awardManagerLogic.LoadData();
+    var temp = awardManagerLogic.GetAll();
+
+
+    string addMessage = "", removeMessage = "";
+}
+<div>
+    <table class="list">
+        <colgroup>
+            <col width="100" />
+            <col width="250" />
+            <col width="450" />
+        </colgroup>
+        @foreach (var item in temp)
+{
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Discription
+                </td>
+            </tr>
+}
+    </table>
+
+</div>
+
+
+
+@{
+    string r = null;
+    string name = null, dob = null;
+    if (IsPost)
+    {
+        try
+        {
+            if (Request.Form.AllKeys.Contains("removename"))
+            {
+                awardManagerLogic.RemoveSecondId(awardManagerLogic.Find(Request["removename"]));
+                if (!awardManagerLogic.RemoveAward(Request["removename"]))
+                {
+                    throw new FormatException("No such user");
+                }
+            }
+            else
+            {
+                if (!awardManagerLogic.AddAward(Request["addname"], Request["adddiscr"]))
+                {
+                    throw new FormatException("This user already exists");
+                }
+            }
+            awardManagerLogic.SaveData();
+
+            Response.Redirect("~/Pages/awards.cshtml");
+        }
+        catch (Exception e)
+        {
+            removeMessage = e.Message;
+        }
+    }
+}
+
+<div class="forminpt">
+    <form method="post">
+        <fieldset class="adduser">
+            <legend>Add Award</legend>
+            <label>Name<input type="text" required name="addname"></label>
+            <label>Discription<input type="text" required name="adddiscr"></label>
+            <input type="submit" value="submit" id="addbutton" />
+
+            <label class="errorMessage">@addMessage</label>
+
+        </fieldset>
+    </form>
+
+    <form method="post">
+        <fieldset class="removeuser">
+            <legend id="a">Remove Award</legend>
+            <label>Name<input type="text" required name="removename"></label>
+            <input type="submit" value="submit" id="removebutton" />
+
+            <label class="errorMessage">@removeMessage</label>
+        </fieldset>
+
+    </form>
+</div>
+
