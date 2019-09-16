@@ -14,22 +14,27 @@
 
 }
 
-    <table>
+<table class="list">
+    <colgroup>
         <col width="100" />
         <col width="250" />
         <col width="450" />
-        @foreach (var item in temp)
-        {
-            <tr>
-                <td>
-                    @item.Id
-                </td>
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                    @item.Discription
-                </td>
-            </tr>
-        }
-    </table>
+    </colgroup>
+    @foreach (var item in temp)
+    {
+        <tr>
+            <td>
+                @item.Id
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.Discription
+            </td>
+        </tr>
+    }
+</table>
+
+
+

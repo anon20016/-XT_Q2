@@ -7,14 +7,21 @@
 
 @{
     IUserLogic userManagerLogic = new UserLogic();
+    IAwardAssotiateLogic awardManagerLogic = new AwardLogic();
+    awardManagerLogic.LoadData();
     userManagerLogic.LoadData();
     var temp = userManagerLogic.GetAll();
-}
 
+    string addMessage = "", removeMessage = "";
+
+}
+<div>
     <table>
-        <col width="100" />
-        <col width="450" />
-        <col width="250" />
+        <colgroup>
+            <col width="100" />
+            <col width="450" />
+            <col width="250" />
+        </colgroup>
         @foreach (var item in temp)
         {
             <tr>
@@ -30,4 +37,62 @@
             </tr>
         }
     </table>
+</div>
 
+@{ 
+    string r = null;
+    string name = null, dob = null;
+    if (IsPost)
+    {
+        if (Request.Form.AllKeys.Contains("removename"))
+        {
+            try
+            {
+                awardManagerLogic.RemoveFirstId(userManagerLogic.Find(Request["addname"], Request["adddob"]));
+                if (!userManagerLogic.RemoveUser(Request["addname"], Request["adddob"]))
+                {
+                    removeMessage = "No such user";
+                }
+            }
+            catch (Exception e)
+            {
+                removeMessage = e.Message;
+            }
+        }
+        else
+        {
+            if (!userManagerLogic.AddUser(Request["addname"], Request["adddob"]))
+            {
+                addMessage = "This user already exists";
+            }
+        }
+
+        r = name + dob;
+    }
+}
+
+<div>
+    <form method="post">
+        <fieldset class="adduser">
+            <legend>Add User</legend>
+            <label>Name<input type="text" required name="addname"></label>
+            <label>Date of birth<input type="text" required placeholder="dd.mm.yyyy" name="adddob" pattern="^([0-2][0-9]|(3)[0-1])(\.)(((0)[0-9])|((1)[0-2]))(\.)\d{4}$"></label>
+            <input type="submit" value="submit" id="add    button" />
+
+            <label class="errorMessage">@addMessage</label>
+
+        </fieldset>
+    </form>
+
+    <form method="post">
+        <fieldset class="removeuser">
+            <legend id="a">Remove User</legend>
+            <label>Name<input type="text" required name="removename"></label>
+            <label>Date of birth<input type="text" required placeholder="dd.mm.yyyy" name="removedob" pattern="^([0-2][0-9]|(3)[0-1])(\.)(((0)[0-9])|((1)[0-2]))(\.)\d{4}$"></label>
+            <input type="submit" value="submit" id="removebutton" />       
+            
+            <label class="errorMessage">@removeMessage</label>
+        </fieldset>
+       
+    </form>
+</div>
