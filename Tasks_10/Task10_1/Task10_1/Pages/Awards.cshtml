@@ -5,8 +5,9 @@
     Layout = "~/Pages/Layouts/_MainLayout.cshtml";
 }
 
+
 @{
-    IAwardAssotiateLogic awardManagerLogic = new AwardLogic();
+    IAwardAssotiateLogic awardManagerLogic = new AwardLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/awards.txt"), System.Web.Hosting.HostingEnvironment.MapPath("~/Data/assotiations.txt"));
     awardManagerLogic.LoadData();
     var temp = awardManagerLogic.GetAll();
 
@@ -50,7 +51,7 @@
         {
             try
             {
-                awardManagerLogic.RemoveFirstId(awardManagerLogic.Find(Request["removename"]));
+                awardManagerLogic.RemoveSecondId(awardManagerLogic.Find(Request["removename"]));
                 if (!awardManagerLogic.RemoveAward(Request["removename"]))
                 {
                     throw new FormatException("No such award");
@@ -92,7 +93,7 @@
             <label>Discription<input type="text" required name="adddiscr"></label>
             <input type="submit" value="submit" id="addbutton" />
 
-            <label class="errorMessage">@addMessage</label>
+            <label class="addMessage">@addMessage</label>
 
         </fieldset>
     </form>
@@ -101,11 +102,20 @@
         <fieldset class="removeuser">
             <legend id="a">Remove Award</legend>
             <label>Name<input type="text" required name="removename"></label>
-            <input type="submit" value="submit" id="removebutton" />
+            <input type="submit" value="submit" id="removebutton" onclick="return confirmDelete()" />
 
-            <label class="errorMessage">@removeMessage</label>
+            <label class="removeMessage">@removeMessage</label>
         </fieldset>
 
     </form>
 </div>
 
+<script>
+    function confirmDelete() {
+	if (confirm("If you delete an award, it will be deleted by all users!")) {
+		    return true;
+	    } else {
+		    return false;
+	    }
+    }
+</script>

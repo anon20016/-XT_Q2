@@ -6,14 +6,18 @@
 }
 
 @{
-    IAwardAssotiateLogic awardManagerLogic = new AwardLogic();
-    IUserLogic userManagerLogic = new UserLogic();
+    IAwardAssotiateLogic awardManagerLogic = new AwardLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/awards.txt"), System.Web.Hosting.HostingEnvironment.MapPath("~/Data/assotiations.txt"));
+    IUserLogic userManagerLogic = new UserLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/users.txt"));
 
     awardManagerLogic.LoadData();
     userManagerLogic.LoadData();
 
     var tempA = awardManagerLogic.GetAllAssotiations();
+    var tempAw = awardManagerLogic.GetAll();
     var tempU = userManagerLogic.GetAll();
+
+    string addMessage = "", removeMessage = "";
+
 }
 
 <div>
@@ -51,4 +55,132 @@
     </table>
 </div>
 
+@{
+    string name = null, dob = null;
+    if (IsPost)
+    {
+        if (Request.Form.AllKeys.Contains("select-add-User"))
+        {
+            try
+            {
+                int frId = 0, scId = 0, c = 0;
+                string t1 = "",t2 = "";
+                while (Request["select-add-User"][c] >= '0' && Request["select-add-User"][c] <= '9')
+                {
+                    t1 += Request["select-add-User"][c];
+                    c++;
+                }
+                c = 0;
+                while (Request["select-add-Award"][c] >= '0' && Request["select-add-Award"][c] <= '9')
+                {
+                    t2 += Request["select-add-Award"][c];
+                    c++;
+                }
+
+                if (!awardManagerLogic.Associate(Convert.ToInt32(t1), Convert.ToInt32(t2)))
+                {
+                    throw new FormatException("Already graded");
+                }
+
+                awardManagerLogic.SaveData();
+                userManagerLogic.SaveData();
+
+                Response.Redirect("~/Pages/main.cshtml");
+            }
+            catch (Exception e)
+            {
+                addMessage = e.Message;
+            }
+        }
+        else
+        {
+            try
+            {
+                int frId = 0, scId = 0, c = 0;
+                string t1 = "",t2 = "";
+                while (Request["select-remove-User"][c] >= '0' && Request["select-remove-User"][c] <= '9')
+                {
+                    t1 += Request["select-remove-User"][c];
+                    c++;
+                }
+                c = 0;
+                while (Request["select-remove-Award"][c] >= '0' && Request["select-remove-Award"][c] <= '9')
+                {
+                    t2 += Request["select-remove-Award"][c];
+                    c++;
+                }
+                if (!awardManagerLogic.deAssociate(Convert.ToInt32(t1), Convert.ToInt32(t2)))
+                {
+                    throw new FormatException("User dont have this award");
+                }
+
+                awardManagerLogic.SaveData();
+                userManagerLogic.SaveData();
+
+                Response.Redirect("~/Pages/main.cshtml");
+            }
+            catch (Exception e)
+            {
+                removeMessage = e.Message;
+            }
+        }
+    }
+}
+
+
+<div class="forminpt">
+    <form method="post">
+        <fieldset class="adduser">
+            <legend>Give Award</legend>
+            <label>User Id</label>
+            <select name="select-add-User">
+                @foreach (var item in tempU)
+                {
+                    string temp = $"{item.Id} {item.Name}";
+                    <option>@temp</option>
+                }
+            </select>
+            <label>Award Id</label>
+            <select name="select-add-Award">
+                @foreach (var item in tempAw)
+                {
+                    string temp = $"{item.Id} {item.Name}";
+                    <option>@temp</option>
+                }
+            </select>
+
+            <input type="submit" value="submit" id="addbutton" />
+            <label class="errorMessage">@addMessage</label>
+
+        </fieldset>
+    </form>
+
+    <form method="post">
+        <fieldset class="removeuser">
+            <legend>Take Award</legend>
+            <label>User Id</label>
+            <select name="select-remove-User">
+                @foreach (var item in tempU)
+                {
+                    string temp = $"{item.Id} {item.Name}";
+                    <option>@temp</option>
+                }
+            </select>
+            <label>Award Id</label>
+            <select name="select-remove-Award">
+                @foreach (var item in tempAw)
+                {
+                    string temp = $"{item.Id} {item.Name}";
+                    <option>@temp</option>
+                }
+            </select>
+
+            <input type="submit" value="submit" id="addbutton" />
+            <label class="errorMessage">@removeMessage</label>
+
+        </fieldset>
+    </form>
+
+    </form>
+</div>
 

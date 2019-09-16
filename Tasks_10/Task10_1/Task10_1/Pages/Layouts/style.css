@@ -105,7 +105,6 @@ form {
 }
 
 
-
 fieldset {
     padding: 1em;
     border: 2px dotted;
@@ -132,7 +131,20 @@ fieldset {
         background-color: greenyellow;
     }
 
+.forminpt input[type ="submit"] {
+    display: block;
+    margin: 10px auto 10px auto;
+    width: 200px;
+    text-align: center;
+}
+
 .forminpt label {
     display: block;
     margin: 10px auto 10px auto;
+}
+
+.forminpt select {
+    display: block;
+    margin: 10px auto 10px auto;
+    width: 200px;
 }

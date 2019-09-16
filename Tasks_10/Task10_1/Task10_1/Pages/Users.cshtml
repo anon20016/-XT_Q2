@@ -6,8 +6,9 @@
 }
 
 @{
-    IUserLogic userManagerLogic = new UserLogic();
-    IAwardAssotiateLogic awardManagerLogic = new AwardLogic();
+    IUserLogic userManagerLogic = new UserLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/users.txt"));
+    IAwardAssotiateLogic awardManagerLogic = new AwardLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/awards.txt"), System.Web.Hosting.HostingEnvironment.MapPath("~/Data/assotiations.txt"));
+
     awardManagerLogic.LoadData();
     userManagerLogic.LoadData();
     var temp = userManagerLogic.GetAll();
@@ -85,8 +86,6 @@
             }
         }
     }
-}
-
 }
 
 <div class="forminpt">

@@ -8,7 +8,14 @@ namespace BAL
 {
     public class UserLogic : IUserLogic
     {
-        public IStorable<User> MemoryStorage = new UserStorage(@"C:\Temp\Users.txt");
+        private string path = @"C:\Temp\Users.txt";
+        public IStorable<User> MemoryStorage;
+
+        public UserLogic(string p)
+        {
+            path = p;
+            MemoryStorage = new UserStorage(path);
+        }
 
         public bool AddUser(string name, string dayofbirth)
         {
