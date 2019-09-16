@@ -46,31 +46,43 @@
     string name = null, dob = null;
     if (IsPost)
     {
-        try
+
+        if (Request.Form.AllKeys.Contains("removename"))
         {
-            if (Request.Form.AllKeys.Contains("removename"))
+            try
             {
                 awardManagerLogic.RemoveFirstId(userManagerLogic.Find(Request["removename"], Request["removedob"]));
                 if (!userManagerLogic.RemoveUser(Request["removename"], Request["removedob"]))
                 {
                     throw new FormatException("No such user");
                 }
+                awardManagerLogic.SaveData();
+                userManagerLogic.SaveData();
+
+                Response.Redirect("~/Pages/users.cshtml");
             }
-            else
+            catch (Exception e)
+            {
+                addMessage = e.Message;
+            }
+        }
+        else
+        {
+            try
             {
                 if (!userManagerLogic.AddUser(Request["addname"], Request["adddob"]))
                 {
                     throw new FormatException("This user already exists");
                 }
-            }
-            awardManagerLogic.SaveData();
-            userManagerLogic.SaveData();
+                awardManagerLogic.SaveData();
+                userManagerLogic.SaveData();
 
-            Response.Redirect("~/Pages/users.cshtml");
-        }
-        catch (Exception e)
-        {
-            removeMessage = e.Message;
+                Response.Redirect("~/Pages/users.cshtml");
+            }
+            catch (Exception e)
+            {
+                removeMessage = e.Message;
+            }
         }
     }
 }
@@ -89,7 +101,7 @@
 
         </fieldset>
     </form>
-
+    
     <form method="post">
         <fieldset class="removeuser">
             <legend id="a">Remove User</legend>

@@ -45,30 +45,41 @@
     string name = null, dob = null;
     if (IsPost)
     {
-        try
+
+        if (Request.Form.AllKeys.Contains("removename"))
         {
-            if (Request.Form.AllKeys.Contains("removename"))
+            try
             {
-                awardManagerLogic.RemoveSecondId(awardManagerLogic.Find(Request["removename"]));
+                awardManagerLogic.RemoveFirstId(awardManagerLogic.Find(Request["removename"]));
                 if (!awardManagerLogic.RemoveAward(Request["removename"]))
                 {
-                    throw new FormatException("No such user");
+                    throw new FormatException("No such award");
                 }
+                awardManagerLogic.SaveData();                
+
+                Response.Redirect("~/Pages/awards.cshtml");
             }
-            else
+            catch (Exception e)
+            {
+                addMessage = e.Message;
+            }
+        }
+        else
+        {
+            try
             {
                 if (!awardManagerLogic.AddAward(Request["addname"], Request["adddiscr"]))
                 {
-                    throw new FormatException("This user already exists");
+                    throw new FormatException("This award already exists");
                 }
-            }
-            awardManagerLogic.SaveData();
+                awardManagerLogic.SaveData();
 
-            Response.Redirect("~/Pages/awards.cshtml");
-        }
-        catch (Exception e)
-        {
-            removeMessage = e.Message;
+                Response.Redirect("~/Pages/awards.cshtml");
+            }
+            catch (Exception e)
+            {
+                removeMessage = e.Message;
+            }
         }
     }
 }
