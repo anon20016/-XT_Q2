@@ -65,7 +65,11 @@ namespace DAL
 
         public int Find(User note)
         {
-            return FindUser(note.Name, note.DateOfBirth).Id;
+            var temp = FindUser(note.Name, note.DateOfBirth);
+            if (temp != null)
+                return FindUser(note.Name, note.DateOfBirth).Id;
+            else
+                return -1;
         }
 
         public bool Exists(User note)

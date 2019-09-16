@@ -13,8 +13,9 @@
     var temp = userManagerLogic.GetAll();
 
     string addMessage = "", removeMessage = "";
-
 }
+
+
 <div>
     <table>
         <colgroup>
@@ -39,45 +40,50 @@
     </table>
 </div>
 
-@{ 
+
+@{
     string r = null;
     string name = null, dob = null;
     if (IsPost)
     {
-        if (Request.Form.AllKeys.Contains("removename"))
+        try
         {
-            try
+            if (Request.Form.AllKeys.Contains("removename"))
             {
-                awardManagerLogic.RemoveFirstId(userManagerLogic.Find(Request["addname"], Request["adddob"]));
-                if (!userManagerLogic.RemoveUser(Request["addname"], Request["adddob"]))
+                awardManagerLogic.RemoveFirstId(userManagerLogic.Find(Request["removename"], Request["removedob"]));
+                if (!userManagerLogic.RemoveUser(Request["removename"], Request["removedob"]))
                 {
-                    removeMessage = "No such user";
+                    throw new FormatException("No such user");
                 }
             }
-            catch (Exception e)
+            else
             {
-                removeMessage = e.Message;
+                if (!userManagerLogic.AddUser(Request["addname"], Request["adddob"]))
+                {
+                    throw new FormatException("This user already exists");
+                }
             }
-        }
-        else
-        {
-            if (!userManagerLogic.AddUser(Request["addname"], Request["adddob"]))
-            {
-                addMessage = "This user already exists";
-            }
-        }
+            awardManagerLogic.SaveData();
+            userManagerLogic.SaveData();
 
-        r = name + dob;
+            Response.Redirect("~/Pages/users.cshtml");
+        }
+        catch (Exception e)
+        {
+            removeMessage = e.Message;
+        }
     }
 }
 
-<div>
+}
+
+<div class="forminpt">
     <form method="post">
         <fieldset class="adduser">
             <legend>Add User</legend>
             <label>Name<input type="text" required name="addname"></label>
             <label>Date of birth<input type="text" required placeholder="dd.mm.yyyy" name="adddob" pattern="^([0-2][0-9]|(3)[0-1])(\.)(((0)[0-9])|((1)[0-2]))(\.)\d{4}$"></label>
-            <input type="submit" value="submit" id="add    button" />
+            <input type="submit" value="submit" id="addbutton" />
 
             <label class="errorMessage">@addMessage</label>
 
@@ -89,10 +95,11 @@
             <legend id="a">Remove User</legend>
             <label>Name<input type="text" required name="removename"></label>
             <label>Date of birth<input type="text" required placeholder="dd.mm.yyyy" name="removedob" pattern="^([0-2][0-9]|(3)[0-1])(\.)(((0)[0-9])|((1)[0-2]))(\.)\d{4}$"></label>
-            <input type="submit" value="submit" id="removebutton" />       
-            
+            <input type="submit" value="submit" id="removebutton" />
             <label class="errorMessage">@removeMessage</label>
         </fieldset>
-       
+
     </form>
 </div>
+
+

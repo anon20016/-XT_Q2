@@ -42,7 +42,8 @@ namespace BAL
         }
         public int Find(string name, string dayofbirth)
         {
-            return MemoryStorage.Find(new User(-1, name, dayofbirth));
+            var temp = MemoryStorage.Find(new User(-1, name, dayofbirth));
+            return temp;
         }
 
         public void SaveData()
