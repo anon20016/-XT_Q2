@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasks10", "Tasks10\Tasks10.csproj", "{BF8A49ED-9D45-4EFB-8D44-5F7785F3174C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task10_1", "Task10_1\Task10_1.csproj", "{14102266-57C6-466E-97D1-15C9C6284610}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAL", "BAL\BAL.csproj", "{2097E680-07EC-4ED2-A378-4DB01CB7A5E6}"
 EndProject
@@ -17,10 +17,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BF8A49ED-9D45-4EFB-8D44-5F7785F3174C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF8A49ED-9D45-4EFB-8D44-5F7785F3174C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF8A49ED-9D45-4EFB-8D44-5F7785F3174C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF8A49ED-9D45-4EFB-8D44-5F7785F3174C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14102266-57C6-466E-97D1-15C9C6284610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14102266-57C6-466E-97D1-15C9C6284610}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14102266-57C6-466E-97D1-15C9C6284610}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14102266-57C6-466E-97D1-15C9C6284610}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2097E680-07EC-4ED2-A378-4DB01CB7A5E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2097E680-07EC-4ED2-A378-4DB01CB7A5E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2097E680-07EC-4ED2-A378-4DB01CB7A5E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -38,6 +38,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {81902E27-1C09-4BD0-AF32-2E54DDB22856}
+		SolutionGuid = {6E1368B9-DA4E-41B4-B16C-A48DA04370A0}
 	EndGlobalSection
 EndGlobal
