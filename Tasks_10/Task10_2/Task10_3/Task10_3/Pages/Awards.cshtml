@@ -16,10 +16,6 @@
     string addMessage = "", removeMessage = "", updateMessage = "";
 }
 
-<script>
-
-</script>
-
 <div>
     <table class="list" id="list">
         <colgroup>
@@ -64,7 +60,7 @@
             }
             catch (Exception e)
             {
-                addMessage = e.Message;
+                removeMessage = e.Message;
             }
         }
 
@@ -82,7 +78,8 @@
             }
             catch (Exception e)
             {
-                removeMessage = e.Message;
+                
+                addMessage = e.Message;
             }
         }
 
