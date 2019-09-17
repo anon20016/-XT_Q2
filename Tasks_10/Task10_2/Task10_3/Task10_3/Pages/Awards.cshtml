@@ -3,6 +3,7 @@
 
 @{
     Layout = "~/Pages/Layouts/_MainLayout.cshtml";
+    Page.Name = "Awards";
 
     IAwardAssotiateLogic awardManagerLogic = new AwardLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/awards.txt"), System.Web.Hosting.HostingEnvironment.MapPath("~/Data/assotiations.txt"));
     awardManagerLogic.LoadData();
@@ -14,6 +15,10 @@
 
     string addMessage = "", removeMessage = "", updateMessage = "";
 }
+
+<script>
+
+</script>
 
 <div>
     <table class="list" id="list">

@@ -3,6 +3,8 @@
 
 @{
     Layout = "~/Pages/Layouts/_MainLayout.cshtml";
+    Page.Name = "Users";
+
 }
 
 @{
@@ -23,8 +25,9 @@
     <table>
         <colgroup>
             <col width="100" />
-            <col width="450" />
+            <col width="350" />
             <col width="250" />
+            <col width="100" />
         </colgroup>
         @foreach (var item in temp)
         {
@@ -37,6 +40,12 @@
                 </td>
                 <td>
                     @item.DateOfBirth
+                </td>
+                <td>
+                    @{
+                            string IMG = "data:image/gif;base64," + item.Base64img;
+                    }
+                    <img src=@IMG width="100" height="100" />
                 </td>
             </tr>
         }
@@ -71,9 +80,24 @@
         {
             try
             {
-                if (!userManagerLogic.AddUser(Request["add-name"], Request["add-dob"]))
+                var MyFile = Request.Files["input-img"];
+
+                if (MyFile.ContentLength > 0)
                 {
-                    throw new FormatException("This user already exists");
+                    int FileSize = MyFile.ContentLength;
+                    byte[] FileByteArray = new byte[FileSize];
+                    MyFile.InputStream.Read(FileByteArray, 0, FileSize);
+                    if (!userManagerLogic.AddUser(Request["add-name"], Request["add-dob"], Convert.ToBase64String(FileByteArray)))
+                    {
+                        throw new FormatException("This user already exists");
+                    }
+                }
+                else
+                {
+                    if (!userManagerLogic.AddUser(Request["add-name"], Request["add-dob"]))
+                    {
+                        throw new FormatException("This user already exists");
+                    }
                 }
                 awardManagerLogic.SaveData();
                 userManagerLogic.SaveData();
@@ -106,11 +130,15 @@
 }
 
 <div class="forminpt">
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <fieldset class="adduser">
             <legend>Add User</legend>
             <label>Name<input type="text" required name="add-name"></label>
             <label>Date of birth<input type="text" required placeholder="dd.mm.yyyy" name="add-dob" pattern="^([0-2][0-9]|(3)[0-1])(\.)(((0)[0-9])|((1)[0-2]))(\.)\d{4}$"></label>
+            
+            <label for="input-img">Select image</label>
+            <input type="file" name="input-img" accept="image/jpeg,image/png"/>
+            
             <input type="submit" value="submit" id="add-button" />
 
             <label class="errorMessage">@addMessage</label>

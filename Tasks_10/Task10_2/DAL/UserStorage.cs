@@ -140,10 +140,10 @@ namespace DAL
                     while ((line = sr.ReadLine()) != null)
                     {
                         string[] t = line.Split('*');
-                        if (t.Length == 3)
+                        if (t.Length == 4)
                         {
-                            int temp = System.Convert.ToInt32(t[0]);
-                            Users.Add(new User(temp, t[1], t[2]));
+                            int temp = Convert.ToInt32(t[0]);
+                            Users.Add(new User(temp, t[1], t[2],t[3]));
                             if (temp > mxID)
                             {
                                 mxID = temp;
@@ -164,7 +164,7 @@ namespace DAL
             {
                 foreach (var item in Users)
                 {
-                    sr.WriteLine($"{item.Id}*{item.Name}*{item.DateOfBirth}");
+                    sr.WriteLine($"{item.Id}*{item.Name}*{item.DateOfBirth}*{item.Base64img}");
                 }
             }
         }
