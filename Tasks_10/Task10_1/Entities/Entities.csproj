@@ -48,6 +48,7 @@
     <Compile Include="IUserLogic.cs" />
     <Compile Include="IAwardLogic.cs" />
     <Compile Include="IStorable.cs" />
+    <Compile Include="lib.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

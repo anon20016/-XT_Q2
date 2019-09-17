@@ -27,6 +27,8 @@ namespace Entities
         /// </summary>        
         int Find(T note);
 
+        bool Update(int id, T note);
+
         // Saving and Loading Information
         void Save();
         void Load();

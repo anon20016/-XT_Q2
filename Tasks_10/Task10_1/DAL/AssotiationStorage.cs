@@ -122,5 +122,10 @@ namespace DAL
         {
             throw new NotImplementedException();
         }
+
+        public bool Update(int id, Association note)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

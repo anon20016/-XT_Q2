@@ -8,8 +8,8 @@ namespace BAL
 {
     public class UserLogic : IUserLogic
     {
+        private IStorable<User> MemoryStorage;
         private string path = @"C:\Temp\Users.txt";
-        public IStorable<User> MemoryStorage;
 
         public UserLogic(string p)
         {
@@ -43,6 +43,10 @@ namespace BAL
             }
         }
 
+        public bool UpdateUser(int id, User user)
+        {
+            return MemoryStorage.Update(id, user);
+        }
         public User Find(int id)
         {
             return MemoryStorage.Find(id);

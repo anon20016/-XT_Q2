@@ -90,6 +90,11 @@ form {
     padding: 3px 6px;
     text-align: center;
 }
+.adduser label {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .removeuser legend {
     background-color: #7d0000;
@@ -98,11 +103,14 @@ form {
     text-align: center;
 }
 
-.adduser label {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+.updateuser legend {
+    background-color: #ad4500;
+    color: #fff;
+    padding: 3px 6px;
+    text-align: center;
 }
+
+
 
 
 fieldset {

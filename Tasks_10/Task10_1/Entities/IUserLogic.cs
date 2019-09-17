@@ -6,7 +6,7 @@ namespace Entities
     {       
         bool AddUser(string name, string dayofbirth);
         bool RemoveUser(string name, string dayofbirth);
-
+        bool UpdateUser(int id, User user);
         User Find(int id);
         int Find(string name, string dayofbirth);
 

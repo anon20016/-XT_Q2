@@ -13,6 +13,8 @@
     userManagerLogic.LoadData();
     var temp = userManagerLogic.GetAll();
 
+    var tempU = userManagerLogic.GetAll();
+
     string addMessage = "", removeMessage = "";
 }
 
@@ -43,17 +45,15 @@
 
 
 @{
-    string r = null;
-    string name = null, dob = null;
     if (IsPost)
     {
 
-        if (Request.Form.AllKeys.Contains("removename"))
+        if (Request.Form.AllKeys.Contains("remove-name"))
         {
             try
             {
-                awardManagerLogic.RemoveFirstId(userManagerLogic.Find(Request["removename"], Request["removedob"]));
-                if (!userManagerLogic.RemoveUser(Request["removename"], Request["removedob"]))
+                awardManagerLogic.RemoveFirstId(userManagerLogic.Find(Request["remove-name"], Request["removedob"]));
+                if (!userManagerLogic.RemoveUser(Request["remove-name"], Request["removedob"]))
                 {
                     throw new FormatException("No such user");
                 }
@@ -104,7 +104,7 @@
     <form method="post">
         <fieldset class="removeuser">
             <legend id="a">Remove User</legend>
-            <label>Name<input type="text" required name="removename"></label>
+            <label>Name<input type="text" required name="remove-name"></label>
             <label>Date of birth<input type="text" required placeholder="dd.mm.yyyy" name="removedob" pattern="^([0-2][0-9]|(3)[0-1])(\.)(((0)[0-9])|((1)[0-2]))(\.)\d{4}$"></label>
             <input type="submit" value="submit" id="removebutton" />
             <label class="errorMessage">@removeMessage</label>

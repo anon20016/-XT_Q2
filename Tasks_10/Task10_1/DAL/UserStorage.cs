@@ -27,7 +27,6 @@ namespace DAL
             User.count--;
             return false;
         }
-
         public bool Add(string name, string dateofbirth)
         {
             if (FindUser(name, dateofbirth) == null)
@@ -37,7 +36,14 @@ namespace DAL
             }
             return false;
         }
-
+        public bool Update(int id, User note)
+        {
+            if (Remove(id))
+            {
+                return Add(note);
+            }
+            return false;
+        }
         User FindUser(string name, string dateofbirth)
         {
             var r = from item in Users where ((item.Name == name) && (item.DateOfBirth == dateofbirth)) select item;

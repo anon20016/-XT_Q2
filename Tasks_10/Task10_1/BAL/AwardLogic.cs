@@ -6,10 +6,10 @@ namespace BAL
 {
     public class AwardLogic : IAwardAssotiateLogic
     {
-        private string path_awards, path_ass;
+        private IStorable<Award> MemoryStorage;
+        private IStorable<Association> AsStorage;
 
-        public IStorable<Award> MemoryStorage;
-        public IStorable<Association> AsStorage;
+        private string path_awards, path_ass;
 
         public AwardLogic(string p1, string p2)
         {
@@ -33,6 +33,10 @@ namespace BAL
             return (MemoryStorage.Remove(new Award(-1, name, "")));
         }
 
+        public bool UpdateAward(int id, Award award)
+        {
+            return MemoryStorage.Update(id, award);
+        }
         public bool Associate(int fr, int sc)
         {
             if (MemoryStorage.Find(sc) != null)

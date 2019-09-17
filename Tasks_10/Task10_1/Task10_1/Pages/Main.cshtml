@@ -56,28 +56,13 @@
 </div>
 
 @{
-    string name = null, dob = null;
     if (IsPost)
     {
         if (Request.Form.AllKeys.Contains("select-add-User"))
         {
             try
-            {
-                int frId = 0, scId = 0, c = 0;
-                string t1 = "",t2 = "";
-                while (Request["select-add-User"][c] >= '0' && Request["select-add-User"][c] <= '9')
-                {
-                    t1 += Request["select-add-User"][c];
-                    c++;
-                }
-                c = 0;
-                while (Request["select-add-Award"][c] >= '0' && Request["select-add-Award"][c] <= '9')
-                {
-                    t2 += Request["select-add-Award"][c];
-                    c++;
-                }
-
-                if (!awardManagerLogic.Associate(Convert.ToInt32(t1), Convert.ToInt32(t2)))
+            {       
+                if (!awardManagerLogic.Associate(lib.GetId(Request["select-add-User"]), lib.GetId(Request["select-add-Award"])))
                 {
                     throw new FormatException("Already graded");
                 }
@@ -95,21 +80,8 @@
         else
         {
             try
-            {
-                int frId = 0, scId = 0, c = 0;
-                string t1 = "",t2 = "";
-                while (Request["select-remove-User"][c] >= '0' && Request["select-remove-User"][c] <= '9')
-                {
-                    t1 += Request["select-remove-User"][c];
-                    c++;
-                }
-                c = 0;
-                while (Request["select-remove-Award"][c] >= '0' && Request["select-remove-Award"][c] <= '9')
-                {
-                    t2 += Request["select-remove-Award"][c];
-                    c++;
-                }
-                if (!awardManagerLogic.deAssociate(Convert.ToInt32(t1), Convert.ToInt32(t2)))
+            {                
+                if (!awardManagerLogic.deAssociate(lib.GetId(Request["select-remove-User"]), lib.GetId(Request["select-remove-Award"])))
                 {
                     throw new FormatException("User dont have this award");
                 }
