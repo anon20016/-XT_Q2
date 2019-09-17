@@ -1,0 +1,155 @@
+﻿@using Entities;
+@using BAL;
+
+@{
+    Layout = "~/Pages/Layouts/_MainLayout.cshtml";
+}
+
+@{
+    IUserLogic userManagerLogic = new UserLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/users.txt"));
+    IAwardAssotiateLogic awardManagerLogic = new AwardLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/awards.txt"), System.Web.Hosting.HostingEnvironment.MapPath("~/Data/assotiations.txt"));
+
+    awardManagerLogic.LoadData();
+    userManagerLogic.LoadData();
+    var temp = userManagerLogic.GetAll();
+
+    var tempU = userManagerLogic.GetAll();
+
+    string addMessage = "", removeMessage = "", updateMessage = "";
+}
+
+
+<div>
+    <table>
+        <colgroup>
+            <col width="100" />
+            <col width="450" />
+            <col width="250" />
+        </colgroup>
+        @foreach (var item in temp)
+        {
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.DateOfBirth
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+
+@{
+    if (IsPost)
+    {
+
+        if (Request.Form.AllKeys.Contains("remove-name"))
+        {
+            try
+            {
+                awardManagerLogic.RemoveFirstId(userManagerLogic.Find(Request["remove-name"], Request["removedob"]));
+                if (!userManagerLogic.RemoveUser(Request["remove-name"], Request["remove-dob"]))
+                {
+                    throw new FormatException("No such user");
+                }
+                awardManagerLogic.SaveData();
+                userManagerLogic.SaveData();
+
+                Response.Redirect("~/Pages/users.cshtml");
+            }
+            catch (Exception e)
+            {
+                removeMessage = e.Message;
+            }
+        }
+        if (Request.Form.AllKeys.Contains("add-name"))
+        {
+            try
+            {
+                if (!userManagerLogic.AddUser(Request["add-name"], Request["add-dob"]))
+                {
+                    throw new FormatException("This user already exists");
+                }
+                awardManagerLogic.SaveData();
+                userManagerLogic.SaveData();
+
+                Response.Redirect("~/Pages/users.cshtml");
+            }
+            catch (Exception e)
+            {
+                addMessage = e.Message;
+            }
+        }
+        if (Request.Form.AllKeys.Contains("update-name"))
+        {
+            try
+            {
+                if (!userManagerLogic.UpdateUser(lib.GetId(Request["select-update-User"]), new User(lib.GetId(Request["select-update-User"]), Request["update-name"], Request["update-dob"])))
+                {
+                    throw new FormatException("No such user");
+                }
+                userManagerLogic.SaveData();
+
+                Response.Redirect("~/Pages/users.cshtml");
+            }
+            catch (Exception e)
+            {
+                updateMessage = e.Message;
+            }
+        }
+    }
+}
+
+<div class="forminpt">
+    <form method="post">
+        <fieldset class="adduser">
+            <legend>Add User</legend>
+            <label>Name<input type="text" required name="add-name"></label>
+            <label>Date of birth<input type="text" required placeholder="dd.mm.yyyy" name="add-dob" pattern="^([0-2][0-9]|(3)[0-1])(\.)(((0)[0-9])|((1)[0-2]))(\.)\d{4}$"></label>
+            <input type="submit" value="submit" id="add-button" />
+
+            <label class="errorMessage">@addMessage</label>
+
+        </fieldset>
+    </form>
+
+    <form method="post">
+        <fieldset class="removeuser">
+            <legend id="a">Remove User</legend>
+            <label>Name<input type="text" required name="remove-name"></label>
+            <label>Date of birth<input type="text" required placeholder="dd.mm.yyyy" name="remove-dob" pattern="^([0-2][0-9]|(3)[0-1])(\.)(((0)[0-9])|((1)[0-2]))(\.)\d{4}$"></label>
+            <input type="submit" value="submit" id="remove-button" />
+            <label class="errorMessage">@removeMessage</label>
+        </fieldset>
+    </form>
+    <form method="post">
+        <fieldset class="updateuser">
+            <legend id="a">Update User</legend>
+            <label for="select-update-User">Select Id user</label>
+            <select name="select-update-User">
+                @foreach (var item in tempU)
+                {
+                    string tmp = $"{item.Id} {item.Name}";
+                    <option>@tmp</option>
+                }
+            </select>
+
+            <label>Name<input type="text" required name="update-name"></label>
+            <label>Date of birth<input type="text" required placeholder="dd.mm.yyyy" name="update-dob" pattern="^([0-2][0-9]|(3)[0-1])(\.)(((0)[0-9])|((1)[0-2]))(\.)\d{4}$"></label>
+
+            <input type="submit" value="submit" id="update-button" />
+
+            <label class="errorMessage">@updateMessage</label>
+        </fieldset>
+
+    </form>
+
+
+</div>
+
+
