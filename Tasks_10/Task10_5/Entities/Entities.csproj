@@ -45,10 +45,13 @@
     <Compile Include="Award.cs" />
     <Compile Include="IAssociate.cs" />
     <Compile Include="IAwardAssotiateLogic.cs" />
+    <Compile Include="ISecretLogic.cs" />
     <Compile Include="IUserLogic.cs" />
     <Compile Include="IAwardLogic.cs" />
     <Compile Include="IStorable.cs" />
     <Compile Include="lib.cs" />
+    <Compile Include="LoginData.cs" />
+    <Compile Include="Role.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

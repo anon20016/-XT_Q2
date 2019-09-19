@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     Layout = null;
 }
 
@@ -12,18 +13,55 @@
     <title>@Page.Name</title>
 </head>
 <body>
-    <header class="cont_title">
-        <h1>Users and Awards</h1>
-    </header>
-    <nav class="main-menu" id="main-menu">
-        <ul>    
-            <li><a href="~/Pages/Users.cshtml">Users</a></li>
-            <li><a href="~/Pages/Main.cshtml">Main</a></li>
-            <li><a href="~/Pages/Awards.cshtml">Awards</a></li>
-        </ul>
-    </nav>
-    
-    @RenderBody()
+    <div class="back">
+        <div class="cont_title">
+            Users and Awards
+        </div>
+        <nav class="main-menu" id="main-menu">
+            <ul class="main-menu">
+                @{
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a href="~/Pages/Auth/UsersAwards.cshtml">List</a></li>
+                        <li><a href="~/Pages/Auth/Users.cshtml">Users</a></li>
+                        <li><a href="~/Pages/Auth/Profile.cshtml">Profile</a></li>
+                        <li><a href="~/Pages/Auth/Awards.cshtml">Awards</a></li>
+                        <li><a href="~/Pages/Auth/SignOut.cshtml">Sign Out</a></li>
+                    }
+                    else
+                    {
+                        if (Page.Name == "Registration")
+                        {
+                            <li style="background-color:white"><a href="~/Pages/NonAuth/Register.cshtml">Register</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="~/Pages/NonAuth/Register.cshtml">Register</a></li>
+                        }
+                        if (Page.Name == "Login")
+                        {
+                            <li style="background-color:white"><a href="~/Pages/NonAuth/Login.cshtml">Sign In</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="~/Pages/NonAuth/Login.cshtml">Sign In</a></li>
+                        }
+                        if (Page.Name == "Users")
+                        {
+                            <li style="background-color:white"><a href="~/Pages/NonAuth/Users.cshtml">Users</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="~/Pages/NonAuth/Users.cshtml">Users</a></li>
+                        }
+
+                    }
+                }
+            </ul>
+        </nav>
+
+        @RenderBody()
+    </div>
 </body>
 </html>
 

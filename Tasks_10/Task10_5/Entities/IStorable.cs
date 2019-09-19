@@ -4,6 +4,8 @@ namespace Entities
 {
     public interface IStorable<T>
     {
+        string Path { get; set; }
+
         bool Add(T note);
         bool Remove(T note);
 

@@ -2,9 +2,14 @@
 @using BAL;
 
 @{
-    Layout = "~/Pages/Layouts/_MainLayout.cshtml";
+    Layout = "~/Pages/Auth/Layouts/_Layout.cshtml";
     Page.Name = "Awards";
+}
 
+@{ 
+}
+
+@{
     IAwardAssotiateLogic awardManagerLogic = new AwardLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/awards.txt"), System.Web.Hosting.HostingEnvironment.MapPath("~/Data/assotiations.txt"));
     awardManagerLogic.LoadData();
     var temp = awardManagerLogic.GetAll();
@@ -16,7 +21,7 @@
     string addMessage = "", removeMessage = "", updateMessage = "";
 }
 
-<div>
+<div class="main-div">
     <table class="list" id="list">
         <colgroup>
             <col width="100" />
@@ -103,7 +108,7 @@
     }
 }
 
-<div class="forminpt">
+<div class="forminpt main-div">
     <form method="post">
         <fieldset class="adduser">
             <legend>Add Award</legend>

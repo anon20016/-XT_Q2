@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="AwardStorage.cs" />
     <Compile Include="AssotiationStorage.cs" />
+    <Compile Include="RolesStorage.cs" />
+    <Compile Include="SecretStorage.cs" />
     <Compile Include="UserStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

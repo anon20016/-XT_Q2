@@ -9,11 +9,11 @@ namespace DAL
     public class UserStorage : IStorable<User>
     {
         private List<User> Users { get; set; }
-        private string path { get; set; }
+        public string Path { get; set; }
 
         public UserStorage(string p)
         {
-            path = p;
+            Path = p;
             Users = new List<User>();
         }
 
@@ -131,10 +131,10 @@ namespace DAL
 
         public void Load()
         {
-            if (File.Exists(path))
+            if (File.Exists(Path))
             {
                 int mxID = 0;
-                using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
+                using (StreamReader sr = new StreamReader(Path, System.Text.Encoding.Default))
                 {
                     string line;
                     while ((line = sr.ReadLine()) != null)
@@ -156,11 +156,11 @@ namespace DAL
         }
         public void Save()
         {
-            if (!File.Exists(path))
+            if (!File.Exists(Path))
             {
-                File.Create(path);
+                File.Create(Path);
             }
-            using (StreamWriter sr = new StreamWriter(path))
+            using (StreamWriter sr = new StreamWriter(Path))
             {
                 foreach (var item in Users)
                 {

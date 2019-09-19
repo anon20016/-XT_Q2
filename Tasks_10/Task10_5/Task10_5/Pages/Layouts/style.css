@@ -16,19 +16,12 @@ a {
 
 body {
     margin: 0;
+    background: radial-gradient(white, #00d0ff);
 }
 
-div {
-    width: 800px;
-    padding: 10px;
-    margin: auto;
-    background: #fffed0;
-}
-
-ul {
-    list-style: none;
-    margin: 0 auto;
-    text-align: center;
+.main-div {
+    width: 100%;
+    margin:  10px 0 10px 0;
 }
 
 a {
@@ -36,155 +29,67 @@ a {
     font-family: 'Lora', serif;
 }
 
+nav {
+    width: 100%;
+    margin: auto auto 0 auto;
+}
+
 header{
     margin: auto;
     text-align:center;
 }
 
-nav {
-    width: 800px;
-    margin: 0 auto 30px;
-}
-
-.main-menu li {
-    display: inline;
-    margin: 4em;
-}
-
 .main-menu ul {
-    padding: 1em 0;
-    background: #ECDAD6;
-}
-.main-menu a {
-    font-size: large;
-}
-.main-menu li:hover {
-    border-bottom: groove;
+    margin: 0;
+    padding: 0;
+    display: flex;
 }
 
-
-table {
-    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
-    font-size: 14px;
-    border-collapse: collapse;
-    text-align: center;
-    width: 100%;
-}
-
-th, td:first-child {
-    background: #AFCDE7;
-    color: white;
-    padding: 10px;
-}
-
-th, td {
-    border-style: solid;
-    border-width: 0 1px 1px 0;
-    border-color: white;
-}
-
-td {
-    background: #D8E6F3;
-}
-
-
-form {
-    background-color: aqua;
-    width: auto;
-    text-align: center;
-    padding: 1em;
-}
-
-.adduser legend {
-    background-color: #00621a;
-    color: #fff;
-    padding: 3px 6px;
-    text-align: center;
-}
-.adduser label {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.removeuser legend {
-    background-color: #7d0000;
-    color: #fff;
-    padding: 3px 6px;
-    text-align: center;
-}
-
-.updateuser legend {
-    background-color: #ad4500;
-    color: #fff;
-    padding: 3px 6px;
-    text-align: center;
-}
-
-
-
-
-fieldset {
-    padding: 1em;
-    border: 2px dotted;
-    margin: auto;
-}
-
-.errorMessage {
-    padding: 5px;
-    height: 15px;
-}
-
-.forminpt div {
-    background-color: aquamarine;
-}
-
-.forminpt input[type ="text"] {
-    display: block;
-    width: 250px;
-    margin: 10px auto 10px auto;
-    text-align: center;
-}
-
-    .forminpt input[type="text"]:valid {
-        background-color: greenyellow;
+    .main-menu ul li {
+        list-style-type: none;
+        flex-basis: auto;
+        flex-grow: 1;
+        background: #000;
+        text-align: center;
+        box-shadow: inset 0 0 1px 1px white;
     }
 
-.forminpt input[type ="submit"] {
-    display: block;
-    margin: 10px auto 10px auto;
-    width: 200px;
-    text-align: center;
-}
 
-.forminpt label {
-    display: block;
-    margin: 10px auto 10px auto;
-}
+        .main-menu ul li a {
+            padding: 20px 0;
+            color: forestgreen;
+            display: block;
+            font-size: large;
+            font-weight:500;
+        }
 
-.forminpt select {
-    display: block;
-    margin: 10px auto 10px auto;
-    width: 200px;
+        .main-menu ul li:hover {
+            background: white;
+        }
+
+.white-back{
+    width:800px;
+    height: 800px;
 }
 
 
 .cont_title {
-    position: relative;
     margin: auto;
     width: 100%;
     text-align: center;
-    height: 4vw;
+    background-color: white;
+    width: 100%;
+    text-transform: uppercase;
+    text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
+    font-size: 60px;
+    margin: 0;
+    vertical-align: middle;
 }
 
-    .cont_title h1 {
-        text-transform: uppercase;
-        text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
-        font-size: 3.5vw;
-        margin: 0;
-        vertical-align: middle;
-    }
-.cont_title h1:hover {
-    font-size: 4vw;
-    transition: font-size 0.4s;
-}
+ .back{
+     width: 800px;
+     background-color:transparent;
+     margin: 0 auto 0 auto;
+     padding:0;
+     height:100vh;
+ }
