@@ -41,18 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Association.cs" />
-    <Compile Include="Award.cs" />
-    <Compile Include="IAssociate.cs" />
-    <Compile Include="IAwardAssotiateLogic.cs" />
-    <Compile Include="ISecretLogic.cs" />
-    <Compile Include="IUserLogic.cs" />
-    <Compile Include="IAwardLogic.cs" />
-    <Compile Include="IStorable.cs" />
+    <Compile Include="Interfaces\IRoleStore.cs" />
+    <Compile Include="Models\Association.cs" />
+    <Compile Include="Models\Award.cs" />
+    <Compile Include="Interfaces\IAssociate.cs" />
+    <Compile Include="Interfaces\IAwardAssotiateLogic.cs" />
+    <Compile Include="Interfaces\ISecretLogic.cs" />
+    <Compile Include="Interfaces\IUserLogic.cs" />
+    <Compile Include="Interfaces\IAwardLogic.cs" />
+    <Compile Include="Interfaces\IStorable.cs" />
     <Compile Include="lib.cs" />
-    <Compile Include="LoginData.cs" />
-    <Compile Include="Role.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="Models\LoginData.cs" />
+    <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -7,7 +7,8 @@
     Page.Name = "Registration";
 
     string errormess = "";
-
+    
+                var t = Roles.Enabled;
 
     if (IsPost)
     {
@@ -17,42 +18,53 @@
             IAwardAssotiateLogic awardManagerLogic = new AwardLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/awards.txt"), System.Web.Hosting.HostingEnvironment.MapPath("~/Data/assotiations.txt"));
             ISecretLogic secretLogic = new SecretLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/logpas.txt"));
             RoleLogic roleLogic= new RoleLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/roles.txt"));
-
+            
 
             awardManagerLogic.LoadData();
             userManagerLogic.LoadData();
+
             var temp = userManagerLogic.GetAll();
             try
             {
                 var MyFile = Request.Files["file"];
+
+                var login = Request["Login"];
+                var password = Request["Password"];
+                var dob = Request["day-of-birth"];
+                if (login.Length == 0 || password.Length == 0 || dob.Length == 0)
+                {
+                    throw new KeyNotFoundException("Not enough information");
+                }
 
                 if (MyFile != null && MyFile.ContentLength > 0)
                 {
                     int FileSize = MyFile.ContentLength;
                     byte[] FileByteArray = new byte[FileSize];
                     MyFile.InputStream.Read(FileByteArray, 0, FileSize);
-                    if (!userManagerLogic.AddUser(Request["login"], Request["day-of-birth"], Convert.ToBase64String(FileByteArray)))
+                    if (!userManagerLogic.AddUser(login, dob, Convert.ToBase64String(FileByteArray)))
                     {
                         throw new FormatException("This user already exists");
                     }
                 }
                 else
                 {
-                    if (!userManagerLogic.AddUser(Request["login"], Request["day-of-birth"], ""))
+                    if (!userManagerLogic.AddUser(login, dob, ""))
                     {
                         throw new FormatException("This user already exists");
                     }
                 }
 
-                secretLogic.Add(Request["login"], Request["password"]);
+                Roles.AddUserToRole(login, "User");
+                secretLogic.Add(login, password);
                 awardManagerLogic.SaveData();
                 userManagerLogic.SaveData();
 
-                Response.Redirect("~/Pages/users.cshtml");
+                FormsAuthentication.SetAuthCookie(login, false);
+                Response.Redirect("~/Pages/Auth/Profile.cshtml");
             }
             catch (Exception e)
             {
-                addMessage = e.Message;
+                errormess = e.Message;
             }
         }
     }
