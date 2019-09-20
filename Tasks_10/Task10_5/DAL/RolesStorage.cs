@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using Entities;
+using Entities.Interfaces;
 
 namespace DAL
 {
-    public class RolesStorage : IStorable<Role>
+    public class RolesStorage : IRoleStore
     {
         public string Path { get; set; }
         private List<Role> Data;
@@ -24,6 +25,7 @@ namespace DAL
                 Data.Add(note);
                 return true;
             }
+            Role.count--;
             return false;
         }
 
@@ -53,7 +55,14 @@ namespace DAL
 
         public int Find(Role note)
         {
-            throw new NotImplementedException();
+           foreach(var item in Data)
+            {
+                if (item.Name == note.Name)
+                {
+                    return item.Id;
+                }
+            }
+            return -1;
         }
 
         public ICollection<Role> GetAll()
@@ -124,6 +133,99 @@ namespace DAL
                     sr.WriteLine(temp);
                 }
             }
+        }
+
+        private int FindIndex(string role)
+        {
+            for (int i = 0; i < Data.Count; i++)
+            {
+                if (Data[i].Name == role)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public bool IsUserInRole(string username, string roleName)
+        {
+            int index = FindIndex(roleName);
+            if (index != -1)
+            {
+                return Data[index].Users.Contains(username);
+            }
+            else
+            {
+                throw new ArgumentException("No such role");
+            }
+        }
+        public bool IsUserInRole(string username, int roleIndex)
+        {           
+            return Data[roleIndex].Users.Contains(username);           
+        }
+
+        public string[] GetUsersInRole(string roleName)
+        {
+            int index = FindIndex(roleName);
+            if (index != -1)
+            {
+                return Data[index].Users.ToArray();
+            }
+            else
+            {
+                throw new ArgumentException("No such role");
+            }
+        }
+
+        public void AddUsersToRoles(string[] usernames, string[] roleNames)
+        {
+            foreach(var role in roleNames)
+            {
+                int index = FindIndex(role);
+                if (index != -1)
+                {
+                    foreach (var user in usernames)
+                    {
+                        if (!IsUserInRole(user, index))
+                        {
+                            Data[index].Users.Add(user);
+                        }
+                    }
+                }                
+            }
+        }
+
+        public string[] GetAllRoles()
+        {
+            List<string> res = new List<string>();
+            foreach(var item in Data)
+            {
+                res.Add(item.Name);
+            }
+            return res.ToArray();
+        }
+
+        public void RemoveUsersFromRoles(string[] usernames, string[] roleNames)
+        {
+            foreach (var role in roleNames)
+            {
+                int index = FindIndex(role);
+                if (index != -1)
+                {
+                    foreach (var user in usernames)
+                    {
+                        if (IsUserInRole(user, index))
+                        {
+                            Data[index].Users.Remove(user);
+                        }
+                    }
+                }
+            }
+        }
+
+        public bool RoleExists(string roleName)
+        {
+            return FindIndex(roleName) != -1;
         }
 
 

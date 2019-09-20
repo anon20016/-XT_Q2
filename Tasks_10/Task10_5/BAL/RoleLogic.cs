@@ -4,54 +4,74 @@ using System.Linq;
 using System.Text;
 using Entities;
 using DAL;
+using Entities.Interfaces;
 
 namespace BAL
 {
-    public class RoleLogic
+    public class RoleLogic : IRoleLogic
     {
-        private IStorable<Role> MemoryStorage;
+        private IRoleStore MemoryStorage;
         private string path = @"C:\Temp\Users.txt";
-
 
         public RoleLogic(string p)
         {
             path = p;
             MemoryStorage = new RolesStorage(path);
+        }     
+
+        public bool IsUserInRole(string username, string roleName)
+        {
+            return MemoryStorage.IsUserInRole(username, roleName);
         }
 
-        public void AddUser(string name)
+        public string[] GetRolesForUser(string username)
         {
-            
+            throw new NotImplementedException();
         }
 
-        public Dictionary<string, List<string>> GetU()
+        public string[] GetUsersInRole(string roleName)
         {
-            Dictionary<string, List<string>> temp = new Dictionary<string, List<string>>();
+            return MemoryStorage.GetUsersInRole(roleName);
+        }
 
-            var a = MemoryStorage.GetAll();
-            foreach(var item in a)
+        public void AddUsersToRoles(string[] usernames, string[] roleNames)
+        {
+            MemoryStorage.AddUsersToRoles(usernames, roleNames);
+        }
+
+        public void CreateRole(string roleName)
+        {
+            if (!MemoryStorage.Add(new Role(++Role.count, roleName)))
             {
-                foreach(var u in item.Users)
-                {
-                    if (!temp.ContainsKey(u))
-                    {
-                        temp.Add(u, new List<string>());
-                    }
-                    temp[u].Add(item.Name);
-                }
-                
-            }
-            return temp;
+                throw new ArgumentException("Already exists");
+            }  
         }
-        public Dictionary<string, List<string>> GetR()
+
+        public bool DeleteRole(string roleName, bool throwOnPopulatedRole)
         {
-            Dictionary<string, List<string>> temp = new Dictionary<string, List<string>>();
-            var a = MemoryStorage.GetAll();
-            foreach (var item in a)
+            if (!MemoryStorage.Remove(MemoryStorage.Find(new Role(-1, roleName))))
             {
-                temp.Add(item.Name, item.Users);
+                throw new ArgumentException("Already exists");
             }
-            return temp;
+            else
+            {
+                return true;
+            }
+        }
+
+        public string[] GetAllRoles()
+        {
+            return MemoryStorage.GetAllRoles();
+        }
+
+        public void RemoveUsersFromRoles(string[] usernames, string[] roleNames)
+        {
+            MemoryStorage.RemoveUsersFromRoles(usernames, roleNames);
+        }
+
+        public bool RoleExists(string roleName)
+        {
+            return MemoryStorage.RoleExists(roleName);
         }
 
         public void SaveData()
@@ -62,7 +82,5 @@ namespace BAL
         {
             MemoryStorage.Load();
         }
-
-
     }
 }

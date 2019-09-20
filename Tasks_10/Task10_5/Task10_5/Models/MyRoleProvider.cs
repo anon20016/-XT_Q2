@@ -13,15 +13,12 @@ namespace Task10_5.Models
         private Dictionary<string, List<string>> all = new Dictionary<string, List<string>>();
         private Dictionary<string, List<string>> roles = new Dictionary<string, List<string>>();
 
-        public MyRoleProvider(){
+        public override bool IsUserInRole(string username, string roleName)
+        {
             RoleLogic roleLogic = new RoleLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/roles.txt"));
             roleLogic.LoadData();
             all = roleLogic.GetU();
             roles = roleLogic.GetR();
-        }
-
-        public override bool IsUserInRole(string username, string roleName)
-        {
             if (all.ContainsKey(username) && all[username].Contains(roleName))
             {              
                 return true;                
@@ -31,6 +28,10 @@ namespace Task10_5.Models
 
         public override string[] GetRolesForUser(string username)
         {
+            RoleLogic roleLogic = new RoleLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/roles.txt"));
+            roleLogic.LoadData();
+            all = roleLogic.GetU();
+            roles = roleLogic.GetR();
             if (all.ContainsKey(username))
             {
                 return all[username].ToArray();
@@ -43,6 +44,10 @@ namespace Task10_5.Models
 
         public override string[] GetUsersInRole(string roleName)
         {
+            RoleLogic roleLogic = new RoleLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/roles.txt"));
+            roleLogic.LoadData();
+            all = roleLogic.GetU();
+            roles = roleLogic.GetR();
             if (roles.ContainsKey(roleName))
                 return roles[roleName].ToArray();
             return null;
@@ -52,8 +57,11 @@ namespace Task10_5.Models
 
         public override void AddUsersToRoles(string[] usernames, string[] roleNames)
         {
-            
-            foreach(var user in usernames)
+            RoleLogic roleLogic = new RoleLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/roles.txt"));
+            roleLogic.LoadData();
+            all = roleLogic.GetU();
+            roles = roleLogic.GetR();
+            foreach (var user in usernames)
             {
                 if (!all.ContainsKey(user))
                 {
@@ -73,6 +81,10 @@ namespace Task10_5.Models
 
         public override void CreateRole(string roleName)
         {
+            RoleLogic roleLogic = new RoleLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/roles.txt"));
+            roleLogic.LoadData();
+            all = roleLogic.GetU();
+            roles = roleLogic.GetR();
             roles.Add(roleName, new List<string>());
         }
 
@@ -88,11 +100,19 @@ namespace Task10_5.Models
 
         public override string[] GetAllRoles()
         {
+            RoleLogic roleLogic = new RoleLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/roles.txt"));
+            roleLogic.LoadData();
+            all = roleLogic.GetU();
+            roles = roleLogic.GetR();
             return roles.Keys.ToArray();
         }
 
         public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)
         {
+            RoleLogic roleLogic = new RoleLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/roles.txt"));
+            roleLogic.LoadData();
+            all = roleLogic.GetU();
+            roles = roleLogic.GetR();
             foreach (var user in usernames)
             {
                 if (!all.ContainsKey(user))
@@ -113,6 +133,10 @@ namespace Task10_5.Models
 
         public override bool RoleExists(string roleName)
         {
+            RoleLogic roleLogic = new RoleLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/roles.txt"));
+            roleLogic.LoadData();
+            all = roleLogic.GetU();
+            roles = roleLogic.GetR();
             return roles.ContainsKey(roleName);
         }
     }

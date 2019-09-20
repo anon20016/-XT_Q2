@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IRoleLogic.cs" />
     <Compile Include="Interfaces\IRoleStore.cs" />
     <Compile Include="Models\Association.cs" />
     <Compile Include="Models\Award.cs" />

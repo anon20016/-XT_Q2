@@ -8,7 +8,6 @@
 
     string errormess = "";
     
-                var t = Roles.Enabled;
 
     if (IsPost)
     {
@@ -56,6 +55,8 @@
 
                 Roles.AddUserToRole(login, "User");
                 secretLogic.Add(login, password);
+
+                secretLogic.SaveData();
                 awardManagerLogic.SaveData();
                 userManagerLogic.SaveData();
 
