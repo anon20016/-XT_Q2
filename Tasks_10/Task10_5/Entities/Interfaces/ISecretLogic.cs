@@ -11,9 +11,13 @@ namespace Entities
         bool Can(string login, string password);
 
         bool Exist(string login);
-        bool Add(string login, string password);
+        bool Add(int id, string login, string password);
         bool Remove(string login);
+        bool Remove(int id);
         bool Update(string login, string password);
+
+        string[] GetAllUsers();
+        int GetIdByLogin(string login);
 
         void LoadData();
         void SaveData();

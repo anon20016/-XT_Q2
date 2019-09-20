@@ -94,6 +94,8 @@
     <Content Include="Data\roles.txt" />
     <Content Include="Data\users.txt" />
     <Content Include="Global.asax" />
+    <Content Include="Pages\Admin\style.css" />
+    <Content Include="Pages\Moderator\style.css" />
     <Content Include="Pages\Auth\Layouts\style.css" />
     <Content Include="Pages\Layouts\style.css" />
     <Content Include="Pages\NonAuth\Layouts\style.css" />
@@ -123,11 +125,15 @@
     <Content Include="Pages\NonAuth\Register.cshtml" />
     <Content Include="Pages\NonAuth\Users.cshtml" />
     <Content Include="Pages\Admin\AdminPanel.cshtml" />
-    <Content Include="Pages\Admin\Web.config" />
+    <Content Include="Pages\Moderator\Web.config" />
     <Content Include="Pages\Auth\Web.config" />
     <Content Include="Pages\NonAuth\Web.config" />
     <Content Include="Pages\Auth\Layouts\_Layout.cshtml" />
     <Content Include="Pages\NonAuth\Layouts\_Layout.cshtml" />
+    <Content Include="Pages\Moderator\ModeratePanel.cshtml" />
+    <Content Include="Pages\Admin\_Layout.cshtml" />
+    <Content Include="Pages\Moderator\_Layout.cshtml" />
+    <Content Include="Pages\Admin\Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

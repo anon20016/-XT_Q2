@@ -1,2 +1,3 @@
-﻿0*Admin*admin
-1*User
+0*Admin*admin
+1*User*Anton*anon
+2*Moderator*Anton

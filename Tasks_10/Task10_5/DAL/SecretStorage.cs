@@ -29,10 +29,31 @@ namespace DAL
 
         public bool Exists(LoginData note)
         {
-            return Data.Contains(note);
+            if (note.Id == -1)
+            {
+                foreach (var item in Data)
+                {
+                    if (item.Login == note.Login && note.Hash == item.Hash)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            else
+            {
+                foreach (var item in Data)
+                {
+                    if (item.Login == note.Login)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
         }
 
-        private bool Contains(LoginData note)
+        public bool Contains(LoginData note)
         {
             foreach(var item in Data)
             {
@@ -46,27 +67,49 @@ namespace DAL
 
         public LoginData Find(int id)
         {
-            throw new NotImplementedException();
+            foreach (var item in Data)
+            {
+                if (item.Id == id)
+                {                    
+                    return item;
+                }
+            }
+            return null;
         }
 
         public int Find(LoginData note)
         {
-            throw new NotImplementedException();
+            foreach(var item in Data)
+            {
+                if (note.Login == item.Login)
+                {
+                    return item.Id;
+                }
+            }
+            return -1;
         }
 
         public ICollection<LoginData> GetAll()
         {
-            throw new NotImplementedException();
+            return Data;
         }        
 
         public bool Remove(LoginData note)
         {
-            return Data.Remove(note);
+            throw new NotImplementedException();
         }
 
         public bool Remove(int id)
         {
-            throw new NotImplementedException();
+            foreach(var item in Data)
+            {
+                if (item.Id == id)
+                {
+                    Data.Remove(item);
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void Load()
@@ -79,9 +122,9 @@ namespace DAL
                     while ((line = sr.ReadLine()) != null)
                     {
                         string[] t = line.Split('*');
-                        if (t.Length == 2)
+                        if (t.Length == 3)
                         {
-                            Data.Add(new LoginData(t[0], t[1]));                            
+                            Data.Add(new LoginData(Convert.ToInt32(t[0]), t[1], t[2]));                            
                         }
                     }
                 }
@@ -97,7 +140,7 @@ namespace DAL
             {
                 foreach (var item in Data)
                 {
-                    sr.WriteLine($"{item.Login}*{item.Hash}");
+                    sr.WriteLine($"{item.Id}*{item.Login}*{item.Hash}");
                 }
             }
         }

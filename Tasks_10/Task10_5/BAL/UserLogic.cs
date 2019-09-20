@@ -68,6 +68,11 @@ namespace BAL
             var temp = MemoryStorage.Find(new User(-1, name, dayofbirth));
             return temp;
         }
+        public int Find(string name)
+        {
+            var temp = MemoryStorage.Find(new User(-1, name, ""));
+            return temp;
+        }
 
         public void SaveData()
         {

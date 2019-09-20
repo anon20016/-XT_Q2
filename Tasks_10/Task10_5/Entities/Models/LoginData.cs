@@ -8,14 +8,16 @@ namespace Entities
 {
     public class LoginData
     {
-        public LoginData(string l, string h)
+        public string Login { get; set; }
+        public string Hash { get; set; }
+        public int Id { get; set; }
+
+        public LoginData(int id, string l, string h)
         {
             Login = l;
             Hash = h;
+            Id = id;
         }
-
-        public string Login { get; set; }
-        public string Hash { get; set; }
 
         public override bool Equals(object obj)
         {

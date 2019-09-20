@@ -19,5 +19,7 @@ namespace Entities.Interfaces
         void RemoveUsersFromRoles(string[] usernames, string[] roleNames);
 
         bool RoleExists(string roleName);
+
+        string[] GetRolesForUser(string username);
     }
 }

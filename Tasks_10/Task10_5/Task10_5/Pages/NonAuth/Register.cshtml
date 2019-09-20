@@ -16,11 +16,11 @@
             IUserLogic userManagerLogic = new UserLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/users.txt"));
             IAwardAssotiateLogic awardManagerLogic = new AwardLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/awards.txt"), System.Web.Hosting.HostingEnvironment.MapPath("~/Data/assotiations.txt"));
             ISecretLogic secretLogic = new SecretLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/logpas.txt"));
-            RoleLogic roleLogic= new RoleLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/roles.txt"));
             
 
             awardManagerLogic.LoadData();
             userManagerLogic.LoadData();
+            secretLogic.LoadData();
 
             var temp = userManagerLogic.GetAll();
             try
@@ -54,7 +54,7 @@
                 }
 
                 Roles.AddUserToRole(login, "User");
-                secretLogic.Add(login, password);
+                secretLogic.Add(userManagerLogic.Find(login, dob), login, password);
 
                 secretLogic.SaveData();
                 awardManagerLogic.SaveData();

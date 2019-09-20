@@ -5,6 +5,10 @@
     Layout = "~/Pages/NonAuth/Layouts/_Layout.cshtml";
     Page.Name = "Login";
 
+    if (User.Identity.IsAuthenticated)
+    {
+        Response.Redirect("~/Pages/Auth/Profile");
+    }
 
     string errormess = "";
 

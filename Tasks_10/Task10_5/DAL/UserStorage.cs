@@ -56,6 +56,18 @@ namespace DAL
                 return null;
             }
         }
+        User FindUser(string name)
+        {
+            var r = from item in Users where (item.Name == name) select item;
+            if (r.Count() > 0)
+            {
+                return r.First();
+            }
+            else
+            {
+                return null;
+            }
+        }
         User FindUser(int id)
         {
             var r = from item in Users where ((item.Id == id)) select item;
@@ -71,11 +83,22 @@ namespace DAL
 
         public int Find(User note)
         {
-            var temp = FindUser(note.Name, note.DateOfBirth);
-            if (temp != null)
-                return FindUser(note.Name, note.DateOfBirth).Id;
+            if (note.DateOfBirth != "")
+            {
+                var temp = FindUser(note.Name, note.DateOfBirth);
+                if (temp != null)
+                    return temp.Id;
+                else
+                    return -1;
+            }
             else
-                return -1;
+            {
+                var temp = FindUser(note.Name);
+                if (temp != null)
+                    return temp.Id;
+                else
+                    return -1;
+            }
         }
 
         public bool Exists(User note)

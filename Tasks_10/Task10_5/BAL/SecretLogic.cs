@@ -30,26 +30,52 @@ namespace BAL
 
         public bool Can(string login, string password)
         {
-            return MemoryStorage.Exists(new LoginData(login, GetHash(password)));
+            return MemoryStorage.Exists(new LoginData(-1, login, GetHash(password)));
         }
-        public bool Add(string login, string password)
+
+        
+        public bool Add(int id, string login, string password)
         {
-            return MemoryStorage.Add(new LoginData(login, GetHash(password)));
+            return MemoryStorage.Add(new LoginData(id, login, GetHash(password)));
+        }
+
+        public int GetIdByLogin(string login)
+        {
+            var t = MemoryStorage.Find(new LoginData(-1, login, ""));
+            if (t != -1)
+            {
+                return t;
+            }
+            throw new ArgumentException("No such login");
         }
 
         public bool Exist(string login)
         {
-            return MemoryStorage.Exists(new LoginData(login, ""));
+            return MemoryStorage.Exists(new LoginData(-2, login, ""));
         }
             
         public bool Remove(string login)
         {
-            return MemoryStorage.Remove(new LoginData(login, ""));
+            return MemoryStorage.Remove(new LoginData(-1, login, ""));
+        }
+        public bool Remove(int id)
+        {
+            return MemoryStorage.Remove(id);
         }
 
         public bool Update(string login, string password)
         {
-            return MemoryStorage.Update(0, new LoginData(login, password));
+            throw new NotImplementedException();
+        }
+
+        public string[] GetAllUsers()
+        {
+            List<string> res = new List<string>();
+            foreach(var item in MemoryStorage.GetAll())
+            {
+                res.Add(item.Login);
+            }
+            return res.ToArray();
         }
 
         public void SaveData()

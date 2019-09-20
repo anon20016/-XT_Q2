@@ -26,7 +26,7 @@ namespace BAL
 
         public string[] GetRolesForUser(string username)
         {
-            throw new NotImplementedException();
+            return MemoryStorage.GetRolesForUser(username);
         }
 
         public string[] GetUsersInRole(string roleName)

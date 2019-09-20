@@ -164,6 +164,19 @@ namespace DAL
             return Data[roleIndex].Users.Contains(username);           
         }
 
+        public string[] GetRolesForUser(string username)
+        {
+            List<string> res = new List<string>();
+            foreach(var item in Data)
+            {
+                if (item.Users.Contains(username))
+                {
+                    res.Add(item.Name);
+                }
+            }
+            return res.ToArray();
+        }
+
         public string[] GetUsersInRole(string roleName)
         {
             int index = FindIndex(roleName);

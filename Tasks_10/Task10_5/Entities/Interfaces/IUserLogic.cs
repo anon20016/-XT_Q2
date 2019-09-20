@@ -11,6 +11,7 @@ namespace Entities
 
         User Find(int id);
         int Find(string name, string dayofbirth);
+        int Find(string name);
 
         void LoadData();
         void SaveData();
