@@ -9,6 +9,19 @@
     secretLogic.LoadData();
 
     var temp = secretLogic.GetAllUsers();
+
+
+    if (IsPost)
+    {
+        if (Request.Form.AllKeys.Contains("add"))
+        {
+            Roles.AddUserToRole(Request["add"], "Moderator");
+        }
+        if (Request.Form.AllKeys.Contains("rem"))
+        {
+            Roles.RemoveUserFromRole(Request["rem"], "Moderator");
+        }
+    }
 }
 
 <div class="admin-table">
@@ -30,15 +43,15 @@
                 <td>
                     @if (Roles.IsUserInRole(item, "Moderator"))
                     {
-                        <form>
-                            <input type="text" hidden name="rem" value="@secretLogic.GetIdByLogin(item)" />
+                        <form method="post">
+                            <input type="text" hidden name="rem" value="@item" />
                             <button class="admin-button-no" value="remove"></button>
                         </form>
                     }
                     else
                     {
-                        <form>
-                            <input type="text" hidden name="add" value="@secretLogic.GetIdByLogin(item)" />
+                        <form method="post">
+                            <input type="text" hidden name="add" value="@item" />
                             <button class="admin-button-ok" value="move"></button>
                         </form>
                     }

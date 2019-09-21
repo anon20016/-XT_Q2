@@ -23,12 +23,13 @@
                     if (User.Identity.IsAuthenticated)
                     {
                         <li><a href="~/Pages/Auth/UsersAwards.cshtml">List</a></li>
-                        <li><a href="~/Pages/Auth/Users.cshtml">Users</a></li>
+
                         <li><a href="~/Pages/Auth/Profile.cshtml">Profile</a></li>
                         <li><a href="~/Pages/Auth/Awards.cshtml">Awards</a></li>
 
                         if (Roles.IsUserInRole(User.Identity.Name, "Moderator") || Roles.IsUserInRole(User.Identity.Name, "Admin"))
                         {
+                            <li><a href="~/Pages/Auth/Users.cshtml">Users</a></li>
                             <li><a href="~/Pages/Moderator/ModeratePanel.cshtml">Moderate</a></li>
                         }
                         if (Roles.IsUserInRole(User.Identity.Name, "Admin"))

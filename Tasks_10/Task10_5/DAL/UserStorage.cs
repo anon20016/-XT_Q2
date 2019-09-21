@@ -19,7 +19,7 @@ namespace DAL
 
         public bool Add(User note)
         {
-            if (FindUser(note.Name, note.DateOfBirth) == null)
+            if (FindUser(note.Name) == null)
             {
                 Users.Add(note);
                 return true;
@@ -29,7 +29,7 @@ namespace DAL
         }
         public bool Add(string name, string dateofbirth)
         {
-            if (FindUser(name, dateofbirth) == null)
+            if (FindUser(name) == null)
             {
                 Users.Add(new User(++User.count, name, dateofbirth));
                 return true;
