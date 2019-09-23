@@ -7,16 +7,16 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{889B9DCA-E66A-4666-B512-A27D425E6A12}</ProjectGuid>
+    <ProjectGuid>{50CDF051-948B-446F-A333-7E7CBA916E7A}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Task10_5</RootNamespace>
-    <AssemblyName>Task10_5</AssemblyName>
+    <RootNamespace>Task_11</RootNamespace>
+    <AssemblyName>Task_11</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44300</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -59,9 +59,6 @@
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
@@ -93,48 +90,38 @@
     <Content Include="Data\logpas.txt" />
     <Content Include="Data\roles.txt" />
     <Content Include="Data\users.txt" />
-    <Content Include="Global.asax" />
     <Content Include="Pages\Admin\style.css" />
-    <Content Include="Pages\Moderator\style.css" />
     <Content Include="Pages\Auth\Layouts\style.css" />
     <Content Include="Pages\Layouts\style.css" />
+    <Content Include="Pages\Moderator\style.css" />
     <Content Include="Pages\NonAuth\Layouts\style.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="Models\MyRoleProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Content Include="Pages\Admin\AdminPanel.cshtml" />
+    <Content Include="Pages\Admin\Web.config" />
+    <Content Include="Pages\Admin\_Layout.cshtml" />
     <Content Include="Pages\Auth\Awards.cshtml" />
-    <Content Include="Pages\Layouts\_MainLayout.cshtml" />
-    <Content Include="Pages\Auth\UsersAwards.cshtml" />
-    <Content Include="Pages\Auth\Users.cshtml" />
-    <Content Include="Pages\NonAuth\Login.cshtml" />
+    <Content Include="Pages\Auth\Layouts\_Layout.cshtml" />
     <Content Include="Pages\Auth\Profile.cshtml" />
     <Content Include="Pages\Auth\SignOut.cshtml" />
+    <Content Include="Pages\Auth\Users.cshtml" />
+    <Content Include="Pages\Auth\UsersAwards.cshtml" />
+    <Content Include="Pages\Auth\Web.config" />
+    <Content Include="Pages\Layouts\_MainLayout.cshtml" />
+    <Content Include="Pages\Moderator\ModeratePanel.cshtml" />
+    <Content Include="Pages\Moderator\Web.config" />
+    <Content Include="Pages\Moderator\_Layout.cshtml" />
+    <Content Include="Pages\NonAuth\Layouts\_Layout.cshtml" />
+    <Content Include="Pages\NonAuth\Login.cshtml" />
     <Content Include="Pages\NonAuth\Register.cshtml" />
     <Content Include="Pages\NonAuth\Users.cshtml" />
-    <Content Include="Pages\Admin\AdminPanel.cshtml" />
-    <Content Include="Pages\Moderator\Web.config" />
-    <Content Include="Pages\Auth\Web.config" />
     <Content Include="Pages\NonAuth\Web.config" />
-    <Content Include="Pages\Auth\Layouts\_Layout.cshtml" />
-    <Content Include="Pages\NonAuth\Layouts\_Layout.cshtml" />
-    <Content Include="Pages\Moderator\ModeratePanel.cshtml" />
-    <Content Include="Pages\Admin\_Layout.cshtml" />
-    <Content Include="Pages\Moderator\_Layout.cshtml" />
-    <Content Include="Pages\Admin\Web.config" />
-    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -143,20 +130,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BAL\BAL.csproj">
+    <ProjectReference Include="..\..\BAL\BAL.csproj">
       <Project>{2097e680-07ec-4ed2-a378-4db01cb7a5e6}</Project>
       <Name>BAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Entities\Entities.csproj">
+    <ProjectReference Include="..\..\Entities\Entities.csproj">
       <Project>{e43ed452-a0e5-4289-aa8c-2cd276780ea3}</Project>
       <Name>Entities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -171,9 +152,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>50923</DevelopmentServerPort>
+          <DevelopmentServerPort>54466</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50923/</IISUrl>
+          <IISUrl>https://localhost:44300/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

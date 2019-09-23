@@ -1,0 +1,45 @@
+﻿@using Entities;
+@using BAL;
+
+
+@{
+    Layout = "~/Pages/NonAuth/Layouts/_Layout.cshtml";
+
+    Page.Name = "Users";
+}
+
+@{
+    IUserLogic userManagerLogic = new UserLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/users.txt"));
+
+    userManagerLogic.LoadData();
+    var users = userManagerLogic.GetAll();
+
+    var temp = users.OrderBy(x => x.Id);
+}
+
+
+<div class="main-div">
+    <table>
+        <colgroup>
+            <col width="100" />
+            <col width="350" />
+            <col width="350" />
+        </colgroup>
+        @foreach (var item in temp)
+        {
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.DateOfBirth
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+

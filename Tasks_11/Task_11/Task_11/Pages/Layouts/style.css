@@ -1,0 +1,96 @@
+﻿@import url(https://fonts.googleapis.com/css?family=Lora);
+html {
+    overflow-x: hidden;
+    margin-right: calc(-1 * (100vw - 100%));
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    margin: 0;
+    background: radial-gradient(white, #00d0ff);
+}
+
+.main-div {
+    display: block;
+    width: 100%;
+    margin:  10px 0 10px 0;
+}
+
+a {
+    text-decoration: none;
+    font-family: 'Lora', serif;
+}
+
+nav {
+    width: 100%;
+    margin: auto auto 0 auto;
+}
+
+header{
+    margin: auto;
+    text-align:center;
+}
+
+.main-menu ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+    .main-menu ul li {
+        list-style-type: none;
+        flex-basis: auto;
+        flex-grow: 1;
+        background: #000;
+        text-align: center;
+        box-shadow: inset 0 0 1px 1px white;
+    }
+
+
+        .main-menu ul li a {
+            padding: 20px 0;
+            color: forestgreen;
+            display: block;
+            font-size: large;
+            font-weight:500;
+        }
+
+        .main-menu ul li:hover {
+            background: white;
+        }
+
+.white-back{
+    width:800px;
+    height: 800px;
+}
+
+
+.cont_title {
+    margin: auto;
+    width: 100%;
+    text-align: center;
+    background-color: white;
+    width: 100%;
+    text-transform: uppercase;
+    text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
+    font-size: 60px;
+    margin: 0;
+    vertical-align: middle;
+}
+
+ .back{
+     width: 800px;
+     background-color:transparent;
+     margin: 0 auto 0 auto;
+     padding:0;
+     height:100vh;
+ }

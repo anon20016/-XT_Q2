@@ -1,0 +1,41 @@
+﻿@using Entities;
+@using BAL;
+
+@{
+    Layout = "~/Pages/Auth/Layouts/_Layout.cshtml";
+    Page.Name = "Awards";
+}
+
+@{ 
+}
+
+@{
+    IAwardAssotiateLogic awardManagerLogic = new AwardLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/awards.txt"), System.Web.Hosting.HostingEnvironment.MapPath("~/Data/assotiations.txt"));
+    awardManagerLogic.LoadData();
+    var temp = awardManagerLogic.GetAll();
+}
+
+<div class="main-div">
+    <table class="list" id="list">
+        <colgroup>
+            <col width="100" />
+            <col width="250" />
+            <col width="450" />
+        </colgroup>
+        @foreach (var item in temp)
+        {
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Discription
+                </td>
+            </tr>
+        }
+    </table>
+
+</div>

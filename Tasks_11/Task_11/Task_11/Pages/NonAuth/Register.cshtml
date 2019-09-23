@@ -1,0 +1,126 @@
+﻿@using Entities;
+@using BAL;
+
+@{
+    Layout = "~/Pages/NonAuth/Layouts/_Layout.cshtml";
+
+    Page.Name = "Registration";
+
+    string errormess = "";
+    
+
+    if (IsPost)
+    {
+        if (Request.Form.AllKeys.Contains("login"))
+        {
+            IUserLogic userManagerLogic = new UserLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/users.txt"));
+            IAwardAssotiateLogic awardManagerLogic = new AwardLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/awards.txt"), System.Web.Hosting.HostingEnvironment.MapPath("~/Data/assotiations.txt"));
+            ISecretLogic secretLogic = new SecretLogic(System.Web.Hosting.HostingEnvironment.MapPath("~/Data/logpas.txt"));
+            
+
+            awardManagerLogic.LoadData();
+            userManagerLogic.LoadData();
+            secretLogic.LoadData();
+
+            var temp = userManagerLogic.GetAll();
+            try
+            {
+                var MyFile = Request.Files["file"];
+
+                var login = Request["Login"];
+                var password = Request["Password"];
+                var dob = Request["day-of-birth"];
+                if (login.Length == 0 || password.Length == 0 || dob.Length == 0)
+                {
+                    throw new KeyNotFoundException("Not enough information");
+                }
+
+                if (MyFile != null && MyFile.ContentLength > 0)
+                {
+                    int FileSize = MyFile.ContentLength;
+                    byte[] FileByteArray = new byte[FileSize];
+                    MyFile.InputStream.Read(FileByteArray, 0, FileSize);
+                    if (!userManagerLogic.AddUser(login, dob, Convert.ToBase64String(FileByteArray)))
+                    {
+                        throw new FormatException("This user already exists");
+                    }
+                }
+                else
+                {
+                    if (!userManagerLogic.AddUser(login, dob, ""))
+                    {
+                        throw new FormatException("This user already exists");
+                    }
+                }
+
+                Roles.AddUserToRole(login, "User");
+                secretLogic.Add(userManagerLogic.Find(login, dob), login, password);
+
+                secretLogic.SaveData();
+                awardManagerLogic.SaveData();
+                userManagerLogic.SaveData();
+
+                FormsAuthentication.SetAuthCookie(login, false);
+                Response.Redirect("~/Pages/Auth/Profile.cshtml");
+            }
+            catch (Exception e)
+            {
+                errormess = e.Message;
+            }
+        }
+    }
+}
+<script>
+    function checkPasswordMatch() {
+        var password = $("#password").val();
+        var confirmPassword = $("#password2").val();
+
+        if (password != confirmPassword) {
+            $("#password2").css('background-color', 'palevioletred');
+        } else {
+            $("#password2").css('background-color', 'greenyellow');
+        }
+    }
+    $(document).ready(function () {
+
+        $('input[type="file"]').change(function () {
+            var value = $("input[type='file']").val();
+            $('#filepath').text(value);
+            $('#filepath').css('color', 'green');
+        });
+
+    });
+</script>
+
+<div class="signin">
+    <form method="post" enctype="multipart/form-data">
+        <h2>Registration</h2>
+        <div>
+            <label for="login">Login</label>
+            <input required type="text" name="login" placeholder="">
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input required type="password" name="password" id="password" placeholder="">
+        </div>
+        <div>
+            <label for="password2">Confirm password</label>
+            <input required type="password" name="password2" id="password2" placeholder="" onkeyup="checkPasswordMatch()">
+        </div>
+        <div>
+            <label for="day-of-birth">Day of birth</label>
+            <div class="date">
+                <input type="text" required placeholder="dd.mm.yyyy" name="day-of-birth" id="day-of-birth" pattern="^([0-2][0-9]|(3)[0-1])(\.)(((0)[0-9])|((1)[0-2]))(\.)\d{4}$" />
+            </div>
+        </div>
+        <div>
+            <div class="btn">
+                <label id="filepath" for="file" style="width:50%; text-align:center; margin:0 25% 25px 25%">Download Avatar</label>
+                <input type="file" name="file" id="file" class="input-file">
+            </div>
+        </div>
+
+        <input class="dws-submit" type="submit" name="submit" value="Sign up"><br />
+    </form>
+    <h3>@errormess</h3>
+</div>
