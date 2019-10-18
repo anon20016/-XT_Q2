@@ -50,9 +50,42 @@ namespace Watermarks.DAL
                 }
             }
         }
+
+        public bool CanRegister(string login)
+        {
+            using (var connection = new SqlConnection(path))
+            {
+                var command = connection.CreateCommand();
+                command.CommandText = "CanRegister";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "@Login",
+                    Value = login,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                    Direction = System.Data.ParameterDirection.Input
+                });                
+
+                var returnValue = command.Parameters.Add("@Return", SqlDbType.Int);
+                returnValue.Direction = ParameterDirection.ReturnValue;
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                var sotredProcResult = (int)returnValue.Value;
+                if (sotredProcResult == 1)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
         public void Register(string login, string password_hash)
         {
-
             using (var connection = new SqlConnection(path))
             {
                 var command = connection.CreateCommand();

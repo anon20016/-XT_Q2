@@ -1,0 +1,49 @@
+﻿@using Watermarks.Common
+
+@{
+    Layout = "~/Pages/NonAuth/Layouts/_Layout.cshtml";
+    Page.Name = "Login";
+
+    if (User.Identity.IsAuthenticated)
+    {
+        Response.Redirect("~/Pages/Auth/Profile");
+    }
+
+    string errormess = "";
+
+
+    if (IsPost)
+    {
+        var authlogic = DependencyResolver.AuthLogic;
+        var login = Request["login"];
+        var pass = Request["password"];
+
+        if (authlogic.CanLogin(login, pass))
+        {
+            FormsAuthentication.SetAuthCookie(login, false);
+            Response.Redirect("~/Pages/Auth/Profile.cshtml");
+        }
+        else
+        {
+            errormess = "Invalid login or password";
+        }
+    }
+}
+
+<div class="signin">
+    <form method="post">
+        <h2>Sign In</h2>
+        <div class="dws-input">
+            <input type="text" name="login" placeholder="Login">
+        </div>
+        <div class="dws-input">
+            <input type="password" name="password" placeholder="Password">
+        </div>
+        <input class="dws-submit" type="submit" name="submit" value="Sign in"><br />
+    </form>
+    <h3>@errormess</h3>
+
+    <h2>Not account, yet?</h2> <a href="~/Pages/NonAuth/Register.cshtml">Sign up</a>
+</div>
+
+

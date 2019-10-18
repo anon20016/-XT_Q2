@@ -21,9 +21,21 @@ namespace Watermarks.BLL
             return _authDAO.CanLogin(login, password_hash);
         }
 
+        private bool CanRegister(string login)
+        {
+            return _authDAO.CanRegister(login);
+        }
+
         public void Register(string login, string password_hash)
         {
-            _authDAO.Register(login, password_hash);
+            if (CanRegister(login))
+            {
+                _authDAO.Register(login, password_hash);
+            }
+            else
+            {
+                throw new ArgumentException("This user already exists");
+            }
         }
     }
 }

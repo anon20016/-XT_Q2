@@ -29,3 +29,6 @@ create table UserInRoles(
 )
 
 drop table usertable
+
+Insert into Roles(Role_Name, Discription)
+values ('Admin', 'main administrator'), ('Moderator', 'moderator'), ('User', 'normal user')

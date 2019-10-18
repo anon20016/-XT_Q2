@@ -9,7 +9,7 @@ namespace Watermarks.BLL.Interfaces
     public interface IAuthLogic
     {
         void Register(string login, string password_hash);
-        bool CanLogin(string login, string password_hash);
+        bool CanLogin(string login, string password_hash);       
     }    
 }
 

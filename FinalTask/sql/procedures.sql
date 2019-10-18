@@ -93,4 +93,16 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE CanRegister
+	@Login nvarchar(20)
+AS
+BEGIN
+	IF EXISTS(select * from usertable where user_login = @Login)
+	Begin
+	return 1
+	end else
+	return 0
+END
+GO
+
 

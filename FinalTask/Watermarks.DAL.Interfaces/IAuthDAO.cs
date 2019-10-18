@@ -10,5 +10,6 @@ namespace Watermarks.DAL.Interfaces
     {
         void Register(string login, string password_hash);
         bool CanLogin(string login, string password_hash);
+        bool CanRegister(string login);
     }
 }
