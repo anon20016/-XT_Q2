@@ -1,5 +1,4 @@
 ﻿@using Watermarks.Common
-
 @{
     Layout = "~/Pages/Auth/Layouts/_Layout.cshtml";
     Page.Name = "Profile";
@@ -9,13 +8,58 @@
 
     var user = userlogic.FindByLogin(User.Identity.Name);
 }
-
-<div class="prfl-left-col-back">
-    <div class="prfl-img">
-        
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-3 bg-dark">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-md-6 ml-auto mr-auto">
+                                <div class="profiles p-3 my-4 rounded text-center shadow-sm">
+                                    <div class="avatars">
+                                        @{
+                                            string s = "Avatars/" + user.Image_path + ".jpg";
+                                        }
+                                        <img src="@s" alt="Circle Image" width="100" class="avatar-lg rounded-circle img-fluid" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit avatar images">
+                                    </div>
+                                    <div class="names">
+                                        <h3 class="title text-light">@user.Login</h3>
+                                        @{
+                                            //<a href="#" class="btn btn-link btn-facebook"><i class="fab fa-facebook"></i></a>
+                                            //<a href="#" class="btn btn-link btn-twitter"><i class="fab fa-twitter"></i></a>
+                                            //<a href="#" class="btn btn-link btn-gplus"><i class="fab fa-google-plus"></i></a>
+                                            //<a href="#" class="btn btn-link btn-instagram"><i class="fab fa-instagram"></i></a>
+                                            //<a href="#" class="btn btn-link btn-youtube"><i class="fab fa-youtube"></i></a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-<div class="prfl-right-col-back">
-    <label class="prfl-name">@user.First_Name </label>
-    <label class="prfl-dob">@user.First_Name </label>
-</div>
+
+<form class="form" action="##" method="post" id="registrationForm">
+    <div class="form-group">
+        <div class="col-xs-6">
+            <h4>
+                <label for="first_name">First name</label>
+                <label id="first_name" name="first_name" class="form-control">@user.First_Name</label>
+            </h4>
+        </div>
+    </div>
+    <div class="form-group">
+        <h4>
+            <label for="second_name">Second name</label>
+            <label id="second_name" name="second_name" class="form-control">@user.Second_Name</label>
+        </h4>
+    </div>
+    <div class="form-group">
+        <h4>
+            <label for="email">E-mail</label>
+            <label id="email" name="email" class="form-control">@user.Email</label>
+        </h4>
+    </div>
+</form>

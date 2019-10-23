@@ -8,20 +8,54 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" type="text/css" href="~/Pages/Layouts/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>@Page.Name</title>
 </head>
-<body>
-    <div class="back">
-        <div class="cont_title">
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
             
-        </div>  
-        <nav class="main-menu" id="main-menu">
-            <ul class="main-menu">
-                
-            </ul>
-        </nav>
+             <img src="~/Pages/Layouts/logo.gif" width="50" height="50" alt="Logo" />
+           
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="ml-auto navbar-nav text-uppercase">
+                    <li class="nav-item active">
+                        <a class="nav-link p-3" href="~/Pages/Main/Home.cshtml">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link p-3" href="https://bootstrap.news/bootstrap-4-template-news-portal-magazine/">About us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link p-3" href="https://bootstrap.news/bootstrap-4-template-news-portal-magazine/">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link p-3" href="~/Pages/Auth/Profile.cshtml">My Account</a>
+                    </li>
+                    @{
+                        if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link p-3" href="~/Pages/Auth/SignOut.cshtml">Sign Out</a>
+                            </li>
+                        }
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<body>
+    <div>
+
 
         @RenderBody()
     </div>

@@ -26,11 +26,11 @@ namespace Watermarks.BLL
             return _authDAO.CanRegister(login);
         }
 
-        public void Register(string login, string password_hash)
+        public void Register(string login, string password_hash, string email)
         {
             if (CanRegister(login))
             {
-                _authDAO.Register(login, password_hash);
+                _authDAO.Register(login, password_hash, email);
             }
             else
             {

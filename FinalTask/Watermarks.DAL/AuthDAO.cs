@@ -84,7 +84,7 @@ namespace Watermarks.DAL
             }
         }
 
-        public void Register(string login, string password_hash)
+        public void Register(string login, string password_hash, string email)
         {
             using (var connection = new SqlConnection(path))
             {
@@ -103,6 +103,13 @@ namespace Watermarks.DAL
                 {
                     ParameterName = "@pass_hash",
                     Value = password_hash,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                    Direction = System.Data.ParameterDirection.Input
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "@email",
+                    Value = email,
                     SqlDbType = System.Data.SqlDbType.NVarChar,
                     Direction = System.Data.ParameterDirection.Input
                 });

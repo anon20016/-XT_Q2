@@ -25,6 +25,11 @@ namespace Watermarks.BLL
             _userDAO.DeleteById(id);
         }
 
+        public void EditUser(User user)
+        {
+            _userDAO.EditUser(user);
+        }
+
         public User FindById(int id)
         {
             return _userDAO.FindById(id);

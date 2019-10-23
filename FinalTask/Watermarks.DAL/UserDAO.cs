@@ -75,7 +75,56 @@ namespace Watermarks.DAL
             }
         }
 
-        public User FindById(int id)
+        public void EditUser(User user)
+        {     
+            using (var connection = new SqlConnection(path))
+            {
+                var command = connection.CreateCommand();
+                command.CommandText = "EditUser";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "@Login",
+                    Value = user.Login,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                    Direction = System.Data.ParameterDirection.Input
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "@password",
+                    Value = user.Password,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                    Direction = System.Data.ParameterDirection.Input
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "@email",
+                    Value = user.Email,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                    Direction = System.Data.ParameterDirection.Input
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "@First_name",
+                    Value = user.First_Name,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                    Direction = System.Data.ParameterDirection.Input
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "@second_name",
+                    Value = user.Second_Name,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                    Direction = System.Data.ParameterDirection.Input
+                });
+
+                connection.Open();
+                command.ExecuteNonQuery();                
+            }
+        }
+
+        public User FindById(int id) 
         {
             using (var connection = new SqlConnection(path))
             {
@@ -97,7 +146,7 @@ namespace Watermarks.DAL
                     var temp = reader.Read();
                     if (temp)
                     {
-                        return new User((int)reader["Id"], reader["user_login"].ToString(), reader["user_password_hash"].ToString(), (int)reader["user_class"], reader["image_id"].ToString(), reader["first_name"].ToString(), reader["second_name"].ToString(), reader["registration_date"].ToString());
+                        return new User((int)reader["Id"], reader["user_login"].ToString(), reader["user_password_hash"].ToString(), (int)reader["user_class"], reader["image_id"].ToString(), reader["first_name"].ToString(), reader["second_name"].ToString(), reader["registration_date"].ToString(), reader["email"].ToString());
                     }
                     else
                     {

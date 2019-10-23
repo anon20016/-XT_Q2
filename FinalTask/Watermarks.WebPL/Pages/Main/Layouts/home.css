@@ -1,0 +1,11 @@
+﻿
+
+header {
+    width: 100%;
+    height: 100vh;
+    background: url(1095.jpg) no-repeat center center;
+    background-size: cover;
+    position: relative;
+    color: #ffffff;
+    overflow: hidden;
+}

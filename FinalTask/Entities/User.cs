@@ -14,12 +14,14 @@ namespace Entities
 
         public string Image_path { get; set; }
 
-        public string First_Name { get; private set; }
-        public string Second_Name { get; private set; }
+        public string First_Name { get; set; }
+        public string Second_Name { get; set; }
+
+        public string Email { get; set; }
 
         private string Registration { get; set; }
 
-        public User(int id, string login, string password, int uclass, string img_path, string first_name, string second_name, string reg)
+        public User(int id, string login, string password, int uclass, string img_path, string first_name, string second_name, string reg, string em)
         {
             Id = id;
             Login = login;
@@ -29,6 +31,7 @@ namespace Entities
             First_Name = first_name;
             Second_Name = second_name;
             Registration = reg;
+            Email = em;
         }
         public User(string login, string password, int uclass, string img_path, string first_name, string second_name, string reg)
         {
@@ -64,6 +67,7 @@ namespace Entities
             First_Name = reader["first_name"].ToString();
             Second_Name = reader["second_name"].ToString();
             Registration = reader["registration_date"].ToString();
+            Email = reader["email"].ToString();
         }
     }
 }

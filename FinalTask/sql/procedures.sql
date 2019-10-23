@@ -22,11 +22,12 @@ CREATE PROCEDURE RegisterUser
 	@login nvarchar(20),
 	@pass_hash nvarchar(20),	
 	@class int,
+	@email nvarchar(20),	
 	@Register_date nvarchar(20)
 AS
 BEGIN
-	insert into usertable (user_login, user_password_hash, user_class, registration_date)
-	values (@login, @pass_hash, @class, @Register_date)
+	insert into usertable (user_login, user_password_hash, user_class, email, registration_date)
+	values (@login, @pass_hash, @class, @email, @Register_date)
 	
 END
 GO
@@ -105,4 +106,17 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE EditUser
+	@Login nvarchar(20),
+	@First_name  nvarchar(20),
+	@second_name nvarchar(20),
+	@email nvarchar(20),
+	@password nvarchar(20)
+AS
+BEGIN	
+		update Usertable	
+		set first_name = @First_name, second_name = @second_name, email = @email, user_password_hash = @password
+		where user_login = @Login
+END
+GO
 

@@ -13,6 +13,7 @@ namespace Watermarks.BLL.Interfaces
         void DeleteById(int id);
         User FindById(int id);
         User FindByLogin(string login);
+        void EditUser(User user);
         IEnumerable<User> GetAll();
     }
 }

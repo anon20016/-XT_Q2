@@ -6,6 +6,8 @@ create table Usertable(
 	first_name nvarchar(20),
 	second_name nvarchar(20),
 
+	email nvarchar(20),
+
 	user_class int,
 
 	registration_date datetime,

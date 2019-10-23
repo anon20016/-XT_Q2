@@ -66,6 +66,9 @@
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
@@ -98,10 +101,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Pages\Auth\Avatars\1.jpg" />
+    <Content Include="Pages\Auth\Layouts\profile1.css" />
+    <Content Include="Pages\Main\Layouts\1095.jpg" />
+    <Content Include="Pages\Layouts\logo.gif" />
     <Content Include="Global.asax" />
     <Content Include="Pages\Admin\style.css" />
-    <Content Include="Pages\Auth\Layouts\style.css" />
-    <Content Include="Pages\Layouts\style.css" />
+    <Content Include="Pages\Main\Layouts\home.css" />
     <Content Include="Pages\Moderator\style.css" />
     <Content Include="Pages\NonAuth\Layouts\style.css" />
     <Content Include="Web.config" />
@@ -119,7 +125,6 @@
     <Content Include="Pages\NonAuth\Layouts\_Layout.cshtml" />
     <Content Include="Pages\NonAuth\Login.cshtml" />
     <Content Include="Pages\NonAuth\Register.cshtml" />
-    <Content Include="Pages\Layouts\_MainLayout.cshtml" />
     <Content Include="Pages\Admin\AdminPanel.cshtml" />
     <Content Include="Pages\Admin\Web.config" />
     <Content Include="Pages\Admin\_Layout.cshtml" />
@@ -131,6 +136,11 @@
     <Content Include="Pages\Moderator\Web.config" />
     <Content Include="Pages\Moderator\_Layout.cshtml" />
     <Content Include="Pages\NonAuth\Web.config" />
+    <Content Include="Pages\Layouts\_MainLayout.cshtml" />
+    <Content Include="Pages\Main\Home.cshtml" />
+    <Content Include="Pages\Main\Web.config" />
+    <Content Include="Pages\Auth\EditProfile.cshtml" />
+    <Content Include="Pages\Auth\Files.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -139,7 +149,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\Users\" />
     <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>

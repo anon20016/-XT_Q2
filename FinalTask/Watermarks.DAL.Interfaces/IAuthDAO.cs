@@ -8,7 +8,7 @@ namespace Watermarks.DAL.Interfaces
 {
     public interface IAuthDAO
     {
-        void Register(string login, string password_hash);
+        void Register(string login, string password_hash, string email);
         bool CanLogin(string login, string password_hash);
         bool CanRegister(string login);
     }

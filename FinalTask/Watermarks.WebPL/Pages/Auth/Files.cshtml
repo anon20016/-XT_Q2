@@ -1,0 +1,11 @@
+﻿@using Watermarks.Common
+@{
+    Layout = "~/Pages/Auth/Layouts/_Layout.cshtml";
+    Page.Name = "Profile";
+
+
+    var userlogic = DependencyResolver.UserLogic;
+
+    var user = userlogic.FindByLogin(User.Identity.Name);
+}
+

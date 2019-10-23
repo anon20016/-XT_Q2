@@ -1,5 +1,6 @@
 ﻿@using Watermarks.Common
 
+
 @{
     Layout = "~/Pages/NonAuth/Layouts/_Layout.cshtml";
     Page.Name = "Login";
@@ -30,20 +31,29 @@
     }
 }
 
-<div class="signin">
-    <form method="post">
-        <h2>Sign In</h2>
-        <div class="dws-input">
-            <input type="text" name="login" placeholder="Login">
-        </div>
-        <div class="dws-input">
-            <input type="password" name="password" placeholder="Password">
-        </div>
-        <input class="dws-submit" type="submit" name="submit" value="Sign in"><br />
-    </form>
-    <h3>@errormess</h3>
 
-    <h2>Not account, yet?</h2> <a href="~/Pages/NonAuth/Register.cshtml">Sign up</a>
+<div class="container">
+
+    <div id="login-row" class="row justify-content-center align-items-center">
+        <div id="login-column" class="col-md-4">           
+                <div class="float">
+                    <form class="form" method="post">
+                        <div class="form-group">
+                            <label for="login" >Username:</label><br>
+                            <input type="text" name="login" id="login" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="password" >Password:</label><br>
+                            <input type="text" name="password" id="password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" name="submit" class="btn btn-info btn-md" value="Sign in">
+                        </div>
+                    </form>
+                    <h5>No account, yet? <a href="~/Pages/NonAuth/Register.cshtml">Sign Up</a></h5>
+                </div>            
+        </div>
+    </div>
+
 </div>
-
-
+</div>

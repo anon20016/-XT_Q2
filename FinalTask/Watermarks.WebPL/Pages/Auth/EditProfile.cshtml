@@ -1,0 +1,134 @@
+﻿@using Watermarks.Common
+
+
+@{
+    Layout = "~/Pages/Auth/Layouts/_Layout.cshtml";
+    Page.Name = "Profile";
+
+
+    var userlogic = DependencyResolver.UserLogic;
+    var user = userlogic.FindByLogin(User.Identity.Name);
+
+    if (IsPost)
+    {
+
+        Entities.User u = user;
+
+        if (Request.Form.AllKeys.Contains("first_name"))
+        {if (Request["first_name"].ToString() != "")
+            {
+                u.First_Name = Request["first_name"].ToString();
+            }
+        }
+        if (Request.Form.AllKeys.Contains("second_name"))
+        {if (Request["second_name"].ToString() != "")
+            {
+                u.Second_Name = Request["second_name"].ToString();
+            }
+        }
+        if (Request.Form.AllKeys.Contains("email"))
+        {if (Request["email"].ToString() != "")
+            {
+                u.Email = Request["email"].ToString();
+            }
+        }
+        if (Request.Form.AllKeys.Contains("password"))
+        {
+            if (Request["password"].ToString() != "")
+            {
+                u.Password = Request["password"].ToString();
+            }
+        }
+
+        userlogic.EditUser(u);
+        Response.Redirect("~/Pages/Auth/Profile.cshtml");
+    }
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="mb-3 bg-dark">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-md-6 ml-auto mr-auto">
+                            <div class="profiles p-3 my-4 rounded text-center shadow-sm">
+                                <div class="avatars">
+                                    @{
+                                        string s = "Avatars/" + user.Image_path + ".jpg";
+                                    }
+                                    <img src="@s" alt="Circle Image" width="100" class="avatar-lg rounded-circle img-fluid" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit avatar images">
+                                </div>
+                                <div class="names">
+                                    <h3 class="title text-light" id="aa" name="aa">@user.Login</h3>
+                                    @{
+                                        //<a href="#" class="btn btn-link btn-facebook"><i class="fab fa-facebook"></i></a>
+                                        //<a href="#" class="btn btn-link btn-twitter"><i class="fab fa-twitter"></i></a>
+                                        //<a href="#" class="btn btn-link btn-gplus"><i class="fab fa-google-plus"></i></a>
+                                        //<a href="#" class="btn btn-link btn-instagram"><i class="fab fa-instagram"></i></a>
+                                        //<a href="#" class="btn btn-link btn-youtube"><i class="fab fa-youtube"></i></a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form class="form" method="post" id="registrationForm">
+    <div class="form-group">
+
+        <div class="col-xs-6">
+            <label for="first_name"><h4>First name</h4></label>
+            <input type="text" class="form-control" name="first_name" id="first_name" title="enter your first name if any." value="@user.First_Name">
+        </div>
+    </div>
+    <div class="form-group">
+
+        <div class="col-xs-6">
+            <label for="second_name"><h4>Second name</h4></label>
+            <input type="text" class="form-control" name="second_name" id="second_name" value="@user.Second_Name" title="enter your last name if any.">
+        </div>
+    </div>
+    <div class="form-group">
+
+        <div class="col-xs-6">
+            <label for="email"><h4>Email</h4></label>
+            <input type="email" class="form-control" name="email" id="email" value="@user.Email" title="enter your email.">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-6">
+            <label for="password"><h4>Password</h4></label>
+            <input type="password" class="form-control" name="password" id="password" placeholder="password" title="enter new password">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-6">
+            <label for="password2"><h4>Verify</h4></label>
+            <input type="password" class="form-control" name="password2" id="password2" placeholder="password2" title="confirm password" onkeyup="checkPasswordMatch()">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-12">
+            <br>
+            <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
+            <button class="btn btn-lg" type="reset" ><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    function checkPasswordMatch() {
+        var password = $("#password").val();
+        var confirmPassword = $("#password2").val();        
+        if (password != confirmPassword) {
+            $("#password2").css('background-color', 'palevioletred');
+        } else {
+            $("#password2").css('background-color', 'greenyellow');
+        }
+    }    
+</script>
