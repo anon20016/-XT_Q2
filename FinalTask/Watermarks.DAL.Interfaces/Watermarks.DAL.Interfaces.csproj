@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAuthDAO.cs" />
+    <Compile Include="IFileDAO.cs" />
+    <Compile Include="IFileStorageDAO.cs" />
     <Compile Include="IRoleDAO.cs" />
     <Compile Include="IUserDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

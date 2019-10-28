@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthLogic.cs" />
+    <Compile Include="FileLogic.cs" />
+    <Compile Include="FileStorageLogic.cs" />
     <Compile Include="RoleLogic.cs" />
     <Compile Include="UserLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

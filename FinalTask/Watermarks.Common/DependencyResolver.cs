@@ -20,23 +20,40 @@ namespace Watermarks.Common
         private static readonly IRoleDAO _roleDAO;
         private static readonly IRoleLogic _roleLogic;
 
+        private static readonly IFileDAO _fileDAO;
+        private static readonly IFileLogic _fileLogic;
+
+        private static readonly IFileStorageDAO _filestorageDAO;
+        private static readonly IFileStorageLogic _filestorageLogic;
+
         public static IUserDAO UserDAO => _userDAO;
         public static IUserLogic UserLogic => _userLogic;
+
         public static IAuthDAO AuthDAO => _authDAO;
         public static IAuthLogic AuthLogic => _authLogic;
 
         public static IRoleDAO RoleDAO => _roleDAO;
         public static IRoleLogic RoleLogic => _roleLogic;
 
+        public static IFileDAO FileDAO => _fileDAO;
+        public static IFileLogic FileLogic => _fileLogic;
+
+        public static IFileStorageDAO FileStorageDAO => _filestorageDAO;
+        public static IFileStorageLogic FileStorageLogic => _filestorageLogic;
+
         static DependencyResolver() 
         {
             _userDAO = new UserDAO();
             _authDAO = new AuthDAO();
             _roleDAO = new RoleDAO();
+            _fileDAO = new FileDAO();
+            _filestorageDAO = new FileStorageDAO();
 
             _userLogic = new UserLogic(_userDAO);
             _authLogic = new AuthLogic(_authDAO);
             _roleLogic = new RoleLogic(_roleDAO);
+            _fileLogic = new FileLogic(_fileDAO);
+            _filestorageLogic = new FileStorageLogic(_filestorageDAO);
         }   
     }
 }

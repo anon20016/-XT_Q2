@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthDAO.cs" />
+    <Compile Include="FileDAO.cs" />
+    <Compile Include="FileStorageDAO.cs" />
     <Compile Include="RoleDAO.cs" />
     <Compile Include="UserDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

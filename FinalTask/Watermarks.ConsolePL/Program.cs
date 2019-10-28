@@ -15,8 +15,8 @@ namespace Watermarks.ConsolePL
             var userlogic = DependencyResolver.UserLogic;
             var authlogic = DependencyResolver.AuthLogic;
             var rolelogic = DependencyResolver.RoleLogic;
+            var filelogic = DependencyResolver.FileLogic;
 
-            
             Console.ReadLine();
         }
     }

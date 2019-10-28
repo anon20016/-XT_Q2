@@ -102,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pages\Auth\Avatars\1.jpg" />
+    <Content Include="Pages\Auth\Layouts\filetable.css" />
     <Content Include="Pages\Auth\Layouts\profile1.css" />
     <Content Include="Pages\Main\Layouts\1095.jpg" />
     <Content Include="Pages\Layouts\logo.gif" />
@@ -151,6 +152,7 @@
   <ItemGroup>
     <Folder Include="App_Data\Users\" />
     <Folder Include="Controllers\" />
+    <Folder Include="User_Files\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entities\Watermarks.Entities.csproj">

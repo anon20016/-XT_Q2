@@ -1,11 +1,95 @@
 ﻿@using Watermarks.Common
+
+<link rel="stylesheet" type="text/css" href="~/Pages/Auth/Layouts/filetable.css">
+
 @{
     Layout = "~/Pages/Auth/Layouts/_Layout.cshtml";
     Page.Name = "Profile";
 
 
     var userlogic = DependencyResolver.UserLogic;
+    var filelogic = DependencyResolver.FileLogic;
+    var filestorage = DependencyResolver.FileStorageLogic;
 
     var user = userlogic.FindByLogin(User.Identity.Name);
+
+    var files = filelogic.GetAllFilesForUser(user.Login);
+
+    if (IsPost)
+    {
+        var r = Request;
+        if (Request.Files.AllKeys.Contains("new_file"))
+        {
+            HttpPostedFileBase MyFile = Request.Files["new_file"];
+            if (MyFile.FileName.Length > 0)
+            {
+                byte[] data;
+                using (Stream inputStream = MyFile.InputStream)
+                {
+                    MemoryStream memoryStream = inputStream as MemoryStream;
+                    if (memoryStream == null)
+                    {
+                        memoryStream = new MemoryStream();
+                        inputStream.CopyTo(memoryStream);
+                    }
+                    data = memoryStream.ToArray();
+                }
+
+                string filename = MyFile.FileName.Substring(MyFile.FileName.LastIndexOf('\\') + 1);
+                string filepath = filestorage.AddFile(data, filename);
+
+                filelogic.Add(new Entities.WFile(filename, filename.Substring(filename.LastIndexOf('.')), user.Login), filepath);
+            }
+        }
+        if (Request.Form.AllKeys.Contains("delete_file_id")){
+            filelogic.DeleteFileById(Convert.ToInt32(Request["delete_file_id"]));
+            filestorage.DeleteFile(Request["delete_file_name"]);
+        }
+        Response.Redirect(Request.RawUrl);
+    }
 }
+
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <form method="post" enctype="multipart/form-data">
+            <div class="row-fluid">
+                <div class="control-group">
+                    <label class="control-label">Picture:</label>
+                    <div class="controls clearfix">
+                        <span class="btn btn-success btn-file">
+                            <i class="icon-plus"></i> <span>Choose picture...</span>
+                            <input type="file" name="new_file" id="new_file" />
+                        </span>
+                    </div>
+                </div>
+                <button>Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@{
+    foreach (var item in files)
+    {
+        <div class="file-box">
+            <div class="file">
+                <span class="corner"></span>
+                <form class="delete" method="post">
+                    <input type="text" name="delete_file_id" id="delete_file_id" hidden value="@item.Id">
+                    <input type="text" name="delete_file_name" id="delete_file_name" hidden value="@item.Name">
+                    <button class="delete"></button>
+                </form>
+                <a href="#">
+                    <div class="file-name">
+                        @item.Name
+                        <br>
+                        <small>Added: @item.Add_Date</small>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    }
+}
+
 

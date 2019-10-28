@@ -5,8 +5,8 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE AddUser
-	@login nvarchar(20),
-	@pass_hash nvarchar(20),	
+	@login nvarchar(30),
+	@pass_hash nvarchar(50),	
 	@class int, 
 	@Id int OUTPUT
 AS
@@ -19,10 +19,10 @@ END
 GO
 
 CREATE PROCEDURE RegisterUser
-	@login nvarchar(20),
-	@pass_hash nvarchar(20),	
+	@login nvarchar(30),
+	@pass_hash nvarchar(50),	
 	@class int,
-	@email nvarchar(20),	
+	@email nvarchar(30),	
 	@Register_date nvarchar(20)
 AS
 BEGIN
@@ -57,7 +57,7 @@ END
 GO
 
 CREATE PROCEDURE FindByLogin
-	@Login varchar(20)
+	@Login varchar(30)
 AS
 BEGIN
 	select * from usertable where user_login = @Login;
@@ -82,8 +82,8 @@ END
 GO
 
 CREATE PROCEDURE CheckPassword
-	@Login nvarchar(20),
-	@Pass nvarchar(20)
+	@Login nvarchar(30),
+	@Pass nvarchar(50)
 AS
 BEGIN
 	IF EXISTS(select * from usertable where (user_login = @Login AND user_password_hash = @Pass))
@@ -95,7 +95,7 @@ END
 GO
 
 CREATE PROCEDURE CanRegister
-	@Login nvarchar(20)
+	@Login nvarchar(30)
 AS
 BEGIN
 	IF EXISTS(select * from usertable where user_login = @Login)
@@ -107,11 +107,11 @@ END
 GO
 
 CREATE PROCEDURE EditUser
-	@Login nvarchar(20),
-	@First_name  nvarchar(20),
-	@second_name nvarchar(20),
-	@email nvarchar(20),
-	@password nvarchar(20)
+	@Login nvarchar(30),
+	@First_name  nvarchar(30),
+	@second_name nvarchar(30),
+	@email nvarchar(30),
+	@password nvarchar(50)
 AS
 BEGIN	
 		update Usertable	
