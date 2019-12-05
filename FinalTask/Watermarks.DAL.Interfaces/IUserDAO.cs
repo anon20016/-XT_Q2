@@ -11,6 +11,7 @@ namespace Watermarks.DAL.Interfaces
         User FindById(int id);
         User FindByLogin(string login);
         void EditUser(User user);
+        void EdituserAvatar(string login, string file_path);
         IEnumerable<User> GetAll();
     }
 }

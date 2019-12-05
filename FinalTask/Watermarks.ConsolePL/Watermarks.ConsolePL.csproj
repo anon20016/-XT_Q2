@@ -38,6 +38,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,9 +54,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DCP\DCT.csproj">
+      <Project>{AA7DA4CE-2CF7-4623-861C-F39F34AF0335}</Project>
+      <Name>DCT</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Entities\Watermarks.Entities.csproj">
       <Project>{8F42490B-8691-4942-9832-F064E19C86D1}</Project>
       <Name>Watermarks.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Watermarking\Watermarking.csproj">
+      <Project>{CCC372AF-040B-470E-9710-4AC3971BF28D}</Project>
+      <Name>Watermarking</Name>
     </ProjectReference>
     <ProjectReference Include="..\Watermarks.BLL.Interfaces\Watermarks.BLL.Interfaces.csproj">
       <Project>{5F7F78CB-B73E-49D5-B6DF-A85196F84860}</Project>
@@ -69,6 +78,9 @@
       <Project>{812FF823-F77D-44A3-BC49-23B4AF140264}</Project>
       <Name>Watermarks.DAL.Interfaces</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="back.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,11 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Watermarks.DAL.Interfaces;
 
+
 namespace Watermarks.DAL
 {
     public class RoleDAO : IRoleDAO
     {
-        private string path = @"Data Source=DESKTOP-L60T6QJ\SQLEXPRESS;Initial Catalog=watermark-project;Integrated Security=True";
+        private string path = @"Data Source=31.31.196.149;Integrated Security=False;Database=u0869762_marks;User ID=u0869762_anon;Password=Qwerty1u!;Connect Timeout=15;Encrypt=False;Packet Size=4096";
 
 
         public void AddUsersToRoles(string[] usernames, string[] roleNames)

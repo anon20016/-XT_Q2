@@ -37,5 +37,24 @@ namespace Watermarks.BLL
                 throw new ArgumentException("This user already exists");
             }
         }
+
+        public void WideRegister(string login, string name, string password_hash, string email)
+        {
+            if (CanRegister(login))
+            {
+                string first_name = name;
+                string sec_name = "";
+                if (name.IndexOf(' ') != -1)               
+                {
+                    first_name = name.Substring(0, name.IndexOf(' '));
+                    sec_name = name.Substring(name.IndexOf(' ') + 1);
+                }
+                _authDAO.WideRegister(login, first_name, sec_name, password_hash, email);
+            }
+            else
+            {
+                throw new ArgumentException("This user already exists");
+            }
+        }
     }
 }

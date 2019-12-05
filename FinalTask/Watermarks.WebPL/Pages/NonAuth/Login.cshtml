@@ -1,6 +1,5 @@
 ﻿@using Watermarks.Common
 
-
 @{
     Layout = "~/Pages/NonAuth/Layouts/_Layout.cshtml";
     Page.Name = "Login";
@@ -31,19 +30,18 @@
     }
 }
 
+    <div class="container">
 
-<div class="container">
-
-    <div id="login-row" class="row justify-content-center align-items-center">
-        <div id="login-column" class="col-md-4">           
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-4">
                 <div class="float">
                     <form class="form" method="post">
                         <div class="form-group">
-                            <label for="login" >Username:</label><br>
+                            <label for="login">Username:</label><br>
                             <input type="text" name="login" id="login" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="password" >Password:</label><br>
+                            <label for="password">Password:</label><br>
                             <input type="text" name="password" id="password" class="form-control">
                         </div>
                         <div class="form-group">
@@ -51,9 +49,9 @@
                         </div>
                     </form>
                     <h5>No account, yet? <a href="~/Pages/NonAuth/Register.cshtml">Sign Up</a></h5>
-                </div>            
+                </div>
+            </div>
         </div>
-    </div>
 
-</div>
+    </div>
 </div>

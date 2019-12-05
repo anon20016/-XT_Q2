@@ -16,17 +16,21 @@
             {
                 var authlogic = DependencyResolver.AuthLogic;
                 var userlogic = DependencyResolver.UserLogic;
+                var filestoragelogic = DependencyResolver.FileStorageLogic;
                 var login = Request["login"];
                 var pass = Request["password"];
                 var email = Request["email"];
+                var name = Request["name"];
 
                 if (userlogic.FindByLogin(login) == null)
                 {
-                    authlogic.Register(login, pass, email);
+                    authlogic.WideRegister(login, name, pass, email);
+                    filestoragelogic.AddFolderForUser(login);
+                    Roles.AddUserToRole(login, "User");
+                    FormsAuthentication.SetAuthCookie(login, false);
                 }
 
-                Roles.AddUserToRole(login, "User");
-                FormsAuthentication.SetAuthCookie(login, false);
+               
                 Response.Redirect("~/Pages/Auth/Profile.cshtml");
             }
             catch (Exception e)

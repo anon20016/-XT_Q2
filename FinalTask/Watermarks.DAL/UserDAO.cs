@@ -5,11 +5,13 @@ using Watermarks.DAL.Interfaces;
 using System.Data.SqlClient;
 using Entities;
 
+
+
 namespace Watermarks.DAL
 {
     public class UserDAO : IUserDAO
     {
-        private string path = @"Data Source=DESKTOP-L60T6QJ\SQLEXPRESS;Initial Catalog=watermark-project;Integrated Security=True";
+        private string path = @"Data Source=31.31.196.149;Integrated Security=False;Database=u0869762_marks;User ID=u0869762_anon;Password=Qwerty1u!;Connect Timeout=15;Encrypt=False;Packet Size=4096";
 
         public int Add(User user)
         {
@@ -121,6 +123,34 @@ namespace Watermarks.DAL
 
                 connection.Open();
                 command.ExecuteNonQuery();                
+            }
+        }
+
+        public void EdituserAvatar(string login, string file_path)
+        {
+            using (var connection = new SqlConnection(path))
+            {
+                var command = connection.CreateCommand();
+                command.CommandText = "EdituserAvatar";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "@Login",
+                    Value = login,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                    Direction = System.Data.ParameterDirection.Input
+                });                
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "@new_avatar",
+                    Value = file_path,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                    Direction = System.Data.ParameterDirection.Input
+                });
+
+                connection.Open();
+                command.ExecuteNonQuery();
             }
         }
 

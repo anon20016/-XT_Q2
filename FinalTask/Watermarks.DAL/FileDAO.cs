@@ -4,11 +4,13 @@ using System.Data.SqlClient;
 using Entities;
 using Watermarks.DAL.Interfaces;
 
+
 namespace Watermarks.DAL
 {
     public class FileDAO : IFileDAO
     {
-        private string path = @"Data Source=DESKTOP-L60T6QJ\SQLEXPRESS;Initial Catalog=watermark-project;Integrated Security=True";
+        private string path = @"Data Source=31.31.196.149;Integrated Security=False;Database=u0869762_marks;User ID=u0869762_anon;Password=Qwerty1u!;Connect Timeout=15;Encrypt=False;Packet Size=4096";
+
 
         public int Add(WFile file)
         {
@@ -122,6 +124,35 @@ namespace Watermarks.DAL
                     SqlDbType = System.Data.SqlDbType.NVarChar,
                     Direction = System.Data.ParameterDirection.Input
                 });              
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void ChangeFileProtection(int Id, string protection)
+        {
+            
+            using (var connection = new SqlConnection(path))
+            {
+                var command = connection.CreateCommand();
+                command.CommandText = "ChangeFileProtection";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "@Id",
+                    Value = Id,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Direction = System.Data.ParameterDirection.Input
+                });
+                command.Parameters.Add(new SqlParameter
+                {
+                    ParameterName = "@Protection",
+                    Value = protection,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                    Direction = System.Data.ParameterDirection.Input
+                });
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -275,7 +306,7 @@ namespace Watermarks.DAL
             using (var connection = new SqlConnection(path))
             {
                 var command = connection.CreateCommand();
-                command.CommandText = "DeleteFileById";
+                command.CommandText = "RenameFileByID";
                 command.CommandType = System.Data.CommandType.StoredProcedure;
 
                 command.Parameters.Add(new SqlParameter

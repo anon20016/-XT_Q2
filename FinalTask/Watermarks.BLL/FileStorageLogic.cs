@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Watermarks.BLL.Interfaces;
 using Watermarks.DAL.Interfaces;
 
@@ -17,14 +13,23 @@ namespace Watermarks.BLL
             _filestorageDAO = filestorageDAO;
         }
 
-        public string AddFile(byte[] data, string filename)
+        public string AddFile(byte[] data, string filename, string user)
         {
-            return _filestorageDAO.AddFile(data, filename);
+            return _filestorageDAO.AddFile(data, filename, user);
         }
 
-        public void DeleteFile(string filename)
+        public void AddFolderForUser(string username)
         {
-            _filestorageDAO.DeleteFile(filename);
+            _filestorageDAO.AddFolderForUser(username);
+        }
+        public string FullFilePath(string user, string filename)
+        {
+            return _filestorageDAO.FullFilePath(user, filename);
+        }
+        
+        public void DeleteFile(string filename, string user)
+        {
+            _filestorageDAO.DeleteFile(filename, user);
         }
     }
 }

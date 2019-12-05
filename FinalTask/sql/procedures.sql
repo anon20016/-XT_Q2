@@ -32,6 +32,22 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE WideRegisterUser
+    @First_name nvarchar(30),
+	@Second_name nvarchar(30),
+	@login nvarchar(30),
+	@pass_hash nvarchar(50),	
+	@class int,
+	@email nvarchar(30),	
+	@Register_date nvarchar(20)
+AS
+BEGIN
+	insert into usertable (user_login, first_name, second_name, user_password_hash, user_class, email, registration_date)
+	values (@login, @First_name, @Second_name, @pass_hash, @class, @email, @Register_date)
+	
+END
+GO
+
 
 CREATE PROCEDURE DeleteById
 	@Id int
@@ -120,3 +136,14 @@ BEGIN
 END
 GO
 
+
+CREATE PROCEDURE EdituserAvatar
+	@Login nvarchar(30),
+	@new_avatar nvarchar(100)
+AS
+BEGIN	
+		update Usertable	
+		set image_id = @new_avatar
+		where user_login = @Login
+END
+GO

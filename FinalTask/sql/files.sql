@@ -82,5 +82,16 @@ END
 GO
 
 
+CREATE PROCEDURE ChangeFileProtection
+	@Id nvarchar(30),
+	@Protection nvarchar(30)
+AS
+BEGIN
+	update Filestable	
+		set protected = @Protection
+		where Id = @Id
+END
+GO
+
 
 

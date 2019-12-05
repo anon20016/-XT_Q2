@@ -1,6 +1,12 @@
 ﻿@using Watermarks.Common
+@using Watermarking
+@using System.Drawing;
+@using System.IO;
+
 
 <link rel="stylesheet" type="text/css" href="~/Pages/Auth/Layouts/filetable.css">
+<link rel="stylesheet" type="text/css" href="~/Pages/Auth/Layouts/fileload.css">
+
 
 @{
     Layout = "~/Pages/Auth/Layouts/_Layout.cshtml";
@@ -10,6 +16,7 @@
     var userlogic = DependencyResolver.UserLogic;
     var filelogic = DependencyResolver.FileLogic;
     var filestorage = DependencyResolver.FileStorageLogic;
+    var filemanager = DependencyResolver.FileManager;
 
     var user = userlogic.FindByLogin(User.Identity.Name);
 
@@ -17,7 +24,6 @@
 
     if (IsPost)
     {
-        var r = Request;
         if (Request.Files.AllKeys.Contains("new_file"))
         {
             HttpPostedFileBase MyFile = Request.Files["new_file"];
@@ -34,62 +40,155 @@
                     }
                     data = memoryStream.ToArray();
                 }
+                filemanager.Add(User.Identity.Name, data, MyFile.FileName);
+            }
+            Response.Redirect(Request.RawUrl);
+        }
+        if (Request.Form.AllKeys.Contains("delete_file_id"))
+        {
+            int c;
+            if (Int32.TryParse(Request["delete_file_id"], out c))
+            {
+                filemanager.Delete(c);
+            }
+            Response.Redirect(Request.RawUrl);
+        }
 
-                string filename = MyFile.FileName.Substring(MyFile.FileName.LastIndexOf('\\') + 1);
-                string filepath = filestorage.AddFile(data, filename);
-
-                filelogic.Add(new Entities.WFile(filename, filename.Substring(filename.LastIndexOf('.')), user.Login), filepath);
+        if (Request.Form.AllKeys.Contains("fragileprotect_file_id"))
+        {
+            var file = filelogic.FindFileById(Convert.ToInt32(Request["fragileprotect_file_id"]));
+            ImageWatermarkEmbed wb = new ImageWatermarkEmbed("Test", new Bitmap(file.Path), 50);
+            //wb.Execute();
+            Response.Redirect(Request.RawUrl);
+        }
+        if (Request.Form.AllKeys.Contains("robustprotect_file_id"))
+        {
+            var file = filelogic.FindFileById(Convert.ToInt32(Request["robustprotect_file_id"]));
+            ImageWatermarkEmbed wb = new ImageWatermarkEmbed("Test", new Bitmap(filemanager.GetImage(file.Id)), 50);
+            wb.Execute();
+            filemanager.ChangeImage(file.Id, wb.ImgOut);
+            filemanager.SetProtection(file.Id, "Robust");
+            Response.Redirect(Request.RawUrl);
+        }
+        if (Request.Form.AllKeys.Contains("robustcheck_file_id"))
+        {
+            var file = filelogic.FindFileById(Convert.ToInt32(Request["robustcheck_file_id"]));
+            ImageWatermarkExtract we = new ImageWatermarkExtract(new Bitmap(filemanager.GetImage(file.Id)));
+            we.Execute();
+            if (we.Mark.Length > 10)
+            {
+                Response.Write($"<script>window.alert('{we.Mark.Substring(1, 10)}');</script>");
+            }
+            else
+            {
+                Response.Write($"<script>window.alert('None');</script>");
             }
         }
-        if (Request.Form.AllKeys.Contains("delete_file_id")){
-            filelogic.DeleteFileById(Convert.ToInt32(Request["delete_file_id"]));
-            filestorage.DeleteFile(Request["delete_file_name"]);
+        if (Request.Form.AllKeys.Contains("download_id"))
+        {
+            var file = filelogic.FindFileById(Convert.ToInt32(Request["download_id"]));
+            filemanager.DownloadFile(file.Id, @"C://");
+            Response.Redirect(Request.RawUrl);
         }
-        Response.Redirect(Request.RawUrl);
     }
 }
 
-<div class="row">
-    <div class="col-sm-12 col-md-12 col-lg-12">
-        <form method="post" enctype="multipart/form-data">
-            <div class="row-fluid">
-                <div class="control-group">
-                    <label class="control-label">Picture:</label>
-                    <div class="controls clearfix">
-                        <span class="btn btn-success btn-file">
-                            <i class="icon-plus"></i> <span>Choose picture...</span>
-                            <input type="file" name="new_file" id="new_file" />
-                        </span>
-                    </div>
+<script>
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            $('#filename').attr('placeholder', input.files[0].name);
+        }
+    }
+</script>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>Upload files</strong> <small> </small></div>
+        <div class="panel-body">
+            <div class="input-group image-preview">
+                <input placeholder="" type="text" class="form-control image-preview-filename" disabled="disabled" id="filename">
+
+                <div class="btn btn-default image-preview-input">
+                    <span class="image-preview-input-title">Browse</span>
+                    <input type="file" name="new_file" onchange="readURL(this)" />
+                    
                 </div>
-                <button>Submit</button>
-            </div>
-        </form>
-    </div>
-</div>
+                <button class="btn btn-labeled btn-primary">Upload</button>
 
-@{
-    foreach (var item in files)
-    {
-        <div class="file-box">
-            <div class="file">
-                <span class="corner"></span>
-                <form class="delete" method="post">
-                    <input type="text" name="delete_file_id" id="delete_file_id" hidden value="@item.Id">
-                    <input type="text" name="delete_file_name" id="delete_file_name" hidden value="@item.Name">
-                    <button class="delete"></button>
-                </form>
-                <a href="#">
-                    <div class="file-name">
-                        @item.Name
-                        <br>
-                        <small>Added: @item.Add_Date</small>
-                    </div>
-                </a>
             </div>
-
         </div>
+    </div>
+</form>
+
+
+<section id="files">
+    @{
+        foreach (var item in files)
+        {
+            <div class="file-box">
+                    <div class="file">
+                        @{
+                            if (item.Protected == "R")
+                            {
+                                <span class="corner" style="background: red"></span>
+                            }
+                            else
+                            {
+                                <span class="corner"></span>
+                            }
+                        }
+
+                        <form class="delete" method="post">
+                            <input type="text" name="delete_file_id" id="delete_file_id" hidden value="@item.Id">
+                            <input type="text" name="delete_file_name" id="delete_file_name" hidden value="@item.Name">
+                            <button class="delete"></button>
+                        </form>
+
+                        <a href="#">
+                            <div class="file-name">
+                                @item.Name
+                                <br>
+                                <small>Protection: @item.Protected</small>
+                                <br>
+                                <small>Added: @item.Add_Date</small>
+                            </div>
+                        </a>
+                        @{
+                            if (item.Extention == ".jpeg" || item.Extention == ".jpg" || item.Extention == ".png" || item.Extention == ".bmp")
+                            {
+                                if (item.Protected == "false")
+                                {
+                                    <form method="post">
+                                        <input type="text" name="fragileprotect_file_id" id="delete_file_id" hidden value="@item.Id">
+                                        <input type="text" name="fragileprotect_file_name" id="delete_file_name" hidden value="@item.Name">
+                                        <button class="fragileprotect">Place fragile Watermark</button>
+                                    </form>
+                                    <form method="post">
+                                        <input type="text" name="robustprotect_file_id" id="robustprotect_file_id" hidden value="@item.Id">
+                                        <input type="text" name="robustprotect_file_name" id="robustprotect_file_name" hidden value="@item.Name">
+                                        <button class="robustprotect">Place robust Watermark</button>
+                                    </form>
+                                }
+                                else
+                                {
+
+                                }
+                                <form method="post">
+                                    <input type="text" name="robustcheck_file_id" id="robustcheck_file_id" hidden value="@item.Id">
+                                    <input type="text" name="robustcheck_file_name" id="robustcheck_file_name" hidden value="@item.Name">
+                                    <button class="robustcheck">Check robust Watermark</button>
+                                </form>
+                                <form method="post">
+                                    <input type="text" name="download_id" id="download_id" hidden value="@item.Id">
+                                    <input type="text" name="download_name" id="download_name" hidden value="@item.Name">
+                                    <button class="download"></button>
+                                </form>
+                            }
+                        }
+                    </div>
+
+            </div>
+        }
     }
-}
-
-
+</section>

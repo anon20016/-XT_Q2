@@ -101,13 +101,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Pages\Auth\Avatars\1.jpg" />
+    <Content Include="Pages\Auth\Layouts\fileload.css" />
     <Content Include="Pages\Auth\Layouts\filetable.css" />
     <Content Include="Pages\Auth\Layouts\profile1.css" />
-    <Content Include="Pages\Main\Layouts\1095.jpg" />
     <Content Include="Pages\Layouts\logo.gif" />
     <Content Include="Global.asax" />
     <Content Include="Pages\Admin\style.css" />
+    <Content Include="Pages\Main\Layouts\back.jpg" />
     <Content Include="Pages\Main\Layouts\home.css" />
     <Content Include="Pages\Moderator\style.css" />
     <Content Include="Pages\NonAuth\Layouts\style.css" />
@@ -142,6 +142,7 @@
     <Content Include="Pages\Main\Web.config" />
     <Content Include="Pages\Auth\EditProfile.cshtml" />
     <Content Include="Pages\Auth\Files.cshtml" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -158,6 +159,10 @@
     <ProjectReference Include="..\Entities\Watermarks.Entities.csproj">
       <Project>{8f42490b-8691-4942-9832-f064e19c86d1}</Project>
       <Name>Watermarks.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Watermarking\Watermarking.csproj">
+      <Project>{ccc372af-040b-470e-9710-4ac3971bf28d}</Project>
+      <Name>Watermarking</Name>
     </ProjectReference>
     <ProjectReference Include="..\Watermarks.BLL.Interfaces\Watermarks.BLL.Interfaces.csproj">
       <Project>{5f7f78cb-b73e-49d5-b6df-a85196f84860}</Project>

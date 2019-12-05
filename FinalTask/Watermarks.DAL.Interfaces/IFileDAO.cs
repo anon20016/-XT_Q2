@@ -16,6 +16,9 @@ namespace Watermarks.DAL.Interfaces
         void RenameFileByID(int Id, string name);
         void ChangeFilePath(int Id, string newpath);
 
+        void ChangeFileProtection(int Id, string protection);
+
+
         WFile[] GetAllFilesForUser(string username);
         WFile[] GetVisibleFilesForUser(string username);
 

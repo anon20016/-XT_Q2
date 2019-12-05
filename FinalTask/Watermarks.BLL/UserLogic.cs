@@ -30,6 +30,11 @@ namespace Watermarks.BLL
             _userDAO.EditUser(user);
         }
 
+        public void EdituserAvatar(string login, string new_file)
+        {
+            _userDAO.EdituserAvatar(login, new_file);
+        }
+
         public User FindById(int id)
         {
             return _userDAO.FindById(id);

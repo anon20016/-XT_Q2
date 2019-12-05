@@ -14,6 +14,7 @@ namespace Watermarks.BLL.Interfaces
         User FindById(int id);
         User FindByLogin(string login);
         void EditUser(User user);
+        void EdituserAvatar(string login, string new_file);
         IEnumerable<User> GetAll();
     }
 }

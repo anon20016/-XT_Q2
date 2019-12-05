@@ -8,7 +8,9 @@ namespace Watermarks.BLL.Interfaces
 {
     public interface IFileStorageLogic
     {
-        string AddFile(byte[] data, string filename);
-        void DeleteFile(string filename);
+        string AddFile(byte[] data, string filename, string user);
+        void DeleteFile(string filename, string user);
+        string FullFilePath(string user, string filename);
+        void AddFolderForUser(string username);
     }
 }
